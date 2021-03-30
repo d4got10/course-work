@@ -1,0 +1,13 @@
+C:\Users\Danil\source\repos\Coursework_Client\bin\Debug\netcoreapp3.1\Coursework_Client.exe
+C:\Users\Danil\source\repos\Coursework_Client\bin\Debug\netcoreapp3.1\Coursework_Client.deps.json
+C:\Users\Danil\source\repos\Coursework_Client\bin\Debug\netcoreapp3.1\Coursework_Client.runtimeconfig.json
+C:\Users\Danil\source\repos\Coursework_Client\bin\Debug\netcoreapp3.1\Coursework_Client.runtimeconfig.dev.json
+C:\Users\Danil\source\repos\Coursework_Client\bin\Debug\netcoreapp3.1\Coursework_Client.dll
+C:\Users\Danil\source\repos\Coursework_Client\bin\Debug\netcoreapp3.1\Coursework_Client.pdb
+C:\Users\Danil\source\repos\Coursework_Client\obj\Debug\netcoreapp3.1\Coursework_Client.AssemblyInfoInputs.cache
+C:\Users\Danil\source\repos\Coursework_Client\obj\Debug\netcoreapp3.1\Coursework_Client.AssemblyInfo.cs
+C:\Users\Danil\source\repos\Coursework_Client\obj\Debug\netcoreapp3.1\Coursework_Client.csproj.CoreCompileInputs.cache
+C:\Users\Danil\source\repos\Coursework_Client\obj\Debug\netcoreapp3.1\Coursework_Client.dll
+C:\Users\Danil\source\repos\Coursework_Client\obj\Debug\netcoreapp3.1\Coursework_Client.pdb
+C:\Users\Danil\source\repos\Coursework_Client\obj\Debug\netcoreapp3.1\Coursework_Client.genruntimeconfig.cache
+C:\Users\Danil\source\repos\Coursework_Client\obj\Debug\netcoreapp3.1\Coursework_Client.csprojAssemblyReference.cache
