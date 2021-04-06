@@ -11,18 +11,20 @@ namespace Сoursework_Server
     {
         public const int BUFFER_SIZE = Packet.PACKET_BUFFER_SIZE;
 
-        public string Name = new Random().Next(0, 1000).ToString();
+        public readonly Server Server;
 
+        public string Name = new Random().Next(0, 1000).ToString();
         public byte[] Buffer = new byte[BUFFER_SIZE];
         public Socket Socket;
 
         private Receiver _receiver;
         private Invoker _invoker;
 
-        public Client()
+        public Client(Server server)
         {
             _receiver = new Receiver();
             _invoker = new Invoker();
+            Server = server;
         }
 
         public void Listen()
@@ -70,6 +72,11 @@ namespace Сoursework_Server
 
             Socket.BeginReceive(Buffer, 0, StateObject.BufferSize, 0,
                     new AsyncCallback(ReadCallback), null);
+        }
+
+        public void Send(Packet packet)
+        {
+            Socket.Send(packet.ToBytes());
         }
     }
 }

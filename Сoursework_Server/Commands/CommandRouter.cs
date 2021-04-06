@@ -21,8 +21,10 @@ namespace Сoursework_Server.Commands
             byte commandID = packet.ReadByte();
             switch (commandID)
             {
-                case 1:
+                case (byte)Packet.PACKET_IDS.MESSAGE:
                     return GetDisplayMessageCommand(packet);
+                case (byte)Packet.PACKET_IDS.RESEND:
+                    return GetResendMessageCommand(packet);
                 default:
                     return null;
             }
@@ -31,6 +33,11 @@ namespace Сoursework_Server.Commands
         public DisplayMessage GetDisplayMessageCommand(Packet packet)
         {
             return new DisplayMessage(_client, _receiver, packet.ReadString());
+        }
+
+        public ResendMessage GetResendMessageCommand(Packet packet)
+        {
+            return new ResendMessage(_client, _receiver, packet.ReadString());
         }
     }
 }

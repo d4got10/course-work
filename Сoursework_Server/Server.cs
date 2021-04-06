@@ -7,17 +7,21 @@ using System.Threading;
 
 namespace Сoursework_Server
 {
-    class Server
+    public class Server
     {
         public static ManualResetEvent allDone;
 
         public bool IsRunning { get; private set; }
         public Socket ListenerSocket { get; private set; }
 
+        private List<Client> _clients;
+        public IReadOnlyList<Client> Clients => _clients;
+
         public Server()
         {
             IsRunning = false;
             allDone = new ManualResetEvent(false);
+            _clients = new List<Client>();
         }
 
         public void Start()
@@ -64,8 +68,10 @@ namespace Сoursework_Server
 
             Console.WriteLine($"Received connection from {handler.RemoteEndPoint}");
 
-            var client = new Client();
+            var client = new Client(this);
             client.Socket = handler;
+
+            _clients.Add(client);
 
             Thread clientThread = new Thread(new ThreadStart(client.Listen));
             clientThread.Start();

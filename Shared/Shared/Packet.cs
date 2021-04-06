@@ -11,6 +11,12 @@ namespace Shared
         private byte[] _data;
         private int _readPosition;
 
+        public enum PACKET_IDS
+        {
+            MESSAGE = 1,
+            RESEND = 2
+        }
+
         public Packet()
         {
             _data = new byte[PACKET_BUFFER_SIZE];

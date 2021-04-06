@@ -13,7 +13,7 @@ namespace Coursework_Client
         // Client socket.  
         public Socket workSocket = null;
         // Size of receive buffer.  
-        public const int BufferSize = 256;
+        public const int BufferSize = Packet.PACKET_BUFFER_SIZE;
         // Receive buffer.  
         public byte[] buffer = new byte[BufferSize];
         // Received data string.  
@@ -61,7 +61,7 @@ namespace Coursework_Client
                     var message = Console.ReadLine();
 
                     var packet = new Packet();
-                    packet.WriteByte(1);
+                    packet.WriteByte((byte)Packet.PACKET_IDS.RESEND);
                     packet.WriteString(message);
 
                     // Send test data to the remote device.  
@@ -142,8 +142,6 @@ namespace Coursework_Client
         {
             try
             {
-                // Retrieve the state object and the client socket
-                // from the asynchronous state object.  
                 StateObject state = (StateObject)ar.AsyncState;
                 Socket client = state.workSocket;
 
@@ -154,15 +152,18 @@ namespace Coursework_Client
                 {
                     var packet = new Packet(state.buffer);
 
-                    var id = packet.ReadInt32();
-                    var message = packet.ReadInt32();
-                    Console.WriteLine("Response: " + message);
-                    // There might be more data, so store the data received so far.  
-                    //state.sb.Append(Encoding.UTF8.GetString(state.buffer, 0, bytesRead));
+                    byte id = packet.ReadByte();
+                    switch (id)
+                    {
+                        case (byte)Packet.PACKET_IDS.MESSAGE:
+                            var message = packet.ReadString();
+                            Console.WriteLine("Response: " + message);
+                            break;
+                        default:
+                            Console.WriteLine("Error");
+                            break;
+                    }
 
-
-
-                    // Get the rest of the data.
                     client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                         new AsyncCallback(ReceiveCallback), state);
                 }
