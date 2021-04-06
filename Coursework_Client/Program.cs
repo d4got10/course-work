@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using Shared;
 
 namespace Coursework_Client
 {
@@ -59,8 +60,12 @@ namespace Coursework_Client
                 {
                     var message = Console.ReadLine();
 
+                    var packet = new Packet();
+                    packet.WriteByte(1);
+                    packet.WriteString(message);
+
                     // Send test data to the remote device.  
-                    Send(Client, message);
+                    Send(Client, packet.ToBytes());
                     sendDone.WaitOne(); 
                 }
 
@@ -149,8 +154,8 @@ namespace Coursework_Client
                 {
                     var packet = new Packet(state.buffer);
 
-                    var id = packet.ReadInt();
-                    var message = packet.ReadString();
+                    var id = packet.ReadInt32();
+                    var message = packet.ReadInt32();
                     Console.WriteLine("Response: " + message);
                     // There might be more data, so store the data received so far.  
                     //state.sb.Append(Encoding.UTF8.GetString(state.buffer, 0, bytesRead));
@@ -185,6 +190,12 @@ namespace Coursework_Client
 
             // Begin sending the data to the remote device.  
             client.BeginSend(byteData, 0, byteData.Length, 0,
+                new AsyncCallback(SendCallback), client);
+        }
+
+        private static void Send(Socket client, byte[] data)
+        {
+            client.BeginSend(data, 0, data.Length, 0,
                 new AsyncCallback(SendCallback), client);
         }
 
