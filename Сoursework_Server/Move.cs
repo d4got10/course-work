@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shared
+namespace Сoursework_Server
 {
-    class Program
+    public abstract class Move
     {
-        static void Main()
-        {
-        }
     }
 }

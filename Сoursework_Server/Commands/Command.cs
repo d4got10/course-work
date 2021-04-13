@@ -7,10 +7,12 @@ namespace Сoursework_Server.Commands
     public abstract class Command
     {
         protected Client Source;
+        protected IReceiver Receiver;
 
-        public Command(Client source)
+        public Command(Client source, IReceiver reciever)
         {
             Source = source;
+            Receiver = reciever;
         }
 
         public abstract void Execute();

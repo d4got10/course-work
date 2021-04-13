@@ -13,8 +13,9 @@ namespace Shared
 
         public enum PACKET_IDS
         {
-            MESSAGE = 1,
-            RESEND = 2
+            WELCOME = 1,
+            MESSAGE,
+            RESEND
         }
 
         public Packet()
@@ -115,6 +116,10 @@ namespace Shared
         public byte[] ToBytes()
         {
             return _data;
+        }
+
+        static void Main()
+        {
         }
     }
 }

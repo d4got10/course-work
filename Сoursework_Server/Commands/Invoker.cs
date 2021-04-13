@@ -4,13 +4,14 @@ using System.Text;
 
 namespace Сoursework_Server.Commands
 {
-    public class Invoker
+
+    public class Invoker : IInvoker
     {
         private Command _command;
 
-        public void SetCommand(Command c)
+        public void SetCommand(Command command)
         {
-            _command = c;
+            _command = command;
         }
 
         public void Run()

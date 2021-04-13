@@ -159,6 +159,12 @@ namespace Coursework_Client
                             var message = packet.ReadString();
                             Console.WriteLine("Response: " + message);
                             break;
+                        case (byte)Packet.PACKET_IDS.RESEND:
+                            var newPacket = new Packet();
+                            newPacket.WriteByte((byte)Packet.PACKET_IDS.MESSAGE);
+                            newPacket.WriteString(packet.ReadString());
+                            Send(client, newPacket.ToBytes());
+                            break;
                         default:
                             Console.WriteLine("Error");
                             break;

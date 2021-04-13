@@ -4,12 +4,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Сoursework_Server.Commands;
 
 namespace Сoursework_Server
 {
     public class Server
     {
-        public static ManualResetEvent allDone;
+        public static ManualResetEvent acceptedConnection;
 
         public bool IsRunning { get; private set; }
         public Socket ListenerSocket { get; private set; }
@@ -17,21 +18,39 @@ namespace Сoursework_Server
         private List<Client> _clients;
         public IReadOnlyList<Client> Clients => _clients;
 
+        public IReceiver Receiver { get; private set; }
+        public IRouter Router { get; private set; }
+        public IInvoker Invoker { get; private set; }
+
+
         public Server()
         {
+            Initialize();
+            Configurate();
+        }
+
+        private void Initialize()
+        {
             IsRunning = false;
-            allDone = new ManualResetEvent(false);
+            acceptedConnection = new ManualResetEvent(false);
             _clients = new List<Client>();
+        }
+
+        private void Configurate()
+        {
+            Receiver = new Receiver(this);
+            Router = new Router(Receiver);
+            Invoker = new Invoker();
         }
 
         public void Start()
         {
             IsRunning = true;
-
             BeginListening();
         }
 
-        public void BeginListening()
+        #region Client Connection
+        private void BeginListening()
         {
             IPAddress ipAddress = IPAddress.Any;
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 8000);
@@ -44,12 +63,12 @@ namespace Сoursework_Server
 
                 while (true)
                 {
-                    allDone.Reset();
+                    acceptedConnection.Reset();
 
                     Console.WriteLine("Waiting for a connection...");
                     ListenerSocket.BeginAccept(new AsyncCallback(AcceptCallback), ListenerSocket);
 
-                    allDone.WaitOne();
+                    acceptedConnection.WaitOne();
                 }
             }
             catch (Exception e)
@@ -57,26 +76,33 @@ namespace Сoursework_Server
                 Console.WriteLine(e.ToString());
             }
         }
-
-        public void AcceptCallback(IAsyncResult ar)
+        private void AcceptCallback(IAsyncResult ar)
         {
             var listener = (Socket)ar.AsyncState;
             var handler = listener.EndAccept(ar);
 
-            StateObject state = new StateObject();
-            state.workSocket = handler;
-
             Console.WriteLine($"Received connection from {handler.RemoteEndPoint}");
 
-            var client = new Client(this);
+            var client = new Client(Receiver, Router, Invoker);
             client.Socket = handler;
+            client.Shutdown += (ex) => { DisconnectClient(client, ex); };
 
             _clients.Add(client);
 
             Thread clientThread = new Thread(new ThreadStart(client.Listen));
             clientThread.Start();
 
-            allDone.Set();
+            acceptedConnection.Set();
         }
+
+        private void DisconnectClient(Client client, Exception ex)
+        {
+            client.Socket.Shutdown(SocketShutdown.Both);
+            _clients.Remove(client);
+            Console.WriteLine($"Client [{client.Name}] disconnected!");
+            if (ex != null)
+                Console.WriteLine($"Error: {ex.Message}");
+        }
+        #endregion
     }
 }

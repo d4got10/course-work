@@ -11,67 +11,50 @@ namespace Сoursework_Server
     {
         public const int BUFFER_SIZE = Packet.PACKET_BUFFER_SIZE;
 
-        public readonly Server Server;
+        public Action<Exception> Shutdown;
 
         public string Name = new Random().Next(0, 1000).ToString();
         public byte[] Buffer = new byte[BUFFER_SIZE];
         public Socket Socket;
 
-        private Receiver _receiver;
-        private Invoker _invoker;
+        private IReceiver _receiver;
+        private IRouter _router;
+        private IInvoker _invoker;
 
-        public Client(Server server)
+        public Client(IReceiver receiver, IRouter router, IInvoker invoker)
         {
-            _receiver = new Receiver();
-            _invoker = new Invoker();
-            Server = server;
+            _receiver = receiver;
+            _router = router;
+            _invoker = invoker;
         }
 
         public void Listen()
         {
-            Socket.BeginReceive(Buffer, 0, StateObject.BufferSize, 0,
+            Socket.BeginReceive(Buffer, 0, BUFFER_SIZE, 0,
                 new AsyncCallback(ReadCallback), null);
         }
 
         private void ReadCallback(IAsyncResult ar)
         {
-            string content = "";
-
-            int bytesRead = Socket.EndReceive(ar);
-
-            if (bytesRead > 0)
+            try
             {
-                var packet = new Packet(Buffer);
-                var router = new CommandRouter(this, _receiver);
-                var command = router.GetCommand(packet);
-                _invoker.SetCommand(command);
-                _invoker.Run();
+                int bytesRead = Socket.EndReceive(ar);
 
-                //if (commandID == 1)
-                //{
-                //    Console.WriteLine($"Received message from client [{Name}]. Message: {packet.ReadString()}");
-                //}
-                //else
-                //{
-                //    Console.WriteLine($"Received bad request from client [{Name}]. Request body: {commandID}");
-                //}
+                if (bytesRead > 0)
+                {
+                    var packet = new Packet(Buffer);
+                    var command = _router.GetCommand(this, packet);
+                    _invoker.SetCommand(command);
+                    _invoker.Run();
+                }
 
-                //content = Encoding.ASCII.GetString(Buffer);
-
-                //if (content.Length > 5 && content.Substring(0, 5) == "<EOF>")
-                //{
-                //    content = content.Substring(5);
-                //    Console.WriteLine("Read {0} bytes from client [{1}].\nData: {2}",
-                //        content.Length, Name, content);
-                //}
-                //else
-                //{
-                //    Console.WriteLine($"Received bad request from client [{Name}]. Request body: {content}");
-                //}
+                Socket.BeginReceive(Buffer, 0, BUFFER_SIZE, 0,
+                        new AsyncCallback(ReadCallback), null);
             }
-
-            Socket.BeginReceive(Buffer, 0, StateObject.BufferSize, 0,
-                    new AsyncCallback(ReadCallback), null);
+            catch(Exception ex)
+            {
+                Shutdown?.Invoke(ex);
+            }
         }
 
         public void Send(Packet packet)
