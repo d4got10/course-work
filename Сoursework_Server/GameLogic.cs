@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using CourseWork_Server.DataStructures.Danil;
+using Shared;
 using Сoursework_Server.Commands;
 
 namespace Сoursework_Server
@@ -42,8 +43,9 @@ namespace Сoursework_Server
             return newPlayer;
         }
 
-        public void MovePlayer()
+        public void MovePlayer(Player player, Vector2 direction)
         {
+            player.Position += direction;
         }
     }
 }
