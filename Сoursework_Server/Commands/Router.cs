@@ -16,6 +16,11 @@ namespace Сoursework_Server.Commands
             _receiver = receiver;
         }
 
+        public void SetReceiver(IReceiver receiver)
+        {
+            _receiver = receiver;
+        }
+
         public Command GetCommand(Client client, Packet packet)
         {
             byte commandID = packet.ReadByte();
@@ -25,6 +30,10 @@ namespace Сoursework_Server.Commands
                     return GetDisplayMessageCommand(client, packet);
                 case (byte)Packet.PACKET_IDS.RESEND:
                     return GetResendMessageCommand(client, packet);
+                case (byte)Packet.PACKET_IDS.SEND_TO_ALL:
+                    return GetSendToAllMessageCommand(client, packet);
+                case (byte)Packet.PACKET_IDS.SIGNIN:
+                    return GetSignInCommand(client, packet);
                 default:
                     return null;
             }
@@ -38,6 +47,16 @@ namespace Сoursework_Server.Commands
         public ResendMessage GetResendMessageCommand(Client client, Packet packet)
         {
             return new ResendMessage(client, _receiver, packet.ReadString());
+        }
+
+        public SendToAllMessage GetSendToAllMessageCommand(Client client, Packet packet)
+        {
+            return new SendToAllMessage(client, _receiver, packet.ReadString());
+        }
+
+        public SignIn GetSignInCommand(Client client, Packet packet)
+        {
+            return new SignIn(client, _receiver, packet.ReadString(), packet.ReadString());
         }
     }
 }

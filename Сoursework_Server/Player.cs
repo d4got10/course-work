@@ -1,21 +1,32 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Сoursework_Server
 {
-    public class Player : IComparable<Player>
+    public class Player : IEquatable<Player>
     {
-        public Client Client;
         public readonly string Name;
+        public readonly string Password;
+        public uint ActionPointsCount { get; private set; }
+        public string Clan { get; private set; }
 
-        public Player(string name, Client client)
+        public Vector2 Position { get; set; }
+
+        public Player(string name, string passwordHash)
         {
             Name = name;
-            Client = client;
+            Password = passwordHash;
+            ActionPointsCount = 0;
+            Clan = null;
         }
 
-        public int CompareTo(Player other) => Name.CompareTo(other.Name);
+        public bool Equals(Player other)
+        {
+            return Name == other.Name;
+        }
     }
 }

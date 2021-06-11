@@ -7,24 +7,29 @@ using Сoursework_Server.Commands;
 
 namespace Сoursework_Server
 {
-    public class Client
+    public class Client : IReceiver
     {
         public const int BUFFER_SIZE = Packet.PACKET_BUFFER_SIZE;
 
         public Action<Exception> Shutdown;
 
-        public string Name = new Random().Next(0, 1000).ToString();
+        public readonly Server Server;
+
+        public Guid Name = Guid.NewGuid();
         public byte[] Buffer = new byte[BUFFER_SIZE];
         public Socket Socket;
+
+        public Player LinkedPlayer { get; private set; }
 
         private IReceiver _receiver;
         private IRouter _router;
         private IInvoker _invoker;
 
-        public Client(IReceiver receiver, IRouter router, IInvoker invoker)
+        public Client(Server server, IInvoker invoker)
         {
-            _receiver = receiver;
-            _router = router;
+            Server = server;
+            _receiver = this;
+            _router = new Router(_receiver);
             _invoker = invoker;
         }
 
@@ -60,6 +65,49 @@ namespace Сoursework_Server
         public void Send(Packet packet)
         {
             Socket.Send(packet.ToBytes());
+        }
+
+        public void SignIn(string username, string password)
+        {
+            if(Server.GameLogic.TryGetPlayer(username, password, out var player))
+            {
+                LinkedPlayer = player;
+
+                var packet = new Packet();
+                packet.WriteByte((byte)Packet.PACKET_IDS.SIGNIN);
+                packet.WriteByte(0);
+                Send(packet);
+            }
+            else
+            {
+                var packet = new Packet();
+                packet.WriteByte((byte)Packet.PACKET_IDS.SIGNIN);
+                packet.WriteByte(1);
+                Send(packet);
+            }
+        }
+
+        public void DisplayMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public void SendPacket(Client player, Packet packet)
+        {
+            player.Send(packet);
+        }
+
+        public void SendToAll(Packet packet)
+        {
+            foreach (var client in Server.Clients)
+            {
+                client.Send(packet);
+            }
+        }
+
+        public void ProcessMoves(Client player, List<Move> moves)
+        {
+            throw new NotImplementedException();
         }
     }
 }

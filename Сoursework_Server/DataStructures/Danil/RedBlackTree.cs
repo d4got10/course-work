@@ -2,11 +2,12 @@
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-    public class RedBlackTree<T> where T : IComparable<T>
+
+    public class RedBlackTree<TKey, TValue> where TKey : IComparable<TKey> where TValue : IEquatable<TValue>
     {
         #region Private Variables
-        private Node<T> _root;
-        private Node<T> _nil;
+        private Node<TKey, TValue> _root;
+        private Node<TKey, TValue> _nil;
         #endregion
 
         #region Constructor
@@ -16,17 +17,69 @@ namespace CourseWork_Server.DataStructures.Danil
         //Выходные данные: объект класса RedBlackTree
         public RedBlackTree()
         {
-            _nil = new Node<T>();
+            _nil = new Node<TKey, TValue>();
             _root = _nil;
         }
         #endregion
 
         #region Public Functions
+        public List<TValue> GetValuesRange(TKey min, TKey max)
+        {
+            //если min > max кидаем ошибку
+            if (min.CompareTo(max) > 0) throw new ArgumentOutOfRangeException();
+            //если min или max == null кидаем ошибку
+            if (min == null || max == null) throw new ArgumentNullException();
+
+            var values = new List<TValue>();
+            var node = _root;
+
+            //ищем элемент из диапозона
+            while(node != _nil && (node.Key.CompareTo(min) < 0 || node.Key.CompareTo(max) > 0))
+            {
+                if (node.Key.CompareTo(min) < 0)
+                    node = node.RightChild;
+                else
+                    node = node.LeftChild;
+            }
+
+            //собираем все значения из него
+            if(node != _nil && node.Key.CompareTo(min) >= 0 && node.Key.CompareTo(max) <= 0)
+            {
+                GetValuesRangeInternal(node, min, max, values);
+            }
+            //возвращаем значения из диапозона
+            return values;
+        }
+
+        //Метод поиска по значению
+        //Формальные параметры: объект типа T
+        //Входные данные: значение для поиска
+        //Выходные данные: найден или нет + обьект или пустой указатель
+        public bool TryFind(TKey key, out List<TValue> found)
+        {
+            var node = Find(key);
+            if(node != null)
+            {
+                found = node.Values;
+                return true;
+            }
+            found = default;
+            return false;
+        }
+
         //Метод удаления по значению
         //Формальные параметры: объект типа T
         //Входные данные: значение для удаления
         //Выходные данные: пусто
-        public void Remove(T value) => Delete(Find(value));
+        public void Remove(TKey key, TValue value)
+        {
+            var node = Find(key);
+            node.Values.Remove(value);
+            if (node.Values.IsEmpty())
+            {
+                Delete(node);
+            } 
+        }
 
         //Метод очистки дерева
         //Формальные параметры: пусто
@@ -78,12 +131,12 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа T
         //Входные данные: значение для добавления
         //Выходные данные: пусто
-        public void Add(T value)
+        public void Add(TKey key, TValue value)
         {
             var currentNode = _root;
             if(currentNode == _nil)
             {
-                _root = new Node<T>(value, _nil);
+                _root = new Node<TKey, TValue>(key, value, _nil);
                 _root.IsBlack = true;
                 return;
             }
@@ -92,15 +145,20 @@ namespace CourseWork_Server.DataStructures.Danil
             while(currentNode != _nil)
             {
                 parentNode = currentNode;
-                if (currentNode.Value.CompareTo(value) >= 0)
+                if (currentNode.Key.CompareTo(key) > 0)
                     currentNode = currentNode.LeftChild;
-                else
+                else if (currentNode.Key.CompareTo(key) < 0)
                     currentNode = currentNode.RightChild;
+                else
+                {
+                    currentNode.Values.Add(value);
+                    return;
+                }
             }
 
-            bool isLeftChild = parentNode.Value.CompareTo(value) >= 0;
+            bool isLeftChild = parentNode.Key.CompareTo(key) >= 0;
 
-            var node = new Node<T>(value, parentNode, isLeftChild, _nil);
+            var node = new Node<TKey, TValue>(key, value, parentNode, isLeftChild, _nil);
             InsertCase1(node);
         }
         #endregion
@@ -110,7 +168,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>, объект типа Node<T> 
         //Входные данные: два узла дерева
         //Выходные данные: пусто
-        private void Transplant(Node<T> u, Node<T> v)
+        private void Transplant(Node<TKey, TValue> u, Node<TKey, TValue> v)
         {
             if (u.Parent == _nil)
                 _root = v;
@@ -125,11 +183,11 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: узел для удаления
         //Выходные данные: пусто
-        private void Delete(Node<T> z)
+        private void Delete(Node<TKey, TValue> z)
         {
             var y = z;
             bool yWasBlack = y.IsBlack;
-            Node<T> x;
+            Node<TKey, TValue> x;
             if(z.LeftChild == _nil)
             {
                 x = z.RightChild;
@@ -168,9 +226,9 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: узел для которого будет проведена ребалансировка
         //Выходные данные: пусто
-        private void DeleteFixup(Node<T> x)
+        private void DeleteFixup(Node<TKey, TValue> x)
         {
-            Node<T> w;
+            Node<TKey, TValue> w;
             while(x != _root && x.IsBlack)
             {
                 if(x == x.Parent.LeftChild)
@@ -245,9 +303,9 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: корень поддерева
         //Выходные данные: узел с минимальным значением
-        private Node<T> FindMinimum(Node<T> root)
+        private Node<TKey, TValue> FindMinimum(Node<TKey, TValue> root)
         {
-            Node<T> currentNode = root;
+            Node<TKey, TValue> currentNode = root;
             while (currentNode.LeftChild != _nil)
                 currentNode = currentNode.LeftChild;
             return currentNode;
@@ -261,7 +319,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: узел, который был добавлен
         //Выходные данные: пусто
-        private void InsertCase1(Node<T> node)
+        private void InsertCase1(Node<TKey, TValue> node)
         {
             if (node.Parent == _nil)
                 node.IsBlack = true;
@@ -275,7 +333,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: узел, который был добавлен
         //Выходные данные: пусто
-        private void InsertCase2(Node<T> node)
+        private void InsertCase2(Node<TKey, TValue> node)
         {
             if (node.Parent.IsBlack)
                 return;
@@ -287,7 +345,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: узел, который был добавлен
         //Выходные данные: пусто
-        private void InsertCase3(Node<T> node)
+        private void InsertCase3(Node<TKey, TValue> node)
         {
             if (node.Uncle != _nil && node.Uncle.IsBlack == false)
             {
@@ -305,7 +363,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: узел, который был добавлен
         //Выходные данные: пусто
-        private void InsertCase4(Node<T> node)
+        private void InsertCase4(Node<TKey, TValue> node)
         {
             if(node == node.Parent.RightChild && node.Parent == node.GrandParent.LeftChild)
             {
@@ -327,7 +385,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: узел, который был добавлен
         //Выходные данные: пусто
-        private void InsertCase5(Node<T> node)
+        private void InsertCase5(Node<TKey, TValue> node)
         {
             node.Parent.IsBlack = true;
             node.GrandParent.IsBlack = false;
@@ -349,7 +407,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа RedBlackTree, объект типа Node<T>
         //Входные данные: узел вокруг, которого будет поворот
         //Выходные данные: пусто
-        private void RotateRight(Node<T> node)
+        private void RotateRight(Node<TKey, TValue> node)
         {
             var pivot = node.LeftChild;
 
@@ -375,7 +433,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа RedBlackTree, объект типа Node<T>
         //Входные данные: узел вокруг, которого будет поворот
         //Выходные данные: пусто
-        private void RotateLeft(Node<T> node)
+        private void RotateLeft(Node<TKey, TValue> node)
         {
             var pivot = node.RightChild;
 
@@ -399,18 +457,41 @@ namespace CourseWork_Server.DataStructures.Danil
         #endregion
 
         #region Private Functions
+        private void GetValuesRangeInternal(Node<TKey, TValue> root, TKey min, TKey max, List<TValue> values)
+        {
+            if (root != _nil)
+            {
+                //Если текущий не является левой границей диапозона и имеет левого потомка идем в него
+                if (root.LeftChild != _nil && root.Key.CompareTo(min) >= 0) 
+                    GetValuesRangeInternal(root.LeftChild, min, max, values);
+
+                //Если текущий входит в диапозон то добавляем его в список значений
+                if (root.Key.CompareTo(min) >= 0 && root.Key.CompareTo(max) <= 0)
+                {
+                    foreach(var value in root.Values)
+                    {
+                        values.Add(value);
+                    }
+                }
+
+                //Если текущий не является правой границей диапозона и имеет правого потомка идем в него
+                if (root.RightChild != _nil && root.Key.CompareTo(max) <= 0) 
+                    GetValuesRangeInternal(root.RightChild, min, max, values);
+            }
+        }
+
         //Метод нахождения узла по значению
         //Формальные параметры: объект типа RedBlackTree, объект типа T
         //Входные данные: значение для поиска
         //Выходные данные: узел с заданным значением
-        private Node<T> Find(T value)
+        private Node<TKey, TValue> Find(TKey key)
         {
             var node = _root;
             while(node != _nil)
             {
-                if (node.Value.CompareTo(value) > 0)
+                if (node.Key.CompareTo(key) > 0)
                     node = node.LeftChild;
-                else if (node.Value.CompareTo(value) < 0)
+                else if (node.Key.CompareTo(key) < 0)
                     node = node.RightChild;
                 else
                     return node;
@@ -422,7 +503,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: обьект типа Node<T>
         //Входные данные: корень поддерева
         //Выходные данные: вывод поддерева в консоль
-        private void DisplayTree(Node<T> root, int tabs)
+        private void DisplayTree(Node<TKey, TValue> root, int tabs)
         {
             if (root == _nil) return;
 
@@ -431,7 +512,7 @@ namespace CourseWork_Server.DataStructures.Danil
                 DisplayTree(root.RightChild, tabs+1);
             }
             for (int i = 0; i < tabs; i++) Console.Write("\t");
-            Console.WriteLine($"{root.Value}_{(root.IsBlack ? "B" : "R")} ");
+            Console.WriteLine($"{root.Key}_{(root.IsBlack ? "B" : "R")} ");
             if (root.LeftChild != _nil)
             {
                 DisplayTree(root.LeftChild, tabs+1);
@@ -442,7 +523,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: обьект типа Node<T>
         //Входные данные: корень поддерева
         //Выходные данные: вывод поддерева в консоль
-        private void DisplayTreeReverse(Node<T> root)
+        private void DisplayTreeReverse(Node<TKey, TValue> root)
         {
             if (root == _nil) return;
 
@@ -454,14 +535,14 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 DisplayTreeReverse(root.RightChild);
             }
-            Console.Write($"{root.Value} ");
+            Console.Write($"{root.Key} ");
         }
 
         //Метод симметричного вывода поддерева
         //Формальные параметры: обьект типа Node<T>
         //Входные данные: корень поддерева
         //Выходные данные: вывод поддерева в консоль
-        private void DisplayTreeSimmetrical(Node<T> root)
+        private void DisplayTreeSimmetrical(Node<TKey, TValue> root)
         {
             if (root == _nil) return;
 
@@ -469,7 +550,7 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 DisplayTreeSimmetrical(root.LeftChild);
             }
-            Console.Write($"{root.Value} ");
+            Console.Write($"{root.Key} ");
             if (root.RightChild != _nil)
             {
                 DisplayTreeSimmetrical(root.RightChild);
@@ -480,11 +561,11 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: обьект типа Node<T>
         //Входные данные: корень поддерева
         //Выходные данные: вывод поддерева в консоль
-        private void DisplayTreeStraight(Node<T> root)
+        private void DisplayTreeStraight(Node<TKey, TValue> root)
         {
             if (root == _nil) return;
 
-            Console.Write($"{root.Value}_{(root.IsBlack ? "B" : "R")} ");
+            Console.Write($"{root.Key}_{(root.IsBlack ? "B" : "R")} ");
             if (root.LeftChild != _nil)
             {
                 DisplayTreeStraight(root.LeftChild);
@@ -499,7 +580,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа Node<T>
         //Входные данные: корень поддерева
         //Выходные данные: пусто
-        private void Clear(Node<T> root)
+        private void Clear(Node<TKey, TValue> root)
         {
             if (root != _nil)
             {
@@ -511,17 +592,18 @@ namespace CourseWork_Server.DataStructures.Danil
         #endregion
 
         #region Internal Node Class
-        private class Node<U> : IDisposable
+        private class Node<UKey, UValue> : IDisposable where UValue : IEquatable<UValue>
         {
-            public readonly U Value;
+            public readonly UKey Key;
+            public List<UValue> Values;
 
-            public Node<U> LeftChild;
-            public Node<U> RightChild;
-            public Node<U> Parent;
+            public Node<UKey, UValue> LeftChild;
+            public Node<UKey, UValue> RightChild;
+            public Node<UKey, UValue> Parent;
 
             public bool IsBlack;
 
-            public Node<U> Sibling
+            public Node<UKey, UValue> Sibling
             {
                 get
                 {
@@ -532,7 +614,7 @@ namespace CourseWork_Server.DataStructures.Danil
                 }
             }
 
-            public Node<U> Uncle
+            public Node<UKey, UValue> Uncle
             {
                 get
                 {
@@ -543,7 +625,7 @@ namespace CourseWork_Server.DataStructures.Danil
                 }
             }
 
-            public Node<U> GrandParent
+            public Node<UKey, UValue> GrandParent
             {
                 get
                 {
@@ -557,6 +639,7 @@ namespace CourseWork_Server.DataStructures.Danil
             //Выходные данные: объект класса Node
             public Node()
             {
+                Values = new List<UValue>();
                 LeftChild = this;
                 RightChild = this;
                 Parent = this;
@@ -567,9 +650,11 @@ namespace CourseWork_Server.DataStructures.Danil
             //Формальные параметры: объект класса U, объект класса Node<U>
             //Входные данные: значение узла, nil-узел
             //Выходные данные: объект класса Node
-            public Node(U value, Node<U> nil)
+            public Node(UKey key, UValue value, Node<UKey, UValue> nil)
             {
-                Value = value;
+                Key = key;
+                Values = new List<UValue>();
+                Values.Add(value);
                 LeftChild = nil;
                 RightChild = nil;
                 Parent = nil;
@@ -580,9 +665,11 @@ namespace CourseWork_Server.DataStructures.Danil
             //Формальные параметры: объект класса U, объект класса Node<U>, логическая переменная, объект класса Node<U>
             //Входные данные: значение узла, nil-узел
             //Выходные данные: объект класса Node
-            public Node(U value, Node<U> parent, bool isLeftChild, Node<U> nil)
+            public Node(UKey key, UValue value, Node<UKey, UValue> parent, bool isLeftChild, Node<UKey, UValue> nil)
             {
-                Value = value;
+                Key = key;
+                Values = new List<UValue>();
+                Values.Add(value);
                 LeftChild = nil;
                 RightChild = nil;
                 Parent = parent;
@@ -602,10 +689,14 @@ namespace CourseWork_Server.DataStructures.Danil
             //Выходные данные: пусто
             public void Dispose()
             {
+                Values = null;
                 LeftChild = null;
                 RightChild = null;
                 Parent = null;
             }
+
+            public void Add(UValue value) => Values.Add(value);
+            public void Remove(UValue value) => Values.Remove(value);
         }
 
         #endregion

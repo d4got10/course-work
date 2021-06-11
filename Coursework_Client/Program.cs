@@ -34,9 +34,13 @@ namespace Coursework_Client
             new ManualResetEvent(false);
         private static ManualResetEvent receiveDone =
             new ManualResetEvent(false);
+        private static ManualResetEvent loggingInDone =
+            new ManualResetEvent(false);
 
         // The response from the remote device.  
         private static String response = String.Empty;
+
+        private static bool LoggedIn = false;
 
         private static void StartClient()
         {
@@ -56,20 +60,35 @@ namespace Coursework_Client
                     new AsyncCallback(ConnectCallback), Client);
                 connectDone.WaitOne();
 
+                while (LoggedIn == false)
+                {
+                    loggingInDone.Reset();
+                    Console.WriteLine("Введите логин: ");
+                    var username = Console.ReadLine();
+                    Console.WriteLine("Введите пароль: ");
+                    var password = Console.ReadLine();
+
+                    var packet = new Packet();
+                    packet.WriteByte((byte)Packet.PACKET_IDS.SIGNIN);
+                    packet.WriteString(username);
+                    packet.WriteString(password);
+                    Send(Client, packet.ToBytes());
+
+                    loggingInDone.WaitOne();
+                }
+
                 while (true)
                 {
                     var message = Console.ReadLine();
 
                     var packet = new Packet();
-                    packet.WriteByte((byte)Packet.PACKET_IDS.RESEND);
+                    packet.WriteByte((byte)Packet.PACKET_IDS.SEND_TO_ALL);
                     packet.WriteString(message);
 
-                    // Send test data to the remote device.  
                     Send(Client, packet.ToBytes());
                     sendDone.WaitOne(); 
                 }
-
-                // Release the socket.  
+ 
                 Client.Shutdown(SocketShutdown.Both);
                 Client.Close();
 
@@ -123,12 +142,10 @@ namespace Coursework_Client
         private static void Receive()
         {
             try
-            {
-                // Create the state object.  
+            { 
                 StateObject state = new StateObject();
                 state.workSocket = Client;
-
-                // Begin receiving the data from the remote device.  
+  
                 Client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                     new AsyncCallback(ReceiveCallback), state);
             }
@@ -165,6 +182,20 @@ namespace Coursework_Client
                             newPacket.WriteString(packet.ReadString());
                             Send(client, newPacket.ToBytes());
                             break;
+                        case (byte)Packet.PACKET_IDS.SIGNIN:
+                            var code = packet.ReadByte();
+                            if(code == 0)
+                            {
+                                Console.WriteLine("Вы вошли в систему.");
+                                LoggedIn = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Неверный логин или пароль.");
+                                LoggedIn = false;
+                            }
+                            loggingInDone.Set();
+                            break;
                         default:
                             Console.WriteLine("Error");
                             break;
@@ -191,11 +222,9 @@ namespace Coursework_Client
         }
 
         private static void Send(Socket client, String data)
-        {
-            // Convert the string data to byte data using ASCII encoding.  
+        { 
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            // Begin sending the data to the remote device.  
             client.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), client);
         }
@@ -210,14 +239,11 @@ namespace Coursework_Client
         {
             try
             {
-                // Retrieve the socket from the state object.  
                 Socket client = (Socket)ar.AsyncState;
-
-                // Complete sending the data to the remote device.  
+ 
                 int bytesSent = client.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
-                // Signal that all bytes have been sent.  
                 sendDone.Set();
             }
             catch (Exception e)

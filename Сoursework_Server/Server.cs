@@ -10,7 +10,7 @@ namespace Сoursework_Server
 {
     public class Server
     {
-        public static ManualResetEvent acceptedConnection;
+        private static ManualResetEvent acceptedConnection;
 
         public bool IsRunning { get; private set; }
         public Socket ListenerSocket { get; private set; }
@@ -18,15 +18,14 @@ namespace Сoursework_Server
         private List<Client> _clients;
         public IReadOnlyList<Client> Clients => _clients;
 
-        public IReceiver Receiver { get; private set; }
-        public IRouter Router { get; private set; }
+        public GameLogic GameLogic { get; private set; }
         public IInvoker Invoker { get; private set; }
-
 
         public Server()
         {
             Initialize();
             Configurate();
+            GameLogic = new GameLogic();
         }
 
         private void Initialize()
@@ -38,8 +37,6 @@ namespace Сoursework_Server
 
         private void Configurate()
         {
-            Receiver = new Receiver(this);
-            Router = new Router(Receiver);
             Invoker = new Invoker();
         }
 
@@ -76,6 +73,7 @@ namespace Сoursework_Server
                 Console.WriteLine(e.ToString());
             }
         }
+
         private void AcceptCallback(IAsyncResult ar)
         {
             var listener = (Socket)ar.AsyncState;
@@ -83,7 +81,7 @@ namespace Сoursework_Server
 
             Console.WriteLine($"Received connection from {handler.RemoteEndPoint}");
 
-            var client = new Client(Receiver, Router, Invoker);
+            var client = new Client(this, Invoker);
             client.Socket = handler;
             client.Shutdown += (ex) => { DisconnectClient(client, ex); };
 

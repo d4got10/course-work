@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Сoursework_Server": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\repos\\Coursework\\Сoursework_Server"
+    }
+  }
+}

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Danil\\source\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj": {}
+    "D:\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Danil\\source\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj": {
+    "D:\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Danil\\source\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj",
+        "projectUniqueName": "D:\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj",
         "projectName": "Coursework_Client",
-        "projectPath": "C:\\Users\\Danil\\source\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj",
+        "projectPath": "D:\\repos\\Coursework\\Coursework_Client\\Coursework_Client.csproj",
         "packagesPath": "C:\\Users\\Danil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Danil\\source\\repos\\Coursework\\Coursework_Client\\obj\\",
+        "outputPath": "D:\\repos\\Coursework\\Coursework_Client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -27,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Danil\\source\\repos\\Coursework\\Shared\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\Danil\\source\\repos\\Coursework\\Shared\\Shared\\Shared.csproj"
+              "D:\\repos\\Coursework\\Shared\\Shared\\Shared.csproj": {
+                "projectPath": "D:\\repos\\Coursework\\Shared\\Shared\\Shared.csproj"
               }
             }
           }
@@ -60,14 +60,14 @@
         }
       }
     },
-    "C:\\Users\\Danil\\source\\repos\\Coursework\\Shared\\Shared\\Shared.csproj": {
+    "D:\\repos\\Coursework\\Shared\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Danil\\source\\repos\\Coursework\\Shared\\Shared\\Shared.csproj",
+        "projectUniqueName": "D:\\repos\\Coursework\\Shared\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\Danil\\source\\repos\\Coursework\\Shared\\Shared\\Shared.csproj",
+        "projectPath": "D:\\repos\\Coursework\\Shared\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\Danil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Danil\\source\\repos\\Coursework\\Shared\\Shared\\obj\\",
+        "outputPath": "D:\\repos\\Coursework\\Shared\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Danil\\AppData\\Roaming\\NuGet\\NuGet.Config",

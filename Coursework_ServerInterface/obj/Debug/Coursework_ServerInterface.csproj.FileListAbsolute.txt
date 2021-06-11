@@ -1,0 +1,10 @@
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.exe.config
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.exe
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.pdb
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csprojAssemblyReference.cache
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.Form1.resources
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.Properties.Resources.resources
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.GenerateResource.cache
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.CoreCompileInputs.cache
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.exe
+C:\Users\Danil\source\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.pdb

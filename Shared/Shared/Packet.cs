@@ -15,7 +15,9 @@ namespace Shared
         {
             WELCOME = 1,
             MESSAGE,
-            RESEND
+            RESEND,
+            SEND_TO_ALL,
+            SIGNIN
         }
 
         public Packet()
