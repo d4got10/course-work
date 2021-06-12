@@ -4,42 +4,51 @@ using System.Text;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-    //НЕ РОБИТ СО ЗНАЧИМЫМИ ТИПАМИ, 
-    //НУЖНО СДЕЛАТЬ КЛАСС-ОБЕРТКУ (ИЛИ ПОФИГ)
-    public class HashTable<T> where T : IEquatable<T>
+    public class HashTable<TKey, TValue> where TKey : IEquatable<TKey>
     {
+        private class Node<UKey, UValue> where UKey : TKey where UValue : TValue
+        {
+            public UKey Key;
+            public UValue Value;
+            public bool Deleted;
+
+            public Node(UKey key, UValue value)
+            {
+                Key = key;
+                Value = value;
+                Deleted = false;
+            }
+        }
+
         private const float UpperBound = 0.75f;
         private const float LowerBound = 0.25f;
         private const int MinSize = 100;
 
-        public delegate int HashFunction(T key, int i, int size);
+        public delegate int HashFunction(TKey key, int i, int size);
         public readonly HashFunction Function;
 
         private int _currentLoad;
-        private T[] _data;
-        private bool[] _deleted;
+        private Node<TKey, TValue>[] _data;
 
         public HashTable(HashFunction function, int size)
         {
             Function = function;
             if (size < MinSize) size = MinSize;
-            _data = new T[size];
-            _deleted = new bool[size];
+            _data = new Node<TKey, TValue>[size];
             _currentLoad = 0;
         }
 
-        public bool Add(T key)
+        public bool Add(TKey key, TValue value)
         {
             for(int i = 0; i < _data.Length; i++)
             {
                 int index = Function(key, i, _data.Length);
 
-                if (_data[index].Equals(default) || _deleted[index])
+                if (_data[index] == null || _data[index].Deleted)
                 {
-                    _data[index] = key;
-                    _deleted[index] = false;
-                    _currentLoad++;
+                    _data[index] = new Node<TKey, TValue>(key, value);
 
+                    _currentLoad++;
                     if (_currentLoad > _data.Length * UpperBound)
                         Resize();
 
@@ -49,7 +58,7 @@ namespace CourseWork_Server.DataStructures.Danil
             return false;
         }
 
-        public bool TryFind(T key, out T value, out int hash)
+        public bool TryFind(TKey key, out TValue value, out int hash)
         {
             hash = -1;
             value = default;
@@ -57,16 +66,20 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 int index = Function(key, i, _data.Length);
 
-                if (_data[index].Equals(default) == false)
+                if (_data[index] != null)
                 {
-                    if (_data[index].Equals(key))
+                    if (_data[index].Deleted == false && _data[index].Key.Equals(key))
                     {
                         hash = index;
-                        value = _data[index];
+                        value = _data[index].Value;
                         return true;
                     }
+                    else if(_data[index].Deleted == false)
+                    {
+                        return false;
+                    }
                 }
-                else if(_deleted[index] == false)
+                else
                 {
                     return false;
                 }
@@ -74,18 +87,19 @@ namespace CourseWork_Server.DataStructures.Danil
             return false;
         }
 
-        public bool Remove(T key)
+        public bool Remove(TKey key)
         {
             for (int i = 0; i < _data.Length; i++)
             {
                 int index = Function(key, i, _data.Length);
 
-                if (_data[index].Equals(default) == false)
+                if (_data[index] != null)
                 {
-                    if (_data[index].Equals(key))
+                    if (_data[index].Deleted == false && _data[index].Key.Equals(key))
                     {
-                        _data[index] = default;
-                        _deleted[index] = true;
+                        _data[index].Deleted = true;
+                        _data[index].Key = default;
+                        _data[index].Value = default;
                         _currentLoad--;
 
                         if (_currentLoad < _data.Length * LowerBound)
@@ -93,8 +107,12 @@ namespace CourseWork_Server.DataStructures.Danil
 
                         return true;
                     }
+                    else if(_data[index].Deleted == false)
+                    {
+                        return false;
+                    }
                 }
-                else if(_deleted[index] == false)
+                else
                 {
                     return false;
                 }
@@ -109,46 +127,40 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 if(_data[i] != null)
                 {
-                    Console.WriteLine($"Hash code [{i}]: {_data[i]}");
+                    if (_data[i].Deleted == false)
+                    {
+                        Console.WriteLine($"Hash code [{i}]: {{Key:{_data[i].Key}; Value:{_data[i].Value}}}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Hash code [{i}]: DELETED");
+                    }
                 }
             }
         }
 
         private void Resize()
         {
-            T[] prevData = new T[_data.Length];
-            for (int i = 0; i < _data.Length; i++)
-                prevData[i] = _data[i];
+            Node<TKey, TValue>[] prevData = new Node<TKey, TValue>[_data.Length];
+            _data.CopyTo(prevData, 0);
 
             if (_currentLoad > _data.Length * UpperBound)
             {
-                _data = new T[prevData.Length * 2];
-                _deleted = new bool[prevData.Length * 2];
-                _currentLoad = 0;
-                for (int i = 0; i < prevData.Length; i++)
-                {
-                    if(prevData[i] != null)
-                        Add(prevData[i]);
-                }
+                _data = new Node<TKey, TValue>[prevData.Length * 2];
             }
             else
             {
                 if (prevData.Length / 2 >= MinSize)
-                {
-                    _data = new T[prevData.Length / 2];
-                    _deleted = new bool[prevData.Length / 2];
-                }
+                    _data = new Node<TKey, TValue>[prevData.Length / 2];
                 else
-                {
-                    _data = new T[MinSize];
-                    _deleted = new bool[MinSize];
-                }
-                _currentLoad = 0;
-                for (int i = 0; i < prevData.Length; i++)
-                {
-                    if (prevData[i] != null)
-                        Add(prevData[i]);
-                }
+                    _data = new Node<TKey, TValue>[MinSize];
+            }
+
+            _currentLoad = 0;
+            for (int i = 0; i < prevData.Length; i++)
+            {
+                if (prevData[i] != null && prevData[i].Deleted == false)
+                    Add(prevData[i].Key, prevData[i].Value);
             }
         }
     }

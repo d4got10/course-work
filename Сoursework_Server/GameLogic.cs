@@ -8,27 +8,31 @@ namespace Сoursework_Server
 {
     public class GameLogic
     {
-        private List<Player> _players;
-        private RedBlackTree<string, Player> _playersByName;
+        private HashTable<string, Player> _players;
 
         public GameLogic()
         {
-            _players = new List<Player>();
-            _playersByName = new RedBlackTree<string, Player>();
-            foreach(var player in _players)
-            {
-                _playersByName.Add(player.Name, player);
-            }
+            _players = new HashTable<string, Player>(StringHashTableExtras.HashFunction, 100);
 
             CreateAndAddPlayer("4got10", "qwerty123");
             CreateAndAddPlayer("danger441", "hghgjy");
+            CreateAndAddPlayer("qwe11111111", "qwe1111111111");
+
+            _players.Display();
+
+            if(TryGetPlayer("4got10", "qwerty123", out var player))
+            {
+                Console.WriteLine(player.Position);
+            }
+
+            _players.Remove("4got10");
+            _players.Display();
         }
 
         public bool TryGetPlayer(string name, string password, out Player player)
         {
-            if(_playersByName.TryFind(name, out var playerList)){
-                player = playerList[0];
-                return (player.Password == password);
+            if(_players.TryFind(name, out player, out var hash)){
+                return player.Password == password;
             }
 
             player = null;
@@ -38,8 +42,7 @@ namespace Сoursework_Server
         public Player CreateAndAddPlayer(string name, string password)
         {
             var newPlayer = new Player(name, password);
-            _players.Add(newPlayer);
-            _playersByName.Add(newPlayer.Name, newPlayer);
+            _players.Add(name, newPlayer);
             return newPlayer;
         }
 
