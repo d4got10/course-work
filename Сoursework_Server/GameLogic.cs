@@ -1,32 +1,18 @@
-﻿using System;
-using System.Text;
-using CourseWork_Server.DataStructures.Danil;
+﻿using CourseWork_Server.DataStructures.Danil;
 using Shared;
-using Сoursework_Server.Commands;
+using System;
 
 namespace Сoursework_Server
 {
-    public class GameLogic
+    public class GameLogic : IAttackService, IMoveService
     {
+        private GameGrid _grid;
         private HashTable<string, Player> _players;
 
         public GameLogic()
         {
             _players = new HashTable<string, Player>(StringHashTableExtras.HashFunction, 100);
-
-            CreateAndAddPlayer("4got10", "qwerty123");
-            CreateAndAddPlayer("danger441", "hghgjy");
-            CreateAndAddPlayer("qwe11111111", "qwe1111111111");
-
-            _players.Display();
-
-            if(TryGetPlayer("4got10", "qwerty123", out var player))
-            {
-                Console.WriteLine(player.Position);
-            }
-
-            _players.Remove("4got10");
-            _players.Display();
+            _grid = new GameGrid(100);
         }
 
         public bool TryGetPlayer(string name, string password, out Player player)
@@ -41,14 +27,30 @@ namespace Сoursework_Server
 
         public Player CreateAndAddPlayer(string name, string password)
         {
-            var newPlayer = new Player(name, password);
+            var newPlayer = new Player(this, this, name, password);
+            _grid.PlaceNewPlayer(newPlayer);
             _players.Add(name, newPlayer);
             return newPlayer;
         }
 
-        public void MovePlayer(Player player, Vector2 direction)
+        public void Move(Player player, Vector2 direction)
         {
-            player.Position += direction;
+            var prevPosition = player.Position;
+            if(_grid.Move(player, player.Position + direction))
+            {
+                Console.WriteLine($"MOVE: {player.Name} moved ({prevPosition} -> {player.Position})");
+            }
+        }
+
+        public void Attack(Player source, Player target)
+        {
+            var direction = target.Position - source.Position;
+            if (direction.SqrMagnitude == 1)
+            {
+                Console.Write($"MOVE: {source.Name} attacked {target.Name} ({target.Health} ->");
+                target.TakeDamage(1);
+                Console.WriteLine($" {target.Health})");
+            }
         }
     }
 }

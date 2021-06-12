@@ -50,5 +50,10 @@ namespace Shared
         {
             return lhs.Equals(rhs) == false;
         }
+
+        public override string ToString()
+        {
+            return $"({X};{Y})";
+        }
     }
 }
