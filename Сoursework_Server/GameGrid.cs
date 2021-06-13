@@ -65,10 +65,15 @@ namespace Сoursework_Server
             return position;
         }
 
-        public void PlaceNewPlayer(Player player)
+        public void PlaceNewPlayer(Player target)
         {
-            player.Position = GetEmptyCellPosition();
-            GetCell(player.Position).BoundPlayer(player);
+            target.Position = GetEmptyCellPosition();
+            GetCell(target.Position).BoundPlayer(target);
+        }
+
+        public void RemovePlayer(Player target)
+        {
+            GetCell(target.Position).UnboundPlayer();
         }
     }
 }

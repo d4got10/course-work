@@ -19,11 +19,14 @@ namespace Сoursework_Server
 
         private readonly IAttackService _attackService;
         private readonly IMoveService _moveService;
+        private readonly IDeathService _deathService;
 
-        public Player(IAttackService attackService, IMoveService moveService, string name, string passwordHash)
+        public Player(IAttackService attackService, IMoveService moveService, IDeathService deathService,
+                        string name, string passwordHash)
         {
             _attackService = attackService;
             _moveService = moveService;
+            _deathService = deathService;
             Name = name;
             Password = passwordHash;
 
@@ -61,6 +64,11 @@ namespace Сoursework_Server
                 return true;
             }
             return false;
+        }
+
+        public void Die()
+        {
+            _deathService.Die(this);
         }
     }
 }

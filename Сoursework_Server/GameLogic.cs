@@ -4,7 +4,7 @@ using System;
 
 namespace Сoursework_Server
 {
-    public class GameLogic : IAttackService, IMoveService
+    public class GameLogic : IAttackService, IMoveService, IDeathService
     {
         private GameGrid _grid;
         private HashTable<string, Player> _players;
@@ -27,7 +27,7 @@ namespace Сoursework_Server
 
         public Player CreateAndAddPlayer(string name, string password)
         {
-            var newPlayer = new Player(this, this, name, password);
+            var newPlayer = new Player(this, this, this, name, password);
             _grid.PlaceNewPlayer(newPlayer);
             _players.Add(name, newPlayer);
             return newPlayer;
@@ -48,9 +48,23 @@ namespace Сoursework_Server
             if (direction.SqrMagnitude == 1)
             {
                 Console.Write($"MOVE: {source.Name} attacked {target.Name} ({target.Health} ->");
-                target.TakeDamage(1);
+                bool died = target.TakeDamage(1);
                 Console.WriteLine($" {target.Health})");
+
+                if (died) target.Die();
             }
+        }
+
+        public void Die(Player target)
+        {
+            Console.WriteLine($"MOVE: {target.Name} died.");
+            RemovePlayer(target);
+        }
+
+        public void RemovePlayer(Player target)
+        {
+            _players.Remove(target.Name);
+            _grid.RemovePlayer(target);
         }
     }
 }
