@@ -18,3 +18,8 @@ D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterf
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.exe.config
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.exe
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.pdb
+D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Shared.dll
+D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Сoursework_Server.dll
+D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Shared.pdb
+D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Сoursework_Server.pdb
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.CopyComplete

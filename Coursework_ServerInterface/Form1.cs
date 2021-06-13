@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Shared;
+using Сoursework_Server;
 
 namespace Coursework_ServerInterface
 {
@@ -24,6 +26,8 @@ namespace Coursework_ServerInterface
                 }
             }
         }
+
+        public Server Server { get; private set; }
 
         public Action<bool> ServerPowerStateChange;
 
@@ -64,6 +68,8 @@ namespace Coursework_ServerInterface
 
             ServerPowerStateChange += (t) => UpdateServerButtons();
             ServerIsRunning = false;
+
+            Server = new Server();
         }
 
         private void songsDataGridView_CellFormatting(object sender,
@@ -227,6 +233,16 @@ namespace Coursework_ServerInterface
         private void StopButton_Click(object sender, EventArgs e)
         {
             ServerIsRunning = false;
+        }
+
+        private void StartServer()
+        {
+            Server.Start();
+        }
+
+        private void StopServer()
+        {
+            //Server.Shutdown();
         }
     }
 }

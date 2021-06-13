@@ -3,16 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Сoursework_Server", "Сoursework_Server.csproj", "{06688508-6048-4104-B8F7-7A95E069F594}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coursework_Client", "..\Coursework_Client\Coursework_Client.csproj", "{B2C75D9D-6FA5-4C05-95EB-4C656512009D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "..\Shared\Shared\Shared.csproj", "{18C02332-864F-4791-9C2B-88380620FCDA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "..\Coursework\Assembly-CSharp.csproj", "{9E35EA32-85BB-DE78-06A9-4C1642467304}"
-	ProjectSection(ProjectDependencies) = postProject
-		{18C02332-864F-4791-9C2B-88380620FCDA} = {18C02332-864F-4791-9C2B-88380620FCDA}
-	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coursework_SharedLibrary", "..\Coursework_SharedLibrary\Coursework_SharedLibrary.csproj", "{4C3D8AA9-0A44-4112-ABC5-20D6959B214A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coursework_ServerLibrary", "..\Coursework_ServerLibrary\Coursework_ServerLibrary.csproj", "{2F326707-81D5-48BE-AA1C-DB69C7484839}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,22 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{06688508-6048-4104-B8F7-7A95E069F594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06688508-6048-4104-B8F7-7A95E069F594}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06688508-6048-4104-B8F7-7A95E069F594}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06688508-6048-4104-B8F7-7A95E069F594}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2C75D9D-6FA5-4C05-95EB-4C656512009D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2C75D9D-6FA5-4C05-95EB-4C656512009D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2C75D9D-6FA5-4C05-95EB-4C656512009D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2C75D9D-6FA5-4C05-95EB-4C656512009D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18C02332-864F-4791-9C2B-88380620FCDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18C02332-864F-4791-9C2B-88380620FCDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18C02332-864F-4791-9C2B-88380620FCDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18C02332-864F-4791-9C2B-88380620FCDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E35EA32-85BB-DE78-06A9-4C1642467304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E35EA32-85BB-DE78-06A9-4C1642467304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E35EA32-85BB-DE78-06A9-4C1642467304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E35EA32-85BB-DE78-06A9-4C1642467304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3D8AA9-0A44-4112-ABC5-20D6959B214A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3D8AA9-0A44-4112-ABC5-20D6959B214A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3D8AA9-0A44-4112-ABC5-20D6959B214A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3D8AA9-0A44-4112-ABC5-20D6959B214A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F326707-81D5-48BE-AA1C-DB69C7484839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F326707-81D5-48BE-AA1C-DB69C7484839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F326707-81D5-48BE-AA1C-DB69C7484839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F326707-81D5-48BE-AA1C-DB69C7484839}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

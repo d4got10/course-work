@@ -33,13 +33,9 @@ D:\repos\Coursework\Сoursework_Server\obj\Debug\netcoreapp3.1\Сoursework_Serve
 D:\repos\Coursework\Сoursework_Server\obj\Debug\netcoreapp3.1\Сoursework_Server.csproj.CoreCompileInputs.cache
 D:\repos\Coursework\Сoursework_Server\obj\Debug\netcoreapp3.1\Сoursework_Server.dll
 D:\repos\Coursework\Сoursework_Server\obj\Debug\netcoreapp3.1\Сoursework_Server.pdb
-D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Сoursework_Server.exe
 D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Сoursework_Server.deps.json
-D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Сoursework_Server.runtimeconfig.json
-D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Сoursework_Server.runtimeconfig.dev.json
 D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Сoursework_Server.dll
 D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Сoursework_Server.pdb
 D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Shared.dll
 D:\repos\Coursework\Сoursework_Server\bin\Debug\netcoreapp3.1\Shared.pdb
 D:\repos\Coursework\Сoursework_Server\obj\Debug\netcoreapp3.1\Сoursework_Server.csproj.CopyComplete
-D:\repos\Coursework\Сoursework_Server\obj\Debug\netcoreapp3.1\Сoursework_Server.genruntimeconfig.cache
