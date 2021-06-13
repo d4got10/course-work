@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using Сoursework_Server.Commands;
 
 namespace Сoursework_Server
@@ -108,6 +109,38 @@ namespace Сoursework_Server
         public void ProcessMoves(Client player, List<Move> moves)
         {
             throw new NotImplementedException();
+        }
+
+        public void GetMap(string username, string password)
+        {
+            if(Server.GameLogic.TryGetPlayer(username, password, out var player))
+            {
+                var gridIndoPacket = new Packet();
+                gridIndoPacket.WriteByte((byte)Packet.PACKET_IDS.GET_MAP);
+                byte size = (byte)Server.GameLogic.Grid.Size;
+                gridIndoPacket.WriteByte(size);
+                gridIndoPacket.WriteByte((byte)player.Position.X);
+                gridIndoPacket.WriteByte((byte)player.Position.Y);
+                Send(gridIndoPacket);
+
+                for(int i = 0; i < Server.GameLogic.Grid.Size; i++)
+                {
+                    Thread.Sleep(100);
+                    var gridRowPacket = new Packet();
+                    gridRowPacket.WriteByte((byte)Packet.PACKET_IDS.GET_MAP);
+                    for(int j = 0; j < Server.GameLogic.Grid.Size; j++)
+                    {
+                        gridRowPacket.WriteByte((byte)Server.GameLogic.Grid.GetCellByIndex(new Vector2(j, i)).Type);
+                    }
+                    Send(gridRowPacket);
+                }
+            }
+            else
+            {
+                var packet = new Packet();
+                packet.WriteByte((byte)Packet.PACKET_IDS.WELCOME);
+                Send(packet);
+            }
         }
     }
 }

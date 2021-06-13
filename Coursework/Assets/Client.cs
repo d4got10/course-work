@@ -40,7 +40,7 @@ namespace Networking
         {
             Username = username;
             Password = password;
-            Buffer = new byte[Packet.PACKET_BUFFER_SIZE];
+            Buffer = new byte[Packet.PacketBufferSize];
         }
 
         public void Connect() => StartCoroutine(ConnectCoroutine());
@@ -76,7 +76,7 @@ namespace Networking
         private void Receive()
         {
             Debug.Log("Started receiving...");
-            Socket.BeginReceive(Buffer, 0, Packet.PACKET_BUFFER_SIZE, 0, new AsyncCallback(ReceiveCallback), null);
+            Socket.BeginReceive(Buffer, 0, Packet.PacketBufferSize, 0, new AsyncCallback(ReceiveCallback), null);
         }
 
         private IEnumerator ReceiveCoroutine()
@@ -96,7 +96,7 @@ namespace Networking
             {
                 var packet = new Packet(Buffer);
                 ReceivedPackets.Enqueue(packet);
-                Socket.BeginReceive(Buffer, 0, Packet.PACKET_BUFFER_SIZE, 0,
+                Socket.BeginReceive(Buffer, 0, Packet.PacketBufferSize, 0,
                     new AsyncCallback(ReceiveCallback), null);
             }
             else

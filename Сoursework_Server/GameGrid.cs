@@ -22,9 +22,9 @@ namespace Сoursework_Server
                 }
             }
         }
-
-        public GameCell GetCell(Vector2 position) => _data[position.X + Size/2, position.Y + Size/2];
-        public void SetCellType(Vector2 position, GameCellTypes type) => GetCell(position).Type = type;
+        public GameCell GetCellByIndex(Vector2 position) => _data[position.X, position.Y];
+        public GameCell GetCellByPosition(Vector2 position) => _data[position.X + Size/2, position.Y + Size/2];
+        public void SetCellType(Vector2 position, GameCellTypes type) => GetCellByPosition(position).Type = type;
         public bool IsInBounds(Vector2 position)
         {
             return position.X >= -Size / 2 && position.X < Size / 2
@@ -32,15 +32,15 @@ namespace Сoursework_Server
         }
         public bool IsWalkable(Vector2 position)
         {
-            return IsInBounds(position) && GetCell(position).IsWalkable;
+            return IsInBounds(position) && GetCellByPosition(position).IsWalkable;
         }
 
         public bool Move(Player player, Vector2 position)
         {
             if (IsWalkable(position))
             {
-                GetCell(player.Position).UnboundPlayer();
-                GetCell(position).BoundPlayer(player);
+                GetCellByPosition(player.Position).UnboundPlayer();
+                GetCellByPosition(position).BoundPlayer(player);
                 player.Position = position;
                 return true;
             }
@@ -68,12 +68,12 @@ namespace Сoursework_Server
         public void PlaceNewPlayer(Player target)
         {
             target.Position = GetEmptyCellPosition();
-            GetCell(target.Position).BoundPlayer(target);
+            GetCellByPosition(target.Position).BoundPlayer(target);
         }
 
         public void RemovePlayer(Player target)
         {
-            GetCell(target.Position).UnboundPlayer();
+            GetCellByPosition(target.Position).UnboundPlayer();
         }
     }
 }

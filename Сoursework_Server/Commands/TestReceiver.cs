@@ -41,5 +41,10 @@ namespace Сoursework_Server.Commands
         {
             throw new NotImplementedException();
         }
+
+        public void GetMap(string name, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

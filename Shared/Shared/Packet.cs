@@ -17,7 +17,9 @@ namespace Shared
             MESSAGE,
             RESEND,
             SEND_TO_ALL,
-            SIGNIN
+            SIGNIN,
+            GET_MAP,
+            MOVE
         }
 
         public Packet()

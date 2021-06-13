@@ -6,13 +6,13 @@ namespace Сoursework_Server
 {
     public class GameLogic : IAttackService, IMoveService, IDeathService
     {
-        private GameGrid _grid;
+        public GameGrid Grid { get; private set; }
         private HashTable<string, Player> _players;
 
         public GameLogic()
         {
             _players = new HashTable<string, Player>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
-            _grid = new GameGrid(AppConstants.GameGridSize);
+            Grid = new GameGrid(AppConstants.GameGridSize);
         }
 
         public bool TryGetPlayer(string name, string password, out Player player)
@@ -28,7 +28,7 @@ namespace Сoursework_Server
         public Player CreateAndAddPlayer(string name, string password)
         {
             var newPlayer = new Player(this, this, this, name, password);
-            _grid.PlaceNewPlayer(newPlayer);
+            Grid.PlaceNewPlayer(newPlayer);
             _players.Add(name, newPlayer);
             return newPlayer;
         }
@@ -36,7 +36,7 @@ namespace Сoursework_Server
         public void Move(Player player, Vector2 direction)
         {
             var prevPosition = player.Position;
-            if(_grid.Move(player, player.Position + direction))
+            if(Grid.Move(player, player.Position + direction))
             {
                 Console.WriteLine($"MOVE: {player.Name} moved ({prevPosition} -> {player.Position})");
             }
@@ -64,7 +64,7 @@ namespace Сoursework_Server
         public void RemovePlayer(Player target)
         {
             _players.Remove(target.Name);
-            _grid.RemovePlayer(target);
+            Grid.RemovePlayer(target);
         }
     }
 }
