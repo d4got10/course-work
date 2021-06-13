@@ -9,9 +9,9 @@ namespace Сoursework_Server.Commands
     {
         void SignIn(string name, string password);
         void GetMap(string name, string password);
+        void Move(string name, string password, Vector2 direction);
         void DisplayMessage(string message);
         void SendPacket(Client player, Packet packet);
         void SendToAll(Packet packet);
-        void ProcessMoves(Client player, List<Move> moves);
     }
 }

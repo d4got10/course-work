@@ -8,7 +8,8 @@ using Сoursework_Server.Commands;
 
 namespace Сoursework_Server
 {
-    public class Server
+
+    public class Server : IClientsProvider
     {
         private static ManualResetEvent acceptedConnection;
 
@@ -25,7 +26,7 @@ namespace Сoursework_Server
         {
             Initialize();
             Configurate();
-            GameLogic = new GameLogic();
+            GameLogic = new GameLogic(this);
             Populate();
         }
 
@@ -33,6 +34,8 @@ namespace Сoursework_Server
         {
             GameLogic.CreateAndAddPlayer("123", "d4got10");
             GameLogic.CreateAndAddPlayer("d4got10", "d4got10");
+            GameLogic.CreateAndAddPlayer("Fedor", "Fet");
+            GameLogic.CreateAndAddPlayer("German", "Pedorenko");
         }
 
         private void Initialize()

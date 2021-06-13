@@ -36,6 +36,8 @@ namespace Сoursework_Server.Commands
                     return GetSignInCommand(client, packet);
                 case (byte)Packet.PACKET_IDS.GET_MAP:
                     return GetGetMapCommand(client, packet);
+                case (byte)Packet.PACKET_IDS.MOVE:
+                    return GetMoveCommand(client, packet);
                 default:
                     return null;
             }
@@ -64,6 +66,11 @@ namespace Сoursework_Server.Commands
         public GetMap GetGetMapCommand(Client client, Packet packet)
         {
             return new GetMap(client, _receiver, packet.ReadString(), packet.ReadString());
+        }
+
+        public Move GetMoveCommand(Client client, Packet packet)
+        {
+            return new Move(client, _receiver, packet.ReadString(), packet.ReadString(), new Vector2(packet.ReadByte(), packet.ReadByte()));
         }
     }
 }

@@ -106,11 +106,6 @@ namespace Сoursework_Server
             }
         }
 
-        public void ProcessMoves(Client player, List<Move> moves)
-        {
-            throw new NotImplementedException();
-        }
-
         public void GetMap(string username, string password)
         {
             if(Server.GameLogic.TryGetPlayer(username, password, out var player))
@@ -141,6 +136,25 @@ namespace Сoursework_Server
                 packet.WriteByte((byte)Packet.PACKET_IDS.WELCOME);
                 Send(packet);
             }
+        }
+
+        public void Move(string username, string password, Vector2 direction)
+        {
+            direction.X -= 1;
+            direction.Y -= 1;
+
+            if (Server.GameLogic.TryGetPlayer(username, password, out var player))
+            {
+                if(player.Password == password)
+                {
+                    Server.GameLogic.Move(player, direction);
+                    return;
+                }
+            }
+
+            var packet = new Packet();
+            packet.WriteByte((byte)Packet.PACKET_IDS.WELCOME);
+            Send(packet);
         }
     }
 }

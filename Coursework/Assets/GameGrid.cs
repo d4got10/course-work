@@ -25,16 +25,11 @@ public class GameGrid : MonoBehaviour
 
                 if (IsOutside(position))
                 {
-                    _tilemap.SetTile(position, _wallTile);
+                    SetCellType(position, 1);
                 }
                 else
                 {
-                    if(data[x, y] == 0)
-                        _tilemap.SetTile(position, _emptyTile);
-                    else if(data[x, y] == 1)
-                        _tilemap.SetTile(position, _wallTile);
-                    else if(data[x, y] == 2)
-                        _tilemap.SetTile(position, _playerTile);
+                    SetCellType(position, data[x, y]);
                 }
             }
         }
@@ -45,5 +40,15 @@ public class GameGrid : MonoBehaviour
         int x = position.x + Size / 2;
         int y = position.y + Size / 2;
         return (x < 0 || x >= Size || y < 0 || y >= Size);
+    }
+
+    public void SetCellType(Vector3Int position, int type)
+    {
+        if (type == 0)
+            _tilemap.SetTile(position, _emptyTile);
+        else if (type == 1)
+            _tilemap.SetTile(position, _wallTile);
+        else if (type == 2)
+            _tilemap.SetTile(position, _playerTile);
     }
 }

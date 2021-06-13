@@ -56,14 +56,14 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PlayerCamera.cs" />
+    <Compile Include="Assets\InGameController.cs" />
     <Compile Include="Assets\LoginForm.cs" />
     <Compile Include="Assets\Client.cs" />
     <Compile Include="Assets\NetworkSettings.cs" />
-    <Compile Include="Assets\SceneLoader.cs" />
     <Compile Include="Assets\GameGrid.cs" />
-    <Compile Include="Assets\InGameController.cs" />
-    <Compile Include="Assets\PlayerCamera.cs" />
     <Compile Include="Assets\ResolutionSetter.cs" />
+    <Compile Include="Assets\SceneLoader.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

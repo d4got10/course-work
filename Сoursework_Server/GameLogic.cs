@@ -9,10 +9,13 @@ namespace Сoursework_Server
         public GameGrid Grid { get; private set; }
         private HashTable<string, Player> _players;
 
-        public GameLogic()
+        private IClientsProvider _clientsProvider;
+
+        public GameLogic(IClientsProvider clientsProvider)
         {
             _players = new HashTable<string, Player>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
             Grid = new GameGrid(AppConstants.GameGridSize);
+            _clientsProvider = clientsProvider;
         }
 
         public bool TryGetPlayer(string name, string password, out Player player)
@@ -30,6 +33,7 @@ namespace Сoursework_Server
             var newPlayer = new Player(this, this, this, name, password);
             Grid.PlaceNewPlayer(newPlayer);
             _players.Add(name, newPlayer);
+            //send message
             return newPlayer;
         }
 
@@ -39,6 +43,25 @@ namespace Сoursework_Server
             if(Grid.Move(player, player.Position + direction))
             {
                 Console.WriteLine($"MOVE: {player.Name} moved ({prevPosition} -> {player.Position})");
+                var packet = new Packet();
+                packet.WriteByte((byte)Packet.PACKET_IDS.MOVE);
+                packet.WriteString(player.Name);
+                packet.WriteByte((byte)(prevPosition.X + Grid.Size / 2));
+                packet.WriteByte((byte)(prevPosition.Y + Grid.Size / 2));
+                packet.WriteByte((byte)(player.Position.X + Grid.Size / 2));
+                packet.WriteByte((byte)(player.Position.Y + Grid.Size / 2));
+
+                foreach(var client in _clientsProvider.Clients)
+                {
+                    if (client.Socket.Connected)
+                    {
+                        client.Send(packet);
+                    }
+                    else
+                    {
+                        client.Socket.Shutdown(System.Net.Sockets.SocketShutdown.Both);
+                    }
+                }
             }
         }
 

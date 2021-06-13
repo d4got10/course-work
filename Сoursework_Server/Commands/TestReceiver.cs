@@ -37,12 +37,12 @@ namespace Сoursework_Server.Commands
             throw new NotImplementedException();
         }
 
-        public void ProcessMoves(Client player, List<Move> moves)
+        public void GetMap(string name, string password)
         {
             throw new NotImplementedException();
         }
 
-        public void GetMap(string name, string password)
+        public void Move(string name, string password, Vector2 direction)
         {
             throw new NotImplementedException();
         }
