@@ -11,8 +11,8 @@ namespace Сoursework_Server
 
         public GameLogic()
         {
-            _players = new HashTable<string, Player>(StringHashTableExtras.HashFunction, 100);
-            _grid = new GameGrid(100);
+            _players = new HashTable<string, Player>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
+            _grid = new GameGrid(AppConstants.GameGridSize);
         }
 
         public bool TryGetPlayer(string name, string password, out Player player)
