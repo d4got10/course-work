@@ -119,8 +119,8 @@ namespace Сoursework_Server
                 gridIndoPacket.WriteByte((byte)Packet.PACKET_IDS.GET_MAP);
                 byte size = (byte)Server.GameLogic.Grid.Size;
                 gridIndoPacket.WriteByte(size);
-                gridIndoPacket.WriteByte((byte)player.Position.X);
-                gridIndoPacket.WriteByte((byte)player.Position.Y);
+                gridIndoPacket.WriteByte((byte)(player.Position.X + size/2));
+                gridIndoPacket.WriteByte((byte)(player.Position.Y + size/2));
                 Send(gridIndoPacket);
 
                 for(int i = 0; i < Server.GameLogic.Grid.Size; i++)

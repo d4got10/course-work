@@ -42,8 +42,8 @@ public class InGameController : MonoBehaviour
             }
 
             int size = gridInfoPacket.ReadByte();
-            int positionX = gridInfoPacket.ReadByte();
-            int positionY = gridInfoPacket.ReadByte();
+            int positionX = gridInfoPacket.ReadByte() - size / 2;
+            int positionY = gridInfoPacket.ReadByte() - size / 2;
             var playerPosition = new Vector2Int(positionX, positionY);
             _playerCamera.SetPosition(playerPosition + Vector2Int.one);
 
