@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coursework_SharedLibrary", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coursework_ServerLibrary", "..\Coursework_ServerLibrary\Coursework_ServerLibrary.csproj", "{2F326707-81D5-48BE-AA1C-DB69C7484839}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coursework_ServerInterface", "..\Coursework_ServerInterface\Coursework_ServerInterface.csproj", "{88E768B0-E69A-4CE7-A63D-22035B063391}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2F326707-81D5-48BE-AA1C-DB69C7484839} = {2F326707-81D5-48BE-AA1C-DB69C7484839}
+		{4C3D8AA9-0A44-4112-ABC5-20D6959B214A} = {4C3D8AA9-0A44-4112-ABC5-20D6959B214A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,10 @@ Global
 		{2F326707-81D5-48BE-AA1C-DB69C7484839}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F326707-81D5-48BE-AA1C-DB69C7484839}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F326707-81D5-48BE-AA1C-DB69C7484839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88E768B0-E69A-4CE7-A63D-22035B063391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88E768B0-E69A-4CE7-A63D-22035B063391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88E768B0-E69A-4CE7-A63D-22035B063391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88E768B0-E69A-4CE7-A63D-22035B063391}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

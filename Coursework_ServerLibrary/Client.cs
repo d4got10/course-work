@@ -44,6 +44,8 @@ namespace Сoursework_Server
         {
             try
             {
+                if (Server.IsRunning == false) return;
+
                 int bytesRead = Socket.EndReceive(ar);
 
                 if (bytesRead > 0)
@@ -65,6 +67,8 @@ namespace Сoursework_Server
 
         public void Send(Packet packet)
         {
+            if (Server.IsRunning == false) return;
+
             Socket.Send(packet.ToBytes());
         }
 

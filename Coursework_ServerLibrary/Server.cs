@@ -22,6 +22,8 @@ namespace Сoursework_Server
         public GameLogic GameLogic { get; private set; }
         public IInvoker Invoker { get; private set; }
 
+        private List<Thread> _threads;
+
         public Server()
         {
             Initialize();
@@ -40,6 +42,7 @@ namespace Сoursework_Server
 
         private void Initialize()
         {
+            _threads = new List<Thread>();
             IsRunning = false;
             acceptedConnection = new ManualResetEvent(false);
             _clients = new List<Client>();
@@ -53,7 +56,32 @@ namespace Сoursework_Server
         public void Start()
         {
             IsRunning = true;
-            BeginListening();
+            Thread t = new Thread(new ThreadStart(BeginListening));
+            _threads.Add(t);
+            t.Start();
+        }
+
+        public void Stop()
+        {
+            IsRunning = false;
+            foreach(var client in Clients)
+            {
+                DisconnectClient(client, new Exception("Server was shutdown."));
+                ListenerSocket.Shutdown(SocketShutdown.Both);
+                ListenerSocket.Disconnect(true);
+                ListenerSocket = null;
+            }
+            foreach(var thread in _threads)
+            {
+                try
+                {
+                    if(thread.ThreadState == ThreadState.Running)
+                        thread.Abort();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
 
         #region Client Connection
@@ -61,7 +89,8 @@ namespace Сoursework_Server
         {
             IPAddress ipAddress = IPAddress.Any;
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 8000);
-            ListenerSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            if(ListenerSocket == null)
+                ListenerSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             
             try
             {
@@ -71,6 +100,7 @@ namespace Сoursework_Server
                 while (true)
                 {
                     acceptedConnection.Reset();
+                    if (IsRunning == false) return;
 
                     Console.WriteLine("Waiting for a connection...");
                     ListenerSocket.BeginAccept(new AsyncCallback(AcceptCallback), ListenerSocket);
@@ -86,6 +116,12 @@ namespace Сoursework_Server
 
         private void AcceptCallback(IAsyncResult ar)
         {
+            if (IsRunning == false)
+            {
+                acceptedConnection.Set();
+                return;
+            }
+
             var listener = (Socket)ar.AsyncState;
             var handler = listener.EndAccept(ar);
 
@@ -98,6 +134,7 @@ namespace Сoursework_Server
             _clients.Add(client);
 
             Thread clientThread = new Thread(new ThreadStart(client.Listen));
+            _threads.Add(clientThread);
             clientThread.Start();
 
             acceptedConnection.Set();

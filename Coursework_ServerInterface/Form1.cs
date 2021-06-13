@@ -227,22 +227,24 @@ namespace Coursework_ServerInterface
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            ServerIsRunning = true;
+            StartServer();
         }
 
         private void StopButton_Click(object sender, EventArgs e)
         {
-            ServerIsRunning = false;
+            StopServer();
         }
 
         private void StartServer()
         {
+            ServerIsRunning = true;
             Server.Start();
         }
 
         private void StopServer()
         {
-            //Server.Shutdown();
+            ServerIsRunning = false;
+            Server.Stop();
         }
     }
 }
