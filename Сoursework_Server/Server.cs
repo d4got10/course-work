@@ -26,6 +26,12 @@ namespace Сoursework_Server
             Initialize();
             Configurate();
             GameLogic = new GameLogic();
+            Populate();
+        }
+
+        private void Populate()
+        {
+            GameLogic.CreateAndAddPlayer("d4got10", "d4got10");
         }
 
         private void Initialize()

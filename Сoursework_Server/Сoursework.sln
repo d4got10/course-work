@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "..\Shared\Shared\Shared.csproj", "{18C02332-864F-4791-9C2B-88380620FCDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "..\Coursework\Assembly-CSharp.csproj", "{9E35EA32-85BB-DE78-06A9-4C1642467304}"
+	ProjectSection(ProjectDependencies) = postProject
+		{18C02332-864F-4791-9C2B-88380620FCDA} = {18C02332-864F-4791-9C2B-88380620FCDA}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

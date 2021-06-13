@@ -6,7 +6,7 @@ namespace Shared
 {
     public class Packet
     {
-        public const int PACKET_BUFFER_SIZE = 1024;
+        public const int PacketBufferSize = 1024;
 
         private byte[] _data;
         private int _readPosition;
@@ -22,7 +22,7 @@ namespace Shared
 
         public Packet()
         {
-            _data = new byte[PACKET_BUFFER_SIZE];
+            _data = new byte[PacketBufferSize];
             _readPosition = 0;
         }
 

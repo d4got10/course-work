@@ -9,7 +9,7 @@ namespace Сoursework_Server
 {
     public class Client : IReceiver
     {
-        public const int BUFFER_SIZE = Packet.PACKET_BUFFER_SIZE;
+        public const int BUFFER_SIZE = Packet.PacketBufferSize;
 
         public Action<Exception> Shutdown;
 

@@ -13,7 +13,7 @@ namespace Coursework_Client
         // Client socket.  
         public Socket workSocket = null;
         // Size of receive buffer.  
-        public const int BufferSize = Packet.PACKET_BUFFER_SIZE;
+        public const int BufferSize = Packet.PacketBufferSize;
         // Receive buffer.  
         public byte[] buffer = new byte[BufferSize];
         // Received data string.  
