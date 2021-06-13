@@ -12,26 +12,34 @@ namespace Coursework_ServerInterface
 {
     public partial class Form1 : Form
     {
+        private bool _serverIsRunning;
+        public bool ServerIsRunning
+        {
+            get => _serverIsRunning;
+            set
+            {
+                if (_serverIsRunning != value) {
+                    _serverIsRunning = value;
+                    ServerPowerStateChange?.Invoke(value);
+                }
+            }
+        }
+
+        public Action<bool> ServerPowerStateChange;
+
+        private enum FormViews
+        {
+            None,
+            Users
+        }
+
+        private FormViews _currentFromView;
 
         public Form1()
         {
             this.Load += new EventHandler(Form1_Load);
             InitializeComponent();
         }
-
-        //private void CreateTable()
-        //{
-        //    DataGridTableStyle ts1 = new DataGridTableStyle();
-        //    ts1.MappingName = "Customers";
-
-        //    DataGridBoolColumn myDataCol = new DataGridBoolColumn();
-        //    myDataCol.HeaderText = "My New Column";
-        //    myDataCol.MappingName = "Current";
-
-        //    ts1.GridColumnStyles.Add(myDataCol);
-
-        //    //dataGridView1.TableStyles.Add(ts1);
-        //}
 
         private Panel _buttonPanel = new Panel();
         private DataGridView _songsDataGridView = new DataGridView();
@@ -40,8 +48,6 @@ namespace Coursework_ServerInterface
 
         private void Form1_Load(System.Object sender, System.EventArgs e)
         {
-            SetupLayout();
-
             dataGridView1.SelectionMode =
                 DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
@@ -51,8 +57,13 @@ namespace Coursework_ServerInterface
                 DataGridViewCellFormattingEventHandler(
                 songsDataGridView_CellFormatting);
 
-            //SetupDataGridView();
-            //PopulateDataGridView();
+            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Gray;
+
+            UpdateFormView();
+            UpdateServerButtons();
+
+            ServerPowerStateChange += (t) => UpdateServerButtons();
+            ServerIsRunning = false;
         }
 
         private void songsDataGridView_CellFormatting(object sender,
@@ -152,11 +163,6 @@ namespace Coursework_ServerInterface
             _songsDataGridView.Columns[4].DisplayIndex = 4;//2;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
@@ -175,6 +181,52 @@ namespace Coursework_ServerInterface
             {
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_currentFromView == FormViews.Users)
+                _currentFromView = FormViews.None;
+            else
+                _currentFromView = FormViews.Users;
+            UpdateFormView();
+        }
+
+        private void UpdateFormView()
+        {
+            switch (_currentFromView)
+            {
+                case FormViews.Users:
+                    dataGridView1.Show();
+                    break;
+                default:
+                    dataGridView1.Hide();
+                    break;
+            }
+        }
+
+        private void UpdateServerButtons()
+        {
+            if (ServerIsRunning)
+            {
+                StartButton.Enabled = false;
+                StopButton.Enabled = true;
+            }
+            else
+            {
+                StartButton.Enabled = true;
+                StopButton.Enabled = false;
+            }
+        }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            ServerIsRunning = true;
+        }
+
+        private void StopButton_Click(object sender, EventArgs e)
+        {
+            ServerIsRunning = false;
         }
     }
 }
