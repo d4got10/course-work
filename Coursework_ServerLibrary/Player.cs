@@ -12,7 +12,7 @@ namespace Сoursework_Server
         public readonly string Name;
         public readonly string Password;
         public int Health;
-        public uint ActionPointsCount { get; private set; }
+        public int ActionPointsCount { get; private set; }
         public string Clan { get; private set; }
 
         public Vector2 Position { get; set; }
@@ -29,15 +29,13 @@ namespace Сoursework_Server
             _deathService = deathService;
             Name = name;
             Password = passwordHash;
-
-            Init();
         }
 
-        private void Init()
+        public void Init(string clan, int actionPointsCount, int health)
         {
-            ActionPointsCount = 0;
-            Clan = null;
-            Health = 5;
+            Clan = clan;
+            ActionPointsCount = actionPointsCount;
+            Health = health;
         }
 
         public bool Equals(Player other)

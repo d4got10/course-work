@@ -63,6 +63,8 @@ namespace Coursework_ServerInterface
 
             dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Gray;
 
+            _currentFromView = FormViews.Users;
+
             UpdateFormView();
             UpdateServerButtons();
 
@@ -70,6 +72,27 @@ namespace Coursework_ServerInterface
             ServerIsRunning = false;
 
             Server = new Server();
+            UpdateUsersGridView();
+
+            Server.GameLogic.UsersUpdated += UpdateUsersGridView;
+        }
+
+        private void UpdateUsersGridView()
+        {
+            dataGridView1.Rows.Clear();
+            var values = Server.GameLogic.Values;
+            for (int i = 0; i < values.Length; i++)
+            {
+                string[] row = new string[7];
+                row[0] = values[i].Hash.ToString();
+                row[1] = values[i].Value.Name.ToString();
+                row[2] = values[i].Value.Password.ToString();
+                row[3] = values[i].Value.Position.ToString();
+                row[4] = values[i].Value.Clan;
+                row[5] = values[i].Value.ActionPointsCount.ToString();
+                row[6] = values[i].Value.Health.ToString();
+                dataGridView1.Rows.Add(row);
+            }
         }
 
         private void songsDataGridView_CellFormatting(object sender,
@@ -176,7 +199,34 @@ namespace Coursework_ServerInterface
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Add();
+            var newUserForm = new UserAddForm(OnAddUser);
+            newUserForm.Show();
+            //dataGridView1.Rows.Add();
+        }
+
+        private void OnAddUser(string[] values)
+        {
+            try
+            {
+                if (values.Length == 6)
+                {
+                    var username = values[0];
+                    var password = values[1];
+                    var splittedPosition = values[2].Split(':');
+                    var x = splittedPosition[0];
+                    var y = splittedPosition[1];
+                    var position = new Vector2(int.Parse(x), int.Parse(y));
+                    var clan = values[3];
+                    var actionPointsCount = int.Parse(values[4]);
+                    var health = int.Parse(values[5]);
+
+                    var player = Server.GameLogic.CreateAndAddPlayer(username, password, position, clan, actionPointsCount, health);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Некорректные входные данные.");
+            }
         }
 
         private void RemoveButton_Click(object sender, EventArgs e)

@@ -27,8 +27,39 @@ namespace CourseWork_Server.DataStructures.Danil
         public delegate int HashFunction(TKey key, int i, int size);
         public readonly HashFunction Function;
 
+        public Action Changed;
+        public Action Rehashed;
+        public Action<TValue> Added;
+        public Action<TValue> Removed;
+
+        public struct ValueWithHash
+        {
+            public int Hash;
+            public TValue Value;
+        }
+
+        public ValueWithHash[] Values
+        {
+            get
+            {
+                var values = new ValueWithHash[_currentLoad];
+                int j = 0;
+                for(int i = 0; i < _data.Length; i++)
+                {
+                    if(_data[i] != null && _data[i].Value != null && _data[i].Deleted == false)
+                    {
+                        values[j].Hash = i;
+                        values[j].Value = _data[i].Value;
+                        j++;
+                    }
+                }
+                return values;
+            }
+        }
+
         private int _currentLoad;
         private Node<TKey, TValue>[] _data;
+        private bool _isInternal;
 
         public HashTable(HashFunction function, int size)
         {
@@ -51,6 +82,11 @@ namespace CourseWork_Server.DataStructures.Danil
                     _currentLoad++;
                     if (_currentLoad > _data.Length * UpperBound)
                         Resize();
+                    else if(_isInternal == false)
+                        Changed?.Invoke();
+
+                    if (_isInternal == false)
+                        Added?.Invoke(value);
 
                     return true;
                 }
@@ -97,6 +133,8 @@ namespace CourseWork_Server.DataStructures.Danil
                 {
                     if (_data[index].Deleted == false && _data[index].Key.Equals(key))
                     {
+                        var value = _data[index].Value;
+
                         _data[index].Deleted = true;
                         _data[index].Key = default;
                         _data[index].Value = default;
@@ -104,7 +142,11 @@ namespace CourseWork_Server.DataStructures.Danil
 
                         if (_currentLoad < _data.Length * LowerBound)
                             Resize();
+                        else if(_isInternal == false)
+                                Changed?.Invoke();
 
+                        if (_isInternal == false) 
+                            Removed?.Invoke(value);
                         return true;
                     }
                     else if(_data[index].Deleted == false)
@@ -141,6 +183,7 @@ namespace CourseWork_Server.DataStructures.Danil
 
         private void Resize()
         {
+            _isInternal = true;
             Node<TKey, TValue>[] prevData = new Node<TKey, TValue>[_data.Length];
             _data.CopyTo(prevData, 0);
 
@@ -162,6 +205,10 @@ namespace CourseWork_Server.DataStructures.Danil
                 if (prevData[i] != null && prevData[i].Deleted == false)
                     Add(prevData[i].Key, prevData[i].Value);
             }
+
+            _isInternal = false;
+            Changed?.Invoke();
+            Rehashed?.Invoke();
         }
     }
 }

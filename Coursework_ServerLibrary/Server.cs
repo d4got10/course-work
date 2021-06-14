@@ -34,10 +34,10 @@ namespace Сoursework_Server
 
         private void Populate()
         {
-            GameLogic.CreateAndAddPlayer("123", "d4got10");
-            GameLogic.CreateAndAddPlayer("d4got10", "d4got10");
-            GameLogic.CreateAndAddPlayer("Fedor", "Fet");
-            GameLogic.CreateAndAddPlayer("German", "Pedorenko");
+            GameLogic.CreateAndAddPlayer("123", "d4got10", "", 5, 3);
+            GameLogic.CreateAndAddPlayer("d4got10", "d4got10", "", 5, 3);
+            GameLogic.CreateAndAddPlayer("Fedor", "Fet", "", 5, 3);
+            GameLogic.CreateAndAddPlayer("German", "Pedorenko", "", 5, 3);
         }
 
         private void Initialize()

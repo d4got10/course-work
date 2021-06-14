@@ -23,3 +23,4 @@ D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerLibrar
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_SharedLibrary.dll
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerLibrary.pdb
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_SharedLibrary.pdb
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.UserAddForm.resources

@@ -9,6 +9,13 @@ namespace Сoursework_Server
         public GameGrid Grid { get; private set; }
         private HashTable<string, Player> _players;
 
+        public event Action UsersUpdated
+        {
+            add => _players.Changed += value;
+            remove => _players.Changed -= value;
+        }
+        public HashTable<string, Player>.ValueWithHash[] Values => _players.Values;
+
         private IClientsProvider _clientsProvider;
 
         public GameLogic(IClientsProvider clientsProvider)
@@ -28,10 +35,27 @@ namespace Сoursework_Server
             return false;
         }
 
-        public Player CreateAndAddPlayer(string name, string password)
+        public Player CreateAndAddPlayer(string name, string password, string clan, int actionPoints, int health)
         {
             var newPlayer = new Player(this, this, this, name, password);
+            newPlayer.Init(clan, actionPoints, health);
             Grid.PlaceNewPlayer(newPlayer);
+            _players.Add(name, newPlayer);
+            //send message
+            return newPlayer;
+        }
+
+        public Player CreateAndAddPlayer(string name, string password, Vector2 position, string clan, int actionPoints, int health)
+        {
+            if (_players.TryFind(name, out _, out _))
+                throw new Exception("User with the same username already exists.");
+
+            var newPlayer = new Player(this, this, this, name, password);
+            newPlayer.Init(clan, actionPoints, health);
+
+            if (Grid.TryPlacePlayer(newPlayer, position) == false) 
+                throw new Exception($"Cell in position {position} is already taken.");
+
             _players.Add(name, newPlayer);
             //send message
             return newPlayer;

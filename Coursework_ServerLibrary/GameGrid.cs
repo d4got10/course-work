@@ -71,6 +71,17 @@ namespace Сoursework_Server
             GetCellByPosition(target.Position).BoundPlayer(target);
         }
 
+        public bool TryPlacePlayer(Player target, Vector2 position)
+        {
+            if (IsWalkable(position))
+            {
+                target.Position = position;
+                GetCellByPosition(target.Position).BoundPlayer(target);
+                return true;
+            }
+            return false;
+        }
+
         public void RemovePlayer(Player target)
         {
             GetCellByPosition(target.Position).UnboundPlayer();
