@@ -246,5 +246,16 @@ namespace Coursework_ServerInterface
             ServerIsRunning = false;
             Server.Stop();
         }
+
+        private void UpdateConsoleText()
+        {
+            if(Program.TryReadNewText(out var text))
+                textBox1.AppendText(text);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            UpdateConsoleText();
+        }
     }
 }

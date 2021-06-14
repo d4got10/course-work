@@ -64,18 +64,15 @@ namespace Сoursework_Server
         public void Stop()
         {
             IsRunning = false;
-            foreach(var client in Clients)
+            foreach(var client in _clients.ToArray())
             {
                 DisconnectClient(client, new Exception("Server was shutdown."));
-                ListenerSocket.Shutdown(SocketShutdown.Both);
-                ListenerSocket.Disconnect(true);
-                ListenerSocket = null;
             }
-            foreach(var thread in _threads)
+            foreach (var thread in _threads)
             {
                 try
                 {
-                    if(thread.ThreadState == ThreadState.Running)
+                    if (thread.ThreadState != ThreadState.Stopped || thread.ThreadState != ThreadState.Aborted)
                         thread.Abort();
                 }
                 catch (Exception)
@@ -89,13 +86,16 @@ namespace Сoursework_Server
         {
             IPAddress ipAddress = IPAddress.Any;
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 8000);
-            if(ListenerSocket == null)
-                ListenerSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             
             try
             {
-                ListenerSocket.Bind(localEndPoint);
+                if (ListenerSocket == null)
+                {
+                    ListenerSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    ListenerSocket.Bind(localEndPoint);
+                }
                 ListenerSocket.Listen(100);
+
 
                 while (true)
                 {
@@ -110,7 +110,8 @@ namespace Сoursework_Server
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                //if(e.)
+                //Console.WriteLine(e.ToString());
             }
         }
 

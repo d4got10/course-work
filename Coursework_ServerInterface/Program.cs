@@ -35,12 +35,36 @@ namespace Coursework_ServerInterface
 
         static void consoleWriter_WriteLineEvent(object sender, ConsoleWriterEventArgs e)
         {
-            MessageBox.Show(e.Value, "WriteLine");
+            ConsoleText += e.Value + "\r\n";
+            _consoleTextUpdated?.Invoke();
+            //MessageBox.Show(e.Value, "WriteLine");
         }
 
         static void consoleWriter_WriteEvent(object sender, ConsoleWriterEventArgs e)
         {
-            MessageBox.Show(e.Value, "Write");
+            ConsoleText += e.Value;
+            _consoleTextUpdated?.Invoke();
+            //MessageBox.Show(e.Value, "Write");
+        }
+
+        public static string ConsoleText { get; private set; }
+        public static bool TryReadNewText(out string text)
+        {
+            text = "";
+            if (ConsoleText != null)
+            {
+                text = string.Copy(ConsoleText);
+                ConsoleText = "";
+                return true;
+            }
+            return false;
+        }
+
+        private static Action _consoleTextUpdated;
+        public static event Action ConsoleTextUpdated
+        {
+            add => _consoleTextUpdated += value;
+            remove => _consoleTextUpdated -= value;
         }
     }
 }
