@@ -86,6 +86,8 @@ namespace Сoursework_Server
                         client.Socket.Shutdown(System.Net.Sockets.SocketShutdown.Both);
                     }
                 }
+
+                _players.Changed?.Invoke();
             }
         }
 
@@ -99,6 +101,8 @@ namespace Сoursework_Server
                 Console.WriteLine($" {target.Health})");
 
                 if (died) target.Die();
+
+                _players.Changed?.Invoke();
             }
         }
 

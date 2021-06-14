@@ -38,10 +38,11 @@ namespace Coursework_ServerInterface
         }
 
         private FormViews _currentFromView;
+        private bool _usersNeedsToUpdate;
 
         public Form1()
         {
-            this.Load += new EventHandler(Form1_Load);
+            Load += new EventHandler(Form1_Load);
             InitializeComponent();
         }
 
@@ -74,7 +75,7 @@ namespace Coursework_ServerInterface
             Server = new Server();
             UpdateUsersGridView();
 
-            Server.GameLogic.UsersUpdated += UpdateUsersGridView;
+            Server.GameLogic.UsersUpdated += () => _usersNeedsToUpdate = true;
         }
 
         private void UpdateUsersGridView()
@@ -93,6 +94,7 @@ namespace Coursework_ServerInterface
                 row[6] = values[i].Value.Health.ToString();
                 dataGridView1.Rows.Add(row);
             }
+            _usersNeedsToUpdate = false;
         }
 
         private void songsDataGridView_CellFormatting(object sender,
@@ -235,7 +237,13 @@ namespace Coursework_ServerInterface
                 dataGridView1.SelectedRows[0].Index !=
                 dataGridView1.Rows.Count - 1)
             {
-                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
+                string username = (string)dataGridView1.SelectedRows[0].Cells[1].Value;
+                string password = (string)dataGridView1.SelectedRows[0].Cells[2].Value;
+                if (Server.GameLogic.TryGetPlayer(username, password, out var player))
+                {
+                    Server.GameLogic.RemovePlayer(player);
+                }
+                //dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
             }
         }
 
@@ -306,6 +314,10 @@ namespace Coursework_ServerInterface
         private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateConsoleText();
+            if (_usersNeedsToUpdate)
+            {
+                UpdateUsersGridView();
+            }
         }
     }
 }

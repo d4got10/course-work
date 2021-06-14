@@ -37,7 +37,7 @@ namespace Сoursework_Server
             GameLogic.CreateAndAddPlayer("123", "d4got10", "", 5, 3);
             GameLogic.CreateAndAddPlayer("d4got10", "d4got10", "", 5, 3);
             GameLogic.CreateAndAddPlayer("Fedor", "Fet", "", 5, 3);
-            GameLogic.CreateAndAddPlayer("German", "Pedorenko", "", 5, 3);
+            //GameLogic.CreateAndAddPlayer("German", "Pedorenko", "", 5, 3);
         }
 
         private void Initialize()
