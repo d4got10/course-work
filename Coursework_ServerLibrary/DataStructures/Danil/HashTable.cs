@@ -22,7 +22,6 @@ namespace CourseWork_Server.DataStructures.Danil
 
         private const float UpperBound = 0.75f;
         private const float LowerBound = 0.25f;
-        private const int MinSize = 100;
 
         public delegate int HashFunction(TKey key, int i, int size);
         public readonly HashFunction Function;
@@ -57,6 +56,7 @@ namespace CourseWork_Server.DataStructures.Danil
             }
         }
 
+        private readonly int _minSize;
         private int _currentLoad;
         private Node<TKey, TValue>[] _data;
         private bool _isInternal;
@@ -64,7 +64,7 @@ namespace CourseWork_Server.DataStructures.Danil
         public HashTable(HashFunction function, int size)
         {
             Function = function;
-            if (size < MinSize) size = MinSize;
+            _minSize = size;
             _data = new Node<TKey, TValue>[size];
             _currentLoad = 0;
         }
@@ -110,10 +110,6 @@ namespace CourseWork_Server.DataStructures.Danil
                         value = _data[index].Value;
                         return true;
                     }
-                    else if(_data[index].Deleted == false)
-                    {
-                        return false;
-                    }
                 }
                 else
                 {
@@ -140,7 +136,7 @@ namespace CourseWork_Server.DataStructures.Danil
                         _data[index].Value = default;
                         _currentLoad--;
 
-                        if (_currentLoad < _data.Length * LowerBound)
+                        if (_data.Length > _minSize && _currentLoad < _data.Length * LowerBound)
                             Resize();
                         else if(_isInternal == false)
                                 Changed?.Invoke();
@@ -148,10 +144,6 @@ namespace CourseWork_Server.DataStructures.Danil
                         if (_isInternal == false) 
                             Removed?.Invoke(value);
                         return true;
-                    }
-                    else if(_data[index].Deleted == false)
-                    {
-                        return false;
                     }
                 }
                 else
@@ -193,10 +185,10 @@ namespace CourseWork_Server.DataStructures.Danil
             }
             else
             {
-                if (prevData.Length / 2 >= MinSize)
+                if (prevData.Length / 2 >= _minSize)
                     _data = new Node<TKey, TValue>[prevData.Length / 2];
                 else
-                    _data = new Node<TKey, TValue>[MinSize];
+                    _data = new Node<TKey, TValue>[_minSize];
             }
 
             _currentLoad = 0;

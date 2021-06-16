@@ -22,13 +22,9 @@ namespace Coursework_ServerInterface
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var values = new string[6];
+            var values = new string[2];
             values[0] = nameTextBox.Text;
             values[1] = passwordTextBox.Text;
-            values[2] = xPositionTextBox.Text + ":" + yPositionTextBox.Text;
-            values[3] = clanTextBox.Text;
-            values[4] = actionPointsTextBox.Text;
-            values[5] = healthTextBox.Text;
             _onAddAction.Invoke(values);
             Hide();
         }

@@ -7,57 +7,83 @@ namespace Сoursework_Server
     public class GameLogic : IAttackService, IMoveService, IDeathService
     {
         public GameGrid Grid { get; private set; }
-        private HashTable<string, Player> _players;
+
+        private System.Collections.Generic.List<Player> _players;
+        private HashTable<string, Clan> _clans;
+        private HashTable<string, UserData> _users;
+        private RedBlackTree<string, Player> _playersByName;
 
         public event Action UsersUpdated
         {
-            add => _players.Changed += value;
-            remove => _players.Changed -= value;
+            add => _users.Changed += value;
+            remove => _users.Changed -= value;
         }
-        public HashTable<string, Player>.ValueWithHash[] Values => _players.Values;
+        public System.Collections.Generic.IReadOnlyList<Player> Players => _players;
+        public HashTable<string, UserData>.ValueWithHash[] UsersValues => _users.Values;
 
         private IClientsProvider _clientsProvider;
 
         public GameLogic(IClientsProvider clientsProvider)
         {
-            _players = new HashTable<string, Player>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
+            _players = new System.Collections.Generic.List<Player>();
+            _users = new HashTable<string, UserData>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
+            _clans = new HashTable<string, Clan>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
+            _playersByName = new RedBlackTree<string, Player>();
+
             Grid = new GameGrid(AppConstants.GameGridSize);
             _clientsProvider = clientsProvider;
         }
 
         public bool TryGetPlayer(string name, string password, out Player player)
         {
-            if(_players.TryFind(name, out player, out var hash)){
-                return player.Password == password;
+            if(_playersByName.TryFind(name, out var playerList)){
+                foreach(var playerIt in playerList)
+                {
+                    if(playerIt.Password == password)
+                    {
+                        player = playerIt;
+                        return true;
+                    }       
+                }
             }
 
             player = null;
             return false;
         }
 
-        public Player CreateAndAddPlayer(string name, string password, string clan, int actionPoints, int health)
+        public UserData CreateUser(string name, string password)
         {
-            var newPlayer = new Player(this, this, this, name, password);
-            newPlayer.Init(clan, actionPoints, health);
-            Grid.PlaceNewPlayer(newPlayer);
-            _players.Add(name, newPlayer);
-            //send message
-            return newPlayer;
+            if (_users.TryFind(name, out _, out _))
+                throw new Exception("User data with the same name is already exits");
+
+            var userData = new UserData(name, password);
+
+            if (_users.Add(name, userData) == false)
+                throw new Exception("User data wasn't added to hashtable.");
+
+            return userData;
         }
 
-        public Player CreateAndAddPlayer(string name, string password, Vector2 position, string clan, int actionPoints, int health)
+        public Player CreateAndAddPlayer(UserData userData)
         {
-            if (_players.TryFind(name, out _, out _))
+            return CreateAndAddPlayer(userData, Grid.GetEmptyCellPosition(), null, 3, 5);
+        }
+
+        public Player CreateAndAddPlayer(UserData userData, Vector2 position, Clan clan, int actionPoints, int health)
+        {
+            if (_playersByName.TryFind(userData.Login, out var players))
                 throw new Exception("User with the same username already exists.");
 
-            var newPlayer = new Player(this, this, this, name, password);
-            newPlayer.Init(clan, actionPoints, health);
+            var newPlayer = new Player(this, this, this, userData);
+            newPlayer.Clan = clan;
+            newPlayer.ActionPointsCount = actionPoints;
+            newPlayer.Health = health;
 
             if (Grid.TryPlacePlayer(newPlayer, position) == false) 
                 throw new Exception($"Cell in position {position} is already taken.");
 
-            _players.Add(name, newPlayer);
-            //send message
+            _playersByName.Add(userData.Login, newPlayer);
+
             return newPlayer;
         }
 
@@ -87,7 +113,7 @@ namespace Сoursework_Server
                     }
                 }
 
-                _players.Changed?.Invoke();
+                _users.Changed?.Invoke();
             }
         }
 
@@ -102,7 +128,7 @@ namespace Сoursework_Server
 
                 if (died) target.Die();
 
-                _players.Changed?.Invoke();
+                _users.Changed?.Invoke();
             }
         }
 
@@ -114,7 +140,7 @@ namespace Сoursework_Server
 
         public void RemovePlayer(Player target)
         {
-            _players.Remove(target.Name);
+            _users.Remove(target.Name);
             Grid.RemovePlayer(target);
         }
     }

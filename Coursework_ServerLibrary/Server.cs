@@ -34,9 +34,9 @@ namespace Сoursework_Server
 
         private void Populate()
         {
-            GameLogic.CreateAndAddPlayer("123", "d4got10", "", 5, 3);
-            GameLogic.CreateAndAddPlayer("d4got10", "d4got10", "", 5, 3);
-            GameLogic.CreateAndAddPlayer("Fedor", "Fet", "", 5, 3);
+            GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("123", "d4got10"));
+            GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("Fedor", "Fet"));
+            GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("German", "qwerty"));
             //GameLogic.CreateAndAddPlayer("German", "Pedorenko", "", 5, 3);
         }
 
@@ -110,6 +110,7 @@ namespace Сoursework_Server
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //if(e.)
                 //Console.WriteLine(e.ToString());
             }

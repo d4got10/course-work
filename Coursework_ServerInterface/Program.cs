@@ -8,16 +8,6 @@ namespace Coursework_ServerInterface
 {
     static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
-        //[STAThread]
-        //static void Main()
-        //{
-        //    Application.EnableVisualStyles();
-        //    Application.SetCompatibleTextRenderingDefault(false);
-        //    Application.Run(new Form1());
-        //}
         [STAThread]
         static void Main()
         {
@@ -37,14 +27,12 @@ namespace Coursework_ServerInterface
         {
             ConsoleText += e.Value + "\r\n";
             _consoleTextUpdated?.Invoke();
-            //MessageBox.Show(e.Value, "WriteLine");
         }
 
         static void consoleWriter_WriteEvent(object sender, ConsoleWriterEventArgs e)
         {
             ConsoleText += e.Value;
             _consoleTextUpdated?.Invoke();
-            //MessageBox.Show(e.Value, "Write");
         }
 
         public static string ConsoleText { get; private set; }

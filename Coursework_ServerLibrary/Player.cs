@@ -7,13 +7,17 @@ using System.Text;
 
 namespace Сoursework_Server
 {
+
     public class Player : IEquatable<Player>
     {
-        public readonly string Name;
-        public readonly string Password;
+        public readonly UserData UserData;
+
+        public string Name => UserData.Login;
+        public string Password => UserData.Password;
+
+        public Clan Clan;
         public int Health;
-        public int ActionPointsCount { get; private set; }
-        public string Clan { get; private set; }
+        public int ActionPointsCount;
 
         public Vector2 Position { get; set; }
 
@@ -22,20 +26,12 @@ namespace Сoursework_Server
         private readonly IDeathService _deathService;
 
         public Player(IAttackService attackService, IMoveService moveService, IDeathService deathService,
-                        string name, string passwordHash)
+                        UserData userData)
         {
             _attackService = attackService;
             _moveService = moveService;
             _deathService = deathService;
-            Name = name;
-            Password = passwordHash;
-        }
-
-        public void Init(string clan, int actionPointsCount, int health)
-        {
-            Clan = clan;
-            ActionPointsCount = actionPointsCount;
-            Health = health;
+            UserData = userData;
         }
 
         public bool Equals(Player other)

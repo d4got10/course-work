@@ -30,13 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.usersGridView = new System.Windows.Forms.DataGridView();
+            this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.dataGridViewsBox = new System.Windows.Forms.GroupBox();
+            this.mainGridView = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.mainGridDataButton = new System.Windows.Forms.Button();
+            this.usersGridDataButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.StopButton = new System.Windows.Forms.Button();
@@ -45,37 +51,34 @@
             this.LogsLabel = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Position = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Clan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ActionPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Health = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColorCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.dataGridViewsBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // usersGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.usersGridView.AllowUserToAddRows = false;
+            this.usersGridView.AllowUserToDeleteRows = false;
+            this.usersGridView.AllowUserToResizeColumns = false;
+            this.usersGridView.AllowUserToResizeRows = false;
+            this.usersGridView.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.usersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.usersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Hash,
             this.Username,
-            this.Password,
-            this.Position,
-            this.Clan,
-            this.ActionPoints,
-            this.Health});
+            this.Password});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -83,14 +86,42 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.ButtonShadow;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(594, 391);
-            this.dataGridView1.TabIndex = 0;
+            this.usersGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            this.usersGridView.GridColor = System.Drawing.SystemColors.ButtonShadow;
+            this.usersGridView.Location = new System.Drawing.Point(6, 19);
+            this.usersGridView.Name = "usersGridView";
+            this.usersGridView.RowHeadersVisible = false;
+            this.usersGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.usersGridView.Size = new System.Drawing.Size(448, 391);
+            this.usersGridView.TabIndex = 0;
+            // 
+            // Hash
+            // 
+            this.Hash.HeaderText = "Хэш";
+            this.Hash.MaxInputLength = 12;
+            this.Hash.Name = "Hash";
+            this.Hash.ReadOnly = true;
+            this.Hash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Hash.ToolTipText = "Хэш записи пользователя";
+            this.Hash.Width = 50;
+            // 
+            // Username
+            // 
+            this.Username.HeaderText = "Имя";
+            this.Username.MaxInputLength = 12;
+            this.Username.Name = "Username";
+            this.Username.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Username.ToolTipText = "Имя пользователя";
+            this.Username.Width = 200;
+            // 
+            // Password
+            // 
+            this.Password.HeaderText = "Пароль";
+            this.Password.MaxInputLength = 12;
+            this.Password.Name = "Password";
+            this.Password.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Password.ToolTipText = "Пароль пользователя";
+            this.Password.Width = 200;
             // 
             // groupBox1
             // 
@@ -101,7 +132,6 @@
             this.groupBox1.Size = new System.Drawing.Size(442, 52);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // RemoveButton
             // 
@@ -125,30 +155,74 @@
             // 
             // dataGridViewsBox
             // 
-            this.dataGridViewsBox.Controls.Add(this.dataGridView1);
+            this.dataGridViewsBox.Controls.Add(this.mainGridView);
+            this.dataGridViewsBox.Controls.Add(this.usersGridView);
             this.dataGridViewsBox.Location = new System.Drawing.Point(12, 59);
             this.dataGridViewsBox.Name = "dataGridViewsBox";
-            this.dataGridViewsBox.Size = new System.Drawing.Size(606, 416);
+            this.dataGridViewsBox.Size = new System.Drawing.Size(700, 416);
             this.dataGridViewsBox.TabIndex = 2;
             this.dataGridViewsBox.TabStop = false;
             // 
+            // mainGridView
+            // 
+            this.mainGridView.AllowUserToAddRows = false;
+            this.mainGridView.AllowUserToDeleteRows = false;
+            this.mainGridView.AllowUserToResizeColumns = false;
+            this.mainGridView.AllowUserToResizeRows = false;
+            this.mainGridView.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.mainGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.mainGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.ColorCode,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mainGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            this.mainGridView.GridColor = System.Drawing.SystemColors.ButtonShadow;
+            this.mainGridView.Location = new System.Drawing.Point(6, 19);
+            this.mainGridView.Name = "mainGridView";
+            this.mainGridView.RowHeadersVisible = false;
+            this.mainGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.mainGridView.Size = new System.Drawing.Size(688, 391);
+            this.mainGridView.TabIndex = 1;
+            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Location = new System.Drawing.Point(18, 12);
+            this.panel1.Controls.Add(this.mainGridDataButton);
+            this.panel1.Controls.Add(this.usersGridDataButton);
+            this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(594, 41);
+            this.panel1.Size = new System.Drawing.Size(700, 41);
             this.panel1.TabIndex = 3;
             // 
-            // button1
+            // mainGridDataButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(96, 35);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Пользователи";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.mainGridDataButton.Location = new System.Drawing.Point(12, 3);
+            this.mainGridDataButton.Name = "mainGridDataButton";
+            this.mainGridDataButton.Size = new System.Drawing.Size(96, 35);
+            this.mainGridDataButton.TabIndex = 1;
+            this.mainGridDataButton.Text = "Общее";
+            this.mainGridDataButton.UseVisualStyleBackColor = true;
+            this.mainGridDataButton.Click += new System.EventHandler(this.mainGridDataButton_Click);
+            // 
+            // usersGridDataButton
+            // 
+            this.usersGridDataButton.Location = new System.Drawing.Point(114, 3);
+            this.usersGridDataButton.Name = "usersGridDataButton";
+            this.usersGridDataButton.Size = new System.Drawing.Size(96, 35);
+            this.usersGridDataButton.TabIndex = 0;
+            this.usersGridDataButton.Text = "Пользователи";
+            this.usersGridDataButton.UseVisualStyleBackColor = true;
+            this.usersGridDataButton.Click += new System.EventHandler(this.usersDataGridButton_Click);
             // 
             // panel2
             // 
@@ -156,7 +230,7 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.LogsLabel);
             this.panel2.Controls.Add(this.textBox1);
-            this.panel2.Location = new System.Drawing.Point(624, 12);
+            this.panel2.Location = new System.Drawing.Point(718, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(376, 521);
             this.panel2.TabIndex = 4;
@@ -235,66 +309,61 @@
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Hash
+            // dataGridViewTextBoxColumn2
             // 
-            this.Hash.HeaderText = "Хэш";
-            this.Hash.MaxInputLength = 12;
-            this.Hash.Name = "Hash";
-            this.Hash.ReadOnly = true;
-            this.Hash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Hash.ToolTipText = "Хэш записи пользователя";
-            this.Hash.Width = 50;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Имя";
+            this.dataGridViewTextBoxColumn2.MaxInputLength = 12;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn2.ToolTipText = "Имя пользователя";
             // 
-            // Username
+            // dataGridViewTextBoxColumn3
             // 
-            this.Username.HeaderText = "Имя";
-            this.Username.MaxInputLength = 12;
-            this.Username.Name = "Username";
-            this.Username.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Username.ToolTipText = "Имя пользователя";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Пароль";
+            this.dataGridViewTextBoxColumn3.MaxInputLength = 12;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn3.ToolTipText = "Пароль пользователя";
             // 
-            // Password
+            // dataGridViewTextBoxColumn4
             // 
-            this.Password.HeaderText = "Пароль";
-            this.Password.MaxInputLength = 12;
-            this.Password.Name = "Password";
-            this.Password.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Password.ToolTipText = "Пароль пользователя";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Позиция";
+            this.dataGridViewTextBoxColumn4.MaxInputLength = 10;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn4.ToolTipText = "Позиция пользователя на игровом поле";
             // 
-            // Position
+            // dataGridViewTextBoxColumn5
             // 
-            this.Position.HeaderText = "Позиция";
-            this.Position.MaxInputLength = 10;
-            this.Position.Name = "Position";
-            this.Position.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Position.ToolTipText = "Позиция пользователя на игровом поле";
-            this.Position.Width = 120;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Клан";
+            this.dataGridViewTextBoxColumn5.MaxInputLength = 7;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn5.ToolTipText = "Клан, в котором состоит пользователь";
+            this.dataGridViewTextBoxColumn5.Width = 80;
             // 
-            // Clan
+            // ColorCode
             // 
-            this.Clan.HeaderText = "Клан";
-            this.Clan.MaxInputLength = 7;
-            this.Clan.Name = "Clan";
-            this.Clan.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Clan.ToolTipText = "Клан, в котором состоит пользователь";
-            this.Clan.Width = 80;
+            this.ColorCode.HeaderText = "Код цвета";
+            this.ColorCode.Name = "ColorCode";
+            this.ColorCode.Width = 80;
             // 
-            // ActionPoints
+            // dataGridViewTextBoxColumn6
             // 
-            this.ActionPoints.HeaderText = "Очки действий";
-            this.ActionPoints.Name = "ActionPoints";
-            this.ActionPoints.Width = 80;
+            this.dataGridViewTextBoxColumn6.HeaderText = "Очки действий";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 80;
             // 
-            // Health
+            // dataGridViewTextBoxColumn7
             // 
-            this.Health.HeaderText = "Здоровье";
-            this.Health.Name = "Health";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Здоровье";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1012, 545);
+            this.ClientSize = new System.Drawing.Size(1106, 545);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridViewsBox);
@@ -302,9 +371,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.dataGridViewsBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mainGridView)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -315,13 +385,13 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView usersGridView;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.GroupBox dataGridViewsBox;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button usersGridDataButton;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel3;
@@ -330,13 +400,18 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LogsLabel;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.DataGridView mainGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hash;
         private System.Windows.Forms.DataGridViewTextBoxColumn Username;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Position;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Clan;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ActionPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Health;
+        private System.Windows.Forms.Button mainGridDataButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColorCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
     }
 }
 
