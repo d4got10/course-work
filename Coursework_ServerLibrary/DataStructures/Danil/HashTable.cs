@@ -4,7 +4,8 @@ using System.Text;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-    public class HashTable<TKey, TValue> where TKey : IEquatable<TKey>
+    public class HashTable<TKey, TValue> : IHashTableFinder<TKey, TValue> 
+                                            where TKey : IEquatable<TKey>
     {
         private class Node<UKey, UValue> where UKey : TKey where UValue : TValue
         {

@@ -24,3 +24,4 @@ D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_SharedLibrar
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerLibrary.pdb
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_SharedLibrary.pdb
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.UserAddForm.resources
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.PlayerAddForm.resources

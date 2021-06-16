@@ -20,6 +20,7 @@ namespace Сoursework_Server
         }
         public System.Collections.Generic.IReadOnlyList<Player> Players => _players;
         public HashTable<string, UserData>.ValueWithHash[] UsersValues => _users.Values;
+        public IHashTableFinder<string, UserData> UsersFinder => _users;
 
         private IClientsProvider _clientsProvider;
 
@@ -32,6 +33,19 @@ namespace Сoursework_Server
 
             Grid = new GameGrid(AppConstants.GameGridSize);
             _clientsProvider = clientsProvider;
+        }
+
+        public bool TryGetUserData(string name, string password, out UserData data)
+        {
+            if(_users.TryFind(name, out data, out var hash))
+            {
+                if(password == data.Password)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
         public bool TryGetPlayer(string name, string password, out Player player)
@@ -72,7 +86,7 @@ namespace Сoursework_Server
         public Player CreateAndAddPlayer(UserData userData, Vector2 position, Clan clan, int actionPoints, int health)
         {
             if (_playersByName.TryFind(userData.Login, out var players))
-                throw new Exception("User with the same username already exists.");
+                throw new Exception("Player with the same username already exists.");
 
             var newPlayer = new Player(this, this, this, userData);
             newPlayer.Clan = clan;
@@ -82,6 +96,7 @@ namespace Сoursework_Server
             if (Grid.TryPlacePlayer(newPlayer, position) == false) 
                 throw new Exception($"Cell in position {position} is already taken.");
 
+            _players.Add(newPlayer);
             _playersByName.Add(userData.Login, newPlayer);
 
             return newPlayer;

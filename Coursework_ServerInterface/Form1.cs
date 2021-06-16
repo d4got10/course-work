@@ -62,8 +62,6 @@ namespace Coursework_ServerInterface
 
             _currentGridView = GridViews.Main;
 
-            UpdateGridView();
-            UpdateServerButtons();
 
             ServerPowerStateChange += (t) => UpdateServerButtons();
             ServerIsRunning = false;
@@ -72,6 +70,8 @@ namespace Coursework_ServerInterface
             UpdateMainGridView();
             UpdateUsersGridView();
 
+            UpdateGridView();
+            UpdateServerButtons();
             Server.GameLogic.UsersUpdated += () => _usersNeedsToUpdate = true;
         }
 
@@ -86,8 +86,16 @@ namespace Coursework_ServerInterface
                 row[0] = values[i].UserData.Login;//.Hash.ToString();
                 row[1] = values[i].UserData.Password;
                 row[2] = values[i].Position.ToString();
-                row[3] = values[i].Clan.Name;//.Position.ToString();
-                row[4] = values[i].Clan.ColorCode;
+                if (values[i].Clan != null)
+                {
+                    row[3] = values[i].Clan.Name;//.Position.ToString();
+                    row[4] = values[i].Clan.ColorCode;
+                }
+                else
+                {
+                    row[3] = "";
+                    row[4] = "";
+                }
                 row[5] = values[i].ActionPointsCount.ToString();
                 row[6] = values[i].Health.ToString();
                 mainGridView.Rows.Add(row);
@@ -137,8 +145,17 @@ namespace Coursework_ServerInterface
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            var newUserForm = new UserAddForm(OnAddUser);
-            newUserForm.Show();
+            switch (_currentGridView)
+            {
+                case GridViews.Main:
+                    var newUserForm = new PlayerAddForm(Server.GameLogic.UsersFinder, OnAddPlayer);
+                    newUserForm.Show();
+                    break;
+                case GridViews.Users:
+                    var newPlayerForm = new UserAddForm(OnAddUser);
+                    newPlayerForm.Show();
+                    break;
+            }
         }
 
         private void OnAddUser(string[] values)
@@ -160,6 +177,41 @@ namespace Coursework_ServerInterface
             catch(Exception ex)
             {
                 MessageBox.Show("Некорректные входные данные.");
+            }
+        }
+
+        private void OnAddPlayer(string[] values)
+        {
+            try
+            {
+                if (values.Length == 7)
+                {
+                    var username = values[0];
+                    var password = values[1];
+
+                    if (Server.GameLogic.TryGetUserData(username, password, out var data))
+                    {
+                        var splittedPosition = values[4].Split(':');
+                        var position = new Vector2(int.Parse(splittedPosition[0]), int.Parse(splittedPosition[1]));
+                        var actionPoints = int.Parse(values[5]);
+                        var health = int.Parse(values[6]);
+
+                        //TODO: find clan and add to user
+                        var player = Server.GameLogic.CreateAndAddPlayer(data, position, null, actionPoints, health);
+                    }
+                    else
+                    {
+                        throw new Exception("Пользователя с такими данными не существует.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Введено некорректное количество полей.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Некорректные входные данные." + ex.Message);
             }
         }
 
@@ -194,6 +246,7 @@ namespace Coursework_ServerInterface
             switch (_currentGridView)
             {
                 case GridViews.Main:
+                    UpdateMainGridView();
                     mainGridView.Show();
                     break;
                 case GridViews.Users:
