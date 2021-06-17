@@ -1,4 +1,6 @@
-﻿using CourseWork_Server.DataStructures.Danil;
+﻿using CourseWork_Server.DataStructures;
+using CourseWork_Server.DataStructures.Danil;
+using CourseWork_Server.DataStructures.Matvey;
 using Shared;
 using System;
 
@@ -9,8 +11,8 @@ namespace Сoursework_Server
         public GameGrid Grid { get; private set; }
 
         private System.Collections.Generic.List<Player> _players;
-        private HashTable<string, Clan> _clans;
-        private HashTable<string, UserData> _users;
+        private CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan> _clans;
+        private CourseWork_Server.DataStructures.Danil.HashTable<string, UserData> _users;
         private RedBlackTree<string, Player> _playersByName;
 
         public event Action UsersUpdated
@@ -19,20 +21,24 @@ namespace Сoursework_Server
             remove => _users.Changed -= value;
         }
         public System.Collections.Generic.IReadOnlyList<Player> Players => _players;
-        public HashTable<string, UserData>.ValueWithHash[] UsersValues => _users.Values;
+        public CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>.ValueWithHash[] UsersValues => _users.Values;
         public IHashTableFinder<string, UserData> UsersFinder => _users;
+        public IHashTableFinder<string, Clan> ClansFinder => _clans;
 
         private IClientsProvider _clientsProvider;
 
         public GameLogic(IClientsProvider clientsProvider)
         {
             _players = new System.Collections.Generic.List<Player>();
-            _users = new HashTable<string, UserData>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
-            _clans = new HashTable<string, Clan>(StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
+            _users = new CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>(CourseWork_Server.DataStructures.Danil.StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
+            _clans = new CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>(Coursework_Server.DataStructures.Matvey.StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
             _playersByName = new RedBlackTree<string, Player>();
 
             Grid = new GameGrid(AppConstants.GameGridSize);
             _clientsProvider = clientsProvider;
+
+            var clan = new Clan("FEDORI", "#ff00ff");
+            _clans.AddElem(clan.Name, clan);
         }
 
         public bool TryGetUserData(string name, string password, out UserData data)
@@ -155,8 +161,13 @@ namespace Сoursework_Server
 
         public void RemovePlayer(Player target)
         {
-            _users.Remove(target.Name);
+            _players.Remove(target);
             Grid.RemovePlayer(target);
+        }
+
+        public void RemoveUser(UserData user)
+        {
+            _users.Remove(user.Login);
         }
     }
 }

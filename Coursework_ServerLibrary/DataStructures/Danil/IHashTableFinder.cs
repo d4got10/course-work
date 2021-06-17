@@ -1,4 +1,4 @@
-﻿namespace CourseWork_Server.DataStructures.Danil
+﻿namespace CourseWork_Server.DataStructures
 {
     public interface IHashTableFinder<TKey, TValue>
     {

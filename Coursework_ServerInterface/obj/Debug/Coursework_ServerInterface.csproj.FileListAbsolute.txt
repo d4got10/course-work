@@ -25,3 +25,20 @@ D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_ServerLibrar
 D:\repos\Coursework\Coursework_ServerInterface\bin\Debug\Coursework_SharedLibrary.pdb
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.UserAddForm.resources
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.PlayerAddForm.resources
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.exe.config
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.exe
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\bin\Debug\Coursework_ServerInterface.pdb
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\bin\Debug\Coursework_ServerLibrary.dll
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\bin\Debug\Coursework_SharedLibrary.dll
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\bin\Debug\Coursework_ServerLibrary.pdb
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\bin\Debug\Coursework_SharedLibrary.pdb
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.AssemblyReference.cache
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.Form1.resources
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.PlayerAddForm.resources
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.Properties.Resources.resources
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.UserAddForm.resources
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.GenerateResource.cache
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.CoreCompileInputs.cache
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.CopyComplete
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.exe
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.pdb

@@ -148,7 +148,7 @@ namespace Coursework_ServerInterface
             switch (_currentGridView)
             {
                 case GridViews.Main:
-                    var newUserForm = new PlayerAddForm(Server.GameLogic.UsersFinder, OnAddPlayer);
+                    var newUserForm = new PlayerAddForm(Server.GameLogic.UsersFinder, Server.GameLogic.ClansFinder, OnAddPlayer);
                     newUserForm.Show();
                     break;
                 case GridViews.Users:
@@ -197,7 +197,13 @@ namespace Coursework_ServerInterface
                         var health = int.Parse(values[6]);
 
                         //TODO: find clan and add to user
-                        var player = Server.GameLogic.CreateAndAddPlayer(data, position, null, actionPoints, health);
+                        var clanName = values[2];
+                        var clanColorCode = values[3];
+                        Clan clan;
+
+                        Server.GameLogic.ClansFinder.TryFind(clanName, out clan, out _);
+
+                        var player = Server.GameLogic.CreateAndAddPlayer(data, position, clan, actionPoints, health);
                     }
                     else
                     {
@@ -217,14 +223,22 @@ namespace Coursework_ServerInterface
 
         private void RemoveButton_Click(object sender, EventArgs e)
         {
-            if (usersGridView.SelectedRows.Count > 0)
+            switch (_currentGridView)
             {
-                string username = (string)usersGridView.SelectedRows[0].Cells[1].Value;
-                string password = (string)usersGridView.SelectedRows[0].Cells[2].Value;
-                if (Server.GameLogic.TryGetPlayer(username, password, out var player))
-                {
-                    Server.GameLogic.RemovePlayer(player);
-                }
+                case GridViews.Main:
+
+                    break;
+                case GridViews.Users:
+                    if (usersGridView.SelectedRows.Count > 0)
+                    {
+                        string username = (string)usersGridView.SelectedRows[0].Cells[1].Value;
+                        string password = (string)usersGridView.SelectedRows[0].Cells[2].Value;
+                        if (Server.GameLogic.UsersFinder.TryFind(username, out var user, out _))
+                        {
+                            Server.GameLogic.RemoveUser(user);
+                        }
+                    }
+                    break;
             }
         }
 

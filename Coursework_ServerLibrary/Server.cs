@@ -34,9 +34,10 @@ namespace Сoursework_Server
 
         private void Populate()
         {
-            GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("123", "d4got10"));
+            GameLogic.CreateUser("123", "d4got10");
             GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("Fedor", "Fet"));
             GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("German", "qwerty"));
+
             //GameLogic.CreateAndAddPlayer("German", "Pedorenko", "", 5, 3);
         }
 

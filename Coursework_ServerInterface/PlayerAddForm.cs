@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CourseWork_Server.DataStructures;
 using CourseWork_Server.DataStructures.Danil;
 using Сoursework_Server;
 
@@ -16,12 +17,14 @@ namespace Coursework_ServerInterface
     {
         private Action<string[]> _onAddAction;
         private IHashTableFinder<string, UserData> _users;
+        private IHashTableFinder<string, Clan> _clans;
 
-        public PlayerAddForm(IHashTableFinder<string, UserData> users, Action<string[]> onAddAction)
+        public PlayerAddForm(IHashTableFinder<string, UserData> users, IHashTableFinder<string, Clan> clans, Action<string[]> onAddAction)
         {
             InitializeComponent();
             _onAddAction = onAddAction;
             _users = users;
+            _clans = clans;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -61,7 +64,14 @@ namespace Coursework_ServerInterface
 
         private void clanTextBox_TextChanged(object sender, EventArgs e)
         {
-            //TODO: change color code
+            if (_clans.TryFind(clanTextBox.Text, out var data, out _))
+            {
+                colorTextBox.Text = data.ColorCode;
+            }
+            else
+            {
+                colorTextBox.Text = "ошибка";
+            }
         }
     }
 }

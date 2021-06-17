@@ -1,107 +1,114 @@
 ﻿using System;
 
-namespace _4._FSD__5_HT
+namespace CourseWork_Server.DataStructures.Matvey
 {
-    public class List<T> where T : IEquatable<T>
+    public class List<TKey, TValue> where TKey : IEquatable<TKey>
     {
-        public class Node<U> where U : IEquatable<U>
+        public class Node 
         {
-            public Node<U> next;
-            public U data;
-            public Node<U> prev;
+            public Node Next;
+            public TKey Data;
+            public TValue Value;
+            public Node Prev;
 
             public Node()
             {
-                next = this;
-                data = default;
-                prev = this;
+                Next = this;
+                Data = default;
+                Value = default;
+                Prev = this;
             }
-            public Node(U d)
+            public Node(TKey key, TValue value)
             {
-                next = this;
-                data = d;
-                prev = this;
+                Next = this;
+                Data = key;
+                Value = value;
+                Prev = this;
             }
         }
-        Node<T> head;
+        Node head;
         public List()
         {
             head = null;
         }
-        public bool IsFindData(T d)
+        public bool IsFindData(TKey d, out TValue value)
         {
+            value = default;
             if (head != null)
             {
-                Node<T> current = head;
-                if (current.data.Equals(d))
+                Node current = head;
+                if (current.Data.Equals(d))
+                {
+                    value = current.Value;
                     return true;
-                current = current.next;
+                }
+                current = current.Next;
                 while (current != head)
                 {
-                    if (current.data.Equals(d))
+                    if (current.Data.Equals(d))
+                    {
+                        value = current.Value;
                         return true;
-                    current = current.next;
+                    }
+                    current = current.Next;
                 }
                 return false;
             }
-            else return false;
+            return false;
         }
-        public void AddNode(T d)
+        public void AddNode(TKey key, TValue value)
         {
             if (head != null)
             {
-                if (!IsFindData(d))
-                {
-                    Node<T> current = head;
-                    current = current.next;
-                    while (current != head)
-                        current = current.next;
-                    var nodeToAdd = new Node<T>(d);
-                    nodeToAdd.next = current;
-                    nodeToAdd.prev = current.prev;
-                    current.prev.next = nodeToAdd;
-                    current.prev = nodeToAdd;
-                }
+                Node current = head;
+                current = current.Next;
+                while (current != head)
+                    current = current.Next;
+                var nodeToAdd = new Node(key, value);
+                nodeToAdd.Next = current;
+                nodeToAdd.Prev = current.Prev;
+                current.Prev.Next = nodeToAdd;
+                current.Prev = nodeToAdd;
             }
             else
             {
-                Node<T> nodeToAdd = new Node<T>(d);
+                Node nodeToAdd = new Node(key, value);
                 head = nodeToAdd;
             }
         }
-        public bool DeleteNode(T d)
+        public bool DeleteNode(TKey d)
         {
             if (head != null)
             {
-                if (head.data.Equals(d))
+                if (head.Data.Equals(d))
                 {
-                    if (head.next == head)
+                    if (head.Next == head)
                     {
                         head = null;
                         return true;
                     }
                     else
                     {
-                        Node<T> current = head.next;
-                        current.prev = head.prev;
-                        head.prev.next = current;
+                        Node current = head.Next;
+                        current.Prev = head.Prev;
+                        head.Prev.Next = current;
                         head = current;
                         return true;
                     }
                 }
                 else
                 {
-                    var current = head.next;
+                    var current = head.Next;
                     while (current != head)
                     {
-                        if (current.data.Equals(d))
+                        if (current.Data.Equals(d))
                         {
-                            Node<T> temp = current.next;
-                            temp.prev = current.prev;
-                            current.prev.next = temp;
+                            Node temp = current.Next;
+                            temp.Prev = current.Prev;
+                            current.Prev.Next = temp;
                             return true;
                         }
-                        current = current.next;
+                        current = current.Next;
                     }
                 }
 
@@ -112,32 +119,33 @@ namespace _4._FSD__5_HT
         {
             if (head != null)
             {
-                Node<T> current = head;
+                Node current = head;
                 do
                 {
-                    Console.Write(current.data + " ");
-                    current = current.next;
+                    Console.Write(current.Data + " ");
+                    current = current.Next;
                 } while (current != head);
             }
             else Console.WriteLine("_NULL_");
         }
     }
-    public class HashTable<T> where T : IEquatable<T>
+    public class HashTable<TKey, TValue> : IHashTableFinder<TKey, TValue>
+                                            where TKey : IEquatable<TKey>
     {
-        public delegate int HashFunction(T key, int size);
+        public delegate int HashFunction(TKey key, int size);
         public readonly HashFunction Function;
 
         public int size;
-        public List<T>[] table;
+        public List<TKey ,TValue>[] table;
         public HashTable(HashFunction function, int s)
         {
             Function = function;
             if (s < 1) throw new Exception("Хеш таблица пуста");
-            table = new List<T>[s];
+            table = new List<TKey, TValue>[s];
             size = s;
             for (int i = 0; i < size; i++)
             {
-                table[i] = new List<T>();
+                table[i] = new List<TKey, TValue>();
             }
         }
         public void ShowHT()
@@ -148,13 +156,13 @@ namespace _4._FSD__5_HT
                 Console.WriteLine('\n');
             }
         }
-        public void AddElem(T d)
+        public void AddElem(TKey key, TValue value)
         {
-            table[Function(d, size)].AddNode(d);
+            table[Function(key, size)].AddNode(key, value);
         }
-        public void DeletElem(T d)
+        public void DeletElem(TKey key, TValue d)
         {
-            if (table[Function(d, size)].DeleteNode(d))
+            if (table[Function(key, size)].DeleteNode(key))
             {
                 Console.WriteLine("Элемент удалён\n");
                 ShowHT();
@@ -167,16 +175,18 @@ namespace _4._FSD__5_HT
                 Console.WriteLine('\n');
             }
         }
-        public void Search(T d)
+        public bool TryFind(TKey key, out TValue value, out int hash)
         {
-            int n = Function(d, size);
-            if (table[n].IsFindData(d))
+            int n = Function(key, size);
+            if (table[n].IsFindData(key, out value))
             {
-                Console.WriteLine("Элемент " + d + " найден в строке " + Function(d, size) + '\n');
+                hash = n;
+                return true;
             }
             else
             {
-                Console.WriteLine("Элемент " + d + " НЕ НАЙДЕН\n");
+                hash = -1;
+                return false;
             }
         }
     }
