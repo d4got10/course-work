@@ -38,8 +38,7 @@ namespace Coursework_ServerInterface
         }
 
         private GridViews _currentGridView;
-        private bool _mainNeedsToUpdate;
-        private bool _usersNeedsToUpdate;
+        private bool _gridDataNeedsToUpdate;
 
         public Form1()
         {
@@ -54,14 +53,9 @@ namespace Coursework_ServerInterface
             usersGridView.MultiSelect = false;
             usersGridView.Dock = DockStyle.Fill;
 
-            usersGridView.CellFormatting += new
-                DataGridViewCellFormattingEventHandler(
-                songsDataGridView_CellFormatting);
-
             usersGridView.DefaultCellStyle.SelectionForeColor = Color.Gray;
 
             _currentGridView = GridViews.Main;
-
 
             ServerPowerStateChange += (t) => UpdateServerButtons();
             ServerIsRunning = false;
@@ -72,7 +66,9 @@ namespace Coursework_ServerInterface
 
             UpdateGridView();
             UpdateServerButtons();
-            Server.GameLogic.UsersUpdated += () => _usersNeedsToUpdate = true;
+            Server.GameLogic.PlayersUpdated += () => _gridDataNeedsToUpdate = true;
+            Server.GameLogic.UsersUpdated += () => _gridDataNeedsToUpdate = true;
+            Server.GameLogic.ClansUpdated += () => _gridDataNeedsToUpdate = true;
         }
 
         private void UpdateMainGridView()
@@ -100,7 +96,6 @@ namespace Coursework_ServerInterface
                 row[6] = values[i].Health.ToString();
                 mainGridView.Rows.Add(row);
             }
-            _mainNeedsToUpdate = false;
         }
 
         private void UpdateUsersGridView()
@@ -116,46 +111,22 @@ namespace Coursework_ServerInterface
                 row[2] = values[i].Value.Password;
                 usersGridView.Rows.Add(row);
             }
-            _usersNeedsToUpdate = false;
-        }
-
-        private void songsDataGridView_CellFormatting(object sender,
-            System.Windows.Forms.DataGridViewCellFormattingEventArgs e)
-        {
-            if (e != null)
-            {
-                if (usersGridView.Columns[e.ColumnIndex].Name == "Release Date")
-                {
-                    if (e.Value != null)
-                    {
-                        try
-                        {
-                            e.Value = DateTime.Parse(e.Value.ToString())
-                                .ToLongDateString();
-                            e.FormattingApplied = true;
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine("{0} is not a valid date.", e.Value.ToString());
-                        }
-                    }
-                }
-            }
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
+            Form form = null;
             switch (_currentGridView)
             {
                 case GridViews.Main:
-                    var newUserForm = new PlayerAddForm(Server.GameLogic.UsersFinder, Server.GameLogic.ClansFinder, OnAddPlayer);
-                    newUserForm.Show();
+                    form = new PlayerAddForm(Server.GameLogic.UsersFinder, Server.GameLogic.ClansFinder, OnAddPlayer);
                     break;
                 case GridViews.Users:
-                    var newPlayerForm = new UserAddForm(OnAddUser);
-                    newPlayerForm.Show();
+                    form = new UserAddForm(OnAddUser);
                     break;
             }
+            if(form != null)
+                form.Show();
         }
 
         private void OnAddUser(string[] values)
@@ -226,7 +197,18 @@ namespace Coursework_ServerInterface
             switch (_currentGridView)
             {
                 case GridViews.Main:
-
+                    if (usersGridView.SelectedRows.Count > 0)
+                    {
+                        string username = (string)mainGridView.SelectedRows[0].Cells[0].Value;
+                        string password = (string)mainGridView.SelectedRows[0].Cells[1].Value;
+                        if (Server.GameLogic.PlayersByName.TryFind(username, out var players))
+                        {
+                            foreach (var player in players)
+                            {
+                                Server.GameLogic.RemovePlayer(player);
+                            }
+                        }
+                    }
                     break;
                 case GridViews.Users:
                     if (usersGridView.SelectedRows.Count > 0)
@@ -264,11 +246,13 @@ namespace Coursework_ServerInterface
                     mainGridView.Show();
                     break;
                 case GridViews.Users:
+                    UpdateUsersGridView();
                     usersGridView.Show();
                     break;
                 default:
                     break;
             }
+            _gridDataNeedsToUpdate = false;
         }
 
         private void DisableAllGridViews()
@@ -321,11 +305,10 @@ namespace Coursework_ServerInterface
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            UpdateConsoleText();
-            if (_mainNeedsToUpdate)
-                UpdateMainGridView();
-            if (_usersNeedsToUpdate)
-                UpdateUsersGridView();
+            if (_gridDataNeedsToUpdate)
+            {
+                UpdateGridView();
+            }
         }
 
     }

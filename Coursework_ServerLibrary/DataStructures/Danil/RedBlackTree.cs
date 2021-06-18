@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
 
-    public class RedBlackTree<TKey, TValue> where TKey : IComparable<TKey> where TValue : IEquatable<TValue>
+    public class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>
+        where TKey : IComparable<TKey> 
+        where TValue : IEquatable<TValue>
     {
         #region Private Variables
         private Node<TKey, TValue> _root;
@@ -23,7 +26,7 @@ namespace CourseWork_Server.DataStructures.Danil
         #endregion
 
         #region Public Functions
-        public List<TValue> GetValuesRange(TKey min, TKey max)
+        public IEnumerable<TValue> GetValuesRange(TKey min, TKey max)
         {
             //если min > max кидаем ошибку
             if (min.CompareTo(max) > 0) throw new ArgumentOutOfRangeException();
@@ -55,7 +58,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: объект типа T
         //Входные данные: значение для поиска
         //Выходные данные: найден или нет + обьект или пустой указатель
-        public bool TryFind(TKey key, out List<TValue> found)
+        public bool TryFind(TKey key, out IEnumerable<TValue> found)
         {
             var node = Find(key);
             if(node != null)

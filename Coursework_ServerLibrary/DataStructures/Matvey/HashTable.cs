@@ -160,7 +160,7 @@ namespace CourseWork_Server.DataStructures.Matvey
         {
             table[Function(key, size)].AddNode(key, value);
         }
-        public void DeletElem(TKey key, TValue d)
+        public void Remove(TKey key, TValue d)
         {
             if (table[Function(key, size)].DeleteNode(key))
             {

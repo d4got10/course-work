@@ -42,10 +42,10 @@ namespace Coursework_ServerInterface
         private void PlayerAddForm_Load(object sender, EventArgs e)
         {
             positionXField.Minimum = -AppConstants.GameGridSize / 2;
-            positionXField.Maximum = AppConstants.GameGridSize / 2;
+            positionXField.Maximum = AppConstants.GameGridSize / 2 - 1;
 
             positionYField.Minimum = -AppConstants.GameGridSize / 2;
-            positionYField.Maximum = AppConstants.GameGridSize / 2;
+            positionYField.Maximum = AppConstants.GameGridSize / 2 - 1;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -70,7 +70,10 @@ namespace Coursework_ServerInterface
             }
             else
             {
-                colorTextBox.Text = "ошибка";
+                if (string.IsNullOrEmpty(clanTextBox.Text))
+                    colorTextBox.Text = "";
+                else
+                    colorTextBox.Text = "ошибка";
             }
         }
     }

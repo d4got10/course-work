@@ -129,28 +129,70 @@ namespace CourseWork_Server.DataStructures.Danil
             }
         }
 
+        public T[] ToArray()
+        {
+            int count = 0;
+            if (_root != null)
+            {
+                count++;
+                for (var i = _root.Next; i != _root; i = i.Next)
+                {
+                    count++;
+                }
+            }
+
+            var arr = new T[count];
+            var node = _root;
+            for(int i = 0; i < count; i++)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+            }
+            return arr;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             if (_root != null)
             {
-
-                var node = _root;
-                do
+                var arr = ToArray();
+                for(int i = 0; i < arr.Length; i++)
                 {
-                    yield return node.Value;
-                    node = node.Next;
-                } while (node != _root);
+                    yield return arr[i];
+                }
             }
+            
+            //if (_root != null)
+            //{
+            //    var node = _root;
+            //    do
+            //    {
+            //        yield return node.Value;
+            //        node = node.Next;
+            //    } while (node != _root);
+            //}
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            var node = _root;
-            do
+            if (_root != null)
             {
-                yield return node.Value;
-                node = node.Next;
-            } while (node != _root);
+                var arr = ToArray();
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    yield return arr[i];
+                }
+            }
+
+            //if (_root != null)
+            //{
+            //    var node = _root;
+            //    do
+            //    {
+            //        yield return node.Value;
+            //        node = node.Next;
+            //    } while (node != _root);
+            //}
         }
 
         private class Node<U>
