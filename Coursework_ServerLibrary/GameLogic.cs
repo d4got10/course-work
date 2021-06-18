@@ -41,7 +41,7 @@ namespace Сoursework_Server
         private CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan> _clans;
         private CourseWork_Server.DataStructures.Danil.HashTable<string, UserData> _users;
         private RedBlackTree<string, Player> _playersByName;
-        private RedBlackTree<string, Player> _playersByClan; // Поменять на дерево Матвея
+        private RedBlackTree<string, Player> _playersByClan; //TODO: Поменять на дерево Матвея
         private RedBlackTree<int, Player> _playersByHealth;
         private RedBlackTree<int, Player> _playersByActionPoints;
         private IClientsProvider _clientsProvider;

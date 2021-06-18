@@ -11,6 +11,8 @@ namespace CourseWork_Server.DataStructures.Danil
         #region Private Variables
         private Node<TKey, TValue> _root;
         private Node<TKey, TValue> _nil;
+
+        private int _comparisons = 0;
         #endregion
 
         #region Constructor
@@ -60,6 +62,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Выходные данные: найден или нет + обьект или пустой указатель
         public bool TryFind(TKey key, out IEnumerable<TValue> found)
         {
+            _comparisons = 0;
             var node = Find(key);
             if(node != null)
             {
@@ -493,12 +496,23 @@ namespace CourseWork_Server.DataStructures.Danil
             while(node != _nil)
             {
                 if (node.Key.CompareTo(key) > 0)
+                {
                     node = node.LeftChild;
+                    _comparisons += 1;
+                }
                 else if (node.Key.CompareTo(key) < 0)
+                {
                     node = node.RightChild;
+                    _comparisons += 2;
+                }
                 else
+                {
+                    _comparisons += 2;
+                    Console.WriteLine($"ДАННЫЕ: поиск потребовал {_comparisons} сравнений");
                     return node;
+                }
             }
+            Console.WriteLine($"ДАННЫЕ: поиск потребовал {_comparisons} сравнений");
             return null;
         }
 

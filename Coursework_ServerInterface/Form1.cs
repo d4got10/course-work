@@ -276,21 +276,75 @@ namespace Coursework_ServerInterface
             }
         }
 
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            Form form = null;
+            switch (_currentGridView)
+            {
+                case GridViews.Main:
+                    form = new PlayerFindForm(OnPlayerFind);
+                    break;
+                case GridViews.Users:
+                    break;
+                case GridViews.Clans:
+                    break;
+            }
+            form?.Show();
+        }
+
+        private void OnPlayerFind(string[] values)
+        {
+            var username = values[0];
+            var password = values[1];
+            if(Server.GameLogic.PlayersByName.TryFind(username, out var players))
+            {
+                DisplayPlayers(players);
+            }
+            else
+            {
+                MessageBox.Show("Пользователей с такими данными не найдено.");
+            }
+        }
+
+        private void DisplayPlayers(IEnumerable<Player> players)
+        {
+            SetCurrentGridView(GridViews.Main);
+            mainGridView.Rows.Clear();
+            foreach(var player in players)
+            {
+                var row = new string[7];
+                row[0] = player.Name;
+                row[1] = player.Password;
+                row[2] = player.Position.ToString();
+                if (player.Clan != null)
+                {
+                    row[3] = player.Clan.Name;
+                    row[4] = player.Clan.ColorCode;
+                }
+                row[5] = player.ActionPointsCount.ToString();
+                row[6] = player.Health.ToString();
+                mainGridView.Rows.Add(row);
+            }
+        }
+
+        private void SetCurrentGridView(GridViews view)
+        {
+            _currentGridView = view;
+            UpdateGridView();
+        }
+
         private void usersDataGridButton_Click(object sender, EventArgs e)
         {
-            _currentGridView = GridViews.Users;
-            UpdateGridView();
+            SetCurrentGridView(GridViews.Users);
         }
 
         private void mainGridDataButton_Click(object sender, EventArgs e)
         {
-            _currentGridView = GridViews.Main;
-            UpdateGridView();
+            SetCurrentGridView(GridViews.Main);
         }
         private void clansGridDataButton_Click(object sender, EventArgs e)
         {
-            _currentGridView = GridViews.Clans;
-            UpdateGridView();
+            SetCurrentGridView(GridViews.Clans);
         }
 
         private void UpdateGridView()
@@ -301,6 +355,7 @@ namespace Coursework_ServerInterface
                 case GridViews.Main:
                     UpdateMainGridView();
                     mainGridView.Show();
+                    rangeButton.Show();
                     break;
                 case GridViews.Users:
                     UpdateUsersGridView();
@@ -321,6 +376,7 @@ namespace Coursework_ServerInterface
             mainGridView.Hide();
             usersGridView.Hide();
             clansGridView.Hide();
+            rangeButton.Hide();
         }
 
         private void UpdateServerButtons()
@@ -371,6 +427,7 @@ namespace Coursework_ServerInterface
             {
                 UpdateGridView();
             }
+            UpdateConsoleText();
         }
 
     }

@@ -64,6 +64,8 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.rangeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.dataGridViewsBox.SuspendLayout();
@@ -132,6 +134,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.rangeButton);
+            this.groupBox1.Controls.Add(this.searchButton);
             this.groupBox1.Controls.Add(this.RemoveButton);
             this.groupBox1.Controls.Add(this.AddButton);
             this.groupBox1.Location = new System.Drawing.Point(18, 481);
@@ -450,6 +454,25 @@
             this.dataGridViewTextBoxColumn9.ToolTipText = "Код цвета";
             this.dataGridViewTextBoxColumn9.Width = 200;
             // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(180, 10);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(81, 32);
+            this.searchButton.TabIndex = 2;
+            this.searchButton.Text = "Поиск";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // rangeButton
+            // 
+            this.rangeButton.Location = new System.Drawing.Point(267, 10);
+            this.rangeButton.Name = "rangeButton";
+            this.rangeButton.Size = new System.Drawing.Size(81, 32);
+            this.rangeButton.TabIndex = 3;
+            this.rangeButton.Text = "Диапозон";
+            this.rangeButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -509,6 +532,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.Button clansGridDataButton;
+        private System.Windows.Forms.Button rangeButton;
+        private System.Windows.Forms.Button searchButton;
     }
 }
 
