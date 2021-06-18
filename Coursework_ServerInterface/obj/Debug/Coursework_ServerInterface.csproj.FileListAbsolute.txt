@@ -42,3 +42,4 @@ C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInt
 C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.csproj.CopyComplete
 C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.exe
 C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.pdb
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.ClanAddForm.resources

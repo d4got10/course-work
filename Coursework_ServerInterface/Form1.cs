@@ -34,7 +34,8 @@ namespace Coursework_ServerInterface
         private enum GridViews
         {
             Main,
-            Users
+            Users,
+            Clans
         }
 
         private GridViews _currentGridView;
@@ -113,6 +114,21 @@ namespace Coursework_ServerInterface
             }
         }
 
+        private void UpdateClansGridView()
+        {
+
+            clansGridView.Rows.Clear();
+            var values = Server.GameLogic.ClansValues;
+            for (int i = 0; i < values.Length; i++)
+            {
+                string[] row = new string[3];
+                row[0] = values[i].Hash.ToString();
+                row[1] = values[i].Value.Name;
+                row[2] = values[i].Value.ColorCode;
+                clansGridView.Rows.Add(row);
+            }
+        }
+
         private void AddButton_Click(object sender, EventArgs e)
         {
             Form form = null;
@@ -123,6 +139,9 @@ namespace Coursework_ServerInterface
                     break;
                 case GridViews.Users:
                     form = new UserAddForm(OnAddUser);
+                    break;
+                case GridViews.Clans:
+                    form = new ClanAddForm(OnAddClan);
                     break;
             }
             if(form != null)
@@ -146,6 +165,28 @@ namespace Coursework_ServerInterface
                 }
             }
             catch(Exception ex)
+            {
+                MessageBox.Show("Некорректные входные данные.");
+            }
+        }
+
+        private void OnAddClan(string[] values)
+        {
+            try
+            {
+                if (values.Length == 2)
+                {
+                    var clanName = values[0];
+                    var colorCode = values[1];
+
+                    var clan = Server.GameLogic.CreateClan(clanName, colorCode);
+                }
+                else
+                {
+                    throw new Exception("Введено некорректное количество полей.");
+                }
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Некорректные входные данные.");
             }
@@ -221,6 +262,17 @@ namespace Coursework_ServerInterface
                         }
                     }
                     break;
+                case GridViews.Clans:
+                    if (usersGridView.SelectedRows.Count > 0)
+                    {
+                        string clanName = (string)clansGridView.SelectedRows[0].Cells[1].Value;
+                        string colorCode = (string)clansGridView.SelectedRows[0].Cells[2].Value;
+                        if (Server.GameLogic.ClansFinder.TryFind(clanName, out var clan, out _))
+                        {
+                            Server.GameLogic.RemoveClan(clan);
+                        }
+                    }
+                    break;
             }
         }
 
@@ -233,6 +285,11 @@ namespace Coursework_ServerInterface
         private void mainGridDataButton_Click(object sender, EventArgs e)
         {
             _currentGridView = GridViews.Main;
+            UpdateGridView();
+        }
+        private void clansGridDataButton_Click(object sender, EventArgs e)
+        {
+            _currentGridView = GridViews.Clans;
             UpdateGridView();
         }
 
@@ -249,6 +306,10 @@ namespace Coursework_ServerInterface
                     UpdateUsersGridView();
                     usersGridView.Show();
                     break;
+                case GridViews.Clans:
+                    UpdateClansGridView();
+                    clansGridView.Show();
+                    break;
                 default:
                     break;
             }
@@ -259,6 +320,7 @@ namespace Coursework_ServerInterface
         {
             mainGridView.Hide();
             usersGridView.Hide();
+            clansGridView.Hide();
         }
 
         private void UpdateServerButtons()

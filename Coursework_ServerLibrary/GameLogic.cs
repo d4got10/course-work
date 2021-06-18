@@ -20,13 +20,15 @@ namespace Сoursework_Server
             add => _playersChanged += value;
             remove => _playersChanged -= value;
         }
+        private Action _clansChanged;
         public event Action ClansUpdated //TODO: Матвею добавить события в хэштаблицу
         {
-            add => _users.Changed += value;
-            remove => _users.Changed -= value;
+            add => _clansChanged += value;
+            remove => _clansChanged -= value;
         }
         public System.Collections.Generic.IReadOnlyList<Player> Players => _players;
         public CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>.ValueWithHash[] UsersValues => _users.Values;
+        public CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>.ValueWithHash[] ClansValues => _clans.Values;
         public IHashTableFinder<string, UserData> UsersFinder => _users;
         public IHashTableFinder<string, Clan> ClansFinder => _clans;
         public ITreeFinder<string, Player> PlayersByName => _playersByName;
@@ -59,7 +61,7 @@ namespace Сoursework_Server
             _clientsProvider = clientsProvider;
 
             var clan = new Clan("FEDORI", "#ff00ff");
-            _clans.AddElem(clan.Name, clan);
+            _clans.Add(clan.Name, clan);
         }
 
         public bool TryGetUserData(string name, string password, out UserData data)
@@ -95,14 +97,26 @@ namespace Сoursework_Server
         public UserData CreateUser(string name, string password)
         {
             if (_users.TryFind(name, out _, out _))
-                throw new Exception("User data with the same name is already exits");
+                throw new Exception("Пользователь с таким именем уже существует.");
 
             var userData = new UserData(name, password);
 
             if (_users.Add(name, userData) == false)
-                throw new Exception("User data wasn't added to hashtable.");
+                throw new Exception("Пользователь не был добавлен в хэш-таблицу.");
 
             return userData;
+        }
+
+        public Clan CreateClan(string name, string colorCode)
+        {
+            if(_clans.TryFind(name, out _, out _))
+                throw new Exception("Клан с таким названием уже существует.");
+
+            var clan = new Clan(name, colorCode);
+
+            _clans.Add(clan.Name, clan);
+            _clansChanged?.Invoke();
+            return clan;
         }
 
         public Player CreateAndAddPlayer(UserData userData)
@@ -228,6 +242,7 @@ namespace Сoursework_Server
                         break;
                 }
             }
+            _clansChanged?.Invoke();
         }
 
         public void ChangeClan(Player player, Clan target)

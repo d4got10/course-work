@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CourseWork_Server.DataStructures.Matvey
 {
-    public class List<TKey, TValue> where TKey : IEquatable<TKey>
+    public class List<TKey, TValue> : IEnumerable<TValue>
+        where TKey : IEquatable<TKey>
     {
         public class Node 
         {
@@ -26,7 +29,21 @@ namespace CourseWork_Server.DataStructures.Matvey
                 Prev = this;
             }
         }
-        Node head;
+        private Node head;
+        public int Count
+        {
+            get
+            {
+                int count = 0;
+                if(head != null)
+                {
+                    count++;
+                    for (var node = head.Next; node != head; node = node.Next)
+                        count++;
+                }
+                return count;
+            }
+        }
         public List()
         {
             head = null;
@@ -128,41 +145,122 @@ namespace CourseWork_Server.DataStructures.Matvey
             }
             else Console.WriteLine("_NULL_");
         }
+
+        public TValue[] ToArray()
+        {
+            int count = 0;
+            if (head != null)
+            {
+                count++;
+                for (var i = head.Next; i != head; i = i.Next)
+                {
+                    count++;
+                }
+            }
+
+            var arr = new TValue[count];
+            var node = head;
+            for (int i = 0; i < count; i++)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+            }
+            return arr;
+        }
+
+        public IEnumerator<TValue> GetEnumerator()
+        {
+            if (head != null)
+            {
+                var arr = ToArray();
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    yield return arr[i];
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            if (head != null)
+            {
+                var arr = ToArray();
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    yield return arr[i];
+                }
+            }
+        }
     }
     public class HashTable<TKey, TValue> : IHashTableFinder<TKey, TValue>
                                             where TKey : IEquatable<TKey>
     {
         public delegate int HashFunction(TKey key, int size);
         public readonly HashFunction Function;
+        public int Size { get; private set; }
 
-        public int size;
-        public List<TKey ,TValue>[] table;
+        public struct ValueWithHash
+        {
+            public int Hash;
+            public TValue Value;
+        }
+
+        public ValueWithHash[] Values
+        {
+            get
+            {
+                var count = 0;
+                for(int i = 0; i < Size; i++)
+                {
+                    if(_table[i] != null)
+                    {
+                        count += _table[i].Count;
+                    }
+                }
+
+                var values = new ValueWithHash[count];
+                int j = 0;
+                for(int i = 0; i < Size; i++)
+                {
+                    foreach(var value in _table[i])
+                    {
+                        values[j].Hash = i;
+                        values[j].Value = value;
+                        j++;
+                    }
+                }
+                return values;
+            }
+        }
+
+        private List<TKey, TValue>[] _table;
+
         public HashTable(HashFunction function, int s)
         {
             Function = function;
             if (s < 1) throw new Exception("Хеш таблица пуста");
-            table = new List<TKey, TValue>[s];
-            size = s;
-            for (int i = 0; i < size; i++)
+            _table = new List<TKey, TValue>[s];
+            Size = s;
+            for (int i = 0; i < Size; i++)
             {
-                table[i] = new List<TKey, TValue>();
+                _table[i] = new List<TKey, TValue>();
             }
         }
         public void ShowHT()
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             { 
-                table[i].ShowInfo();
+                _table[i].ShowInfo();
                 Console.WriteLine('\n');
             }
         }
-        public void AddElem(TKey key, TValue value)
+        public void Add(TKey key, TValue value)
         {
-            table[Function(key, size)].AddNode(key, value);
+            _table[Function(key, Size)].AddNode(key, value);
         }
         public void Remove(TKey key, TValue d)
         {
-            if (table[Function(key, size)].DeleteNode(key))
+            if (_table[Function(key, Size)].DeleteNode(key))
             {
                 Console.WriteLine("Элемент удалён\n");
                 ShowHT();
@@ -177,8 +275,8 @@ namespace CourseWork_Server.DataStructures.Matvey
         }
         public bool TryFind(TKey key, out TValue value, out int hash)
         {
-            int n = Function(key, size);
-            if (table[n].IsFindData(key, out value))
+            int n = Function(key, Size);
+            if (_table[n].IsFindData(key, out value))
             {
                 hash = n;
                 return true;
