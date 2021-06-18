@@ -260,18 +260,7 @@ namespace CourseWork_Server.DataStructures.Matvey
         }
         public void Remove(TKey key, TValue d)
         {
-            if (_table[Function(key, Size)].DeleteNode(key))
-            {
-                Console.WriteLine("Элемент удалён\n");
-                ShowHT();
-                Console.WriteLine('\n');
-            }
-            else
-            {
-                Console.WriteLine("Элемент не удалён, т. к. не найден\n");
-                ShowHT();
-                Console.WriteLine('\n');
-            }
+            _table[Function(key, Size)].DeleteNode(key);
         }
         public bool TryFind(TKey key, out TValue value, out int hash)
         {
