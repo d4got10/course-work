@@ -132,19 +132,6 @@ namespace CourseWork_Server.DataStructures.Matvey
             }
             return false;
         }
-        public void ShowInfo()
-        {
-            if (head != null)
-            {
-                Node current = head;
-                do
-                {
-                    Console.Write(current.Data + " ");
-                    current = current.Next;
-                } while (current != head);
-            }
-            else Console.WriteLine("_NULL_");
-        }
 
         public TValue[] ToArray()
         {
@@ -244,14 +231,6 @@ namespace CourseWork_Server.DataStructures.Matvey
             for (int i = 0; i < Size; i++)
             {
                 _table[i] = new List<TKey, TValue>();
-            }
-        }
-        public void ShowHT()
-        {
-            for (int i = 0; i < Size; i++)
-            { 
-                _table[i].ShowInfo();
-                Console.WriteLine('\n');
             }
         }
         public void Add(TKey key, TValue value)

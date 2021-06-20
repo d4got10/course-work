@@ -21,7 +21,7 @@ namespace Сoursework_Server
             remove => _playersChanged -= value;
         }
         private Action _clansChanged;
-        public event Action ClansUpdated //TODO: Матвею добавить события в хэштаблицу
+        public event Action ClansUpdated //TODO: Добавить ивенты
         {
             add => _clansChanged += value;
             remove => _clansChanged -= value;

@@ -44,3 +44,5 @@ C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInt
 C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.pdb
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.ClanAddForm.resources
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.PlayerFindForm.resources
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.ClanAddForm.resources
+C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.PlayerFindForm.resources
