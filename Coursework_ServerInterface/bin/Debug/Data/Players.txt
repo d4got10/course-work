@@ -1,0 +1,3 @@
+Fedor|Fet|(0;0)|NULL|NULL|5|3
+German|qwerty|(19;-8)|NULL|NULL|5|3
+123|d4got10|(5;0)|FEDORI|#ff00ff|1|5

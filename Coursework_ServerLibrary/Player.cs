@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using CourseWork_Server.DataStructures;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,7 +9,7 @@ using System.Text;
 namespace Сoursework_Server
 {
 
-    public class Player : IEquatable<Player>
+    public class Player : IEquatable<Player>, ISaveable
     {
         public readonly UserData UserData;
 
@@ -63,6 +64,15 @@ namespace Сoursework_Server
         public void Die()
         {
             _deathService.Die(this);
+        }
+
+        public string GetData()
+        {
+            return $"{UserData.GetData()}" +
+                    $"|{Position}" +
+                    $"|{((Clan != null) ? Clan.GetData() : "NULL|NULL")}" +
+                    $"|{Health}" +
+                    $"|{ActionPointsCount}";
         }
     }
 }

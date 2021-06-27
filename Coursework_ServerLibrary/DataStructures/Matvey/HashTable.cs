@@ -112,7 +112,7 @@ namespace CourseWork_Server.DataStructures.Matvey
                 {
                     foreach (var pair in _table[i])
                     {
-                        var row = $"{pair.Key}|{pair.Value.GetData()}";
+                        var row = $"{pair.Key}|{pair.Value.GetData()}\n";
                         data.Append(row);
                     }
                 }

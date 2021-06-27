@@ -37,7 +37,7 @@ namespace Сoursework_Server
         public ITreeRangeFinder<int, Player> PlayersByActionPoints => _playersByActionPoints;
 
 
-        private System.Collections.Generic.List<Player> _players;
+        private SaveLoadableList<Player> _players;
         private CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan> _clans;
         private CourseWork_Server.DataStructures.Danil.HashTable<string, UserData> _users;
         private RedBlackTree<string, Player> _playersByName;
@@ -49,7 +49,7 @@ namespace Сoursework_Server
 
         public GameLogic(IClientsProvider clientsProvider)
         {
-            _players = new System.Collections.Generic.List<Player>();
+            _players = new SaveLoadableList<Player>();
             _users = new CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>(CourseWork_Server.DataStructures.Danil.StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
             _clans = new CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>(Coursework_Server.DataStructures.Matvey.StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
             _playersByName = new RedBlackTree<string, Player>("Дерево поиска по имени");
@@ -137,7 +137,7 @@ namespace Сoursework_Server
             if (Grid.TryPlacePlayer(newPlayer, position) == false) 
                 throw new Exception($"Клетка в позиции {position} уже занята.");
 
-            _players.Add(newPlayer);
+            _players.Data.Add(newPlayer);
             _playersByName.Add(newPlayer.Name, newPlayer);
             
             if(newPlayer.Clan != null)
@@ -203,7 +203,7 @@ namespace Сoursework_Server
 
         public void RemovePlayer(Player target)
         {
-            _players.Remove(target);
+            _players.Data.Remove(target);
             _playersByName.Remove(target.Name, target);
             if (target.Clan != null)
                 _playersByClan.Remove(target.Clan.Name, target);
@@ -257,6 +257,8 @@ namespace Сoursework_Server
             usersSaver.Save(_users, folderPath, "Users.txt");
             var clansSaver = new DataSaver<CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>>();
             clansSaver.Save(_clans, folderPath, "Clans.txt");
+            var listSaver = new DataSaver<SaveLoadableList<Player>>();
+            listSaver.Save(_players, folderPath, "Players.txt");
         }
     }
 }
