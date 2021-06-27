@@ -556,5 +556,9 @@ namespace Coursework_ServerInterface
             UpdateConsoleText();
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Server.GameLogic.SaveData(Application.StartupPath + "\\Data");
+        }
     }
 }

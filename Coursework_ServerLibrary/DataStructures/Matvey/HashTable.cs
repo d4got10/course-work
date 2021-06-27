@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Text;
 
 namespace CourseWork_Server.DataStructures.Matvey
 {
-    public class HashTable<TKey, TValue> : IHashTableFinder<TKey, TValue>
+    public class HashTable<TKey, TValue> : IHashTableFinder<TKey, TValue>, ISaveable
                                             where TKey : IEquatable<TKey>
+                                            where TValue : ISaveable
     {
         public delegate int HashFunction(TKey key, int size);
         public readonly HashFunction Function;
@@ -99,6 +101,23 @@ namespace CourseWork_Server.DataStructures.Matvey
             value = default;
             hash = -1;
             return false;
+        }
+
+        public string GetData()
+        {
+            var data = new StringBuilder();
+            for(int i = 0; i < _table.Length; i++)
+            {
+                if (_table[i] != null)
+                {
+                    foreach (var pair in _table[i])
+                    {
+                        var row = $"{pair.Key}|{pair.Value.GetData()}";
+                        data.Append(row);
+                    }
+                }
+            }
+            return data.ToString();
         }
     }
 }

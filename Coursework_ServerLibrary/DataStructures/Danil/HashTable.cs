@@ -4,8 +4,9 @@ using System.Text;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-    public class HashTable<TKey, TValue> : IHashTableDoubleFinder<TKey, TValue> 
+    public class HashTable<TKey, TValue> : IHashTableDoubleFinder<TKey, TValue>, ISaveable
                                             where TKey : IEquatable<TKey>
+                                            where TValue : ISaveable
     {
         private class Node<UKey, UValue> where UKey : TKey where UValue : TValue
         {
@@ -157,6 +158,20 @@ namespace CourseWork_Server.DataStructures.Danil
                 }
             }
             return false;
+        }
+
+        public string GetData()
+        {
+            var data = new StringBuilder();
+            for(int i = 0; i < _data.Length; i++)
+            {
+                if(_data[i] != null && _data[i].Deleted == false)
+                {
+                    string row = $"{_data[i].Key}|{_data[i].Value.GetData()}\n";
+                    data.Append(row);
+                }
+            }
+            return data.ToString();
         }
 
         public void Display()

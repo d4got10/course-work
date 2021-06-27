@@ -1,6 +1,8 @@
-﻿namespace Сoursework_Server
+﻿using CourseWork_Server.DataStructures;
+
+namespace Сoursework_Server
 {
-    public class Clan
+    public class Clan : ISaveable
     {
         public readonly string Name;
         public readonly string ColorCode;
@@ -9,6 +11,11 @@
         {
             Name = name;
             ColorCode = colorCode;
+        }
+
+        public string GetData()
+        {
+            return $"{Name}|{ColorCode}";
         }
     }
 }

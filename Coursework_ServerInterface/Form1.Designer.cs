@@ -33,6 +33,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.usersGridView = new System.Windows.Forms.DataGridView();
+            this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SecondaryHash = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rangeButton = new System.Windows.Forms.Button();
             this.searchButton = new System.Windows.Forms.Button();
@@ -63,10 +67,6 @@
             this.LogsLabel = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SecondaryHash = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.dataGridViewsBox.SuspendLayout();
@@ -105,6 +105,43 @@
             this.usersGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.usersGridView.Size = new System.Drawing.Size(448, 391);
             this.usersGridView.TabIndex = 0;
+            // 
+            // Hash
+            // 
+            this.Hash.HeaderText = "Первичный хэш";
+            this.Hash.MaxInputLength = 12;
+            this.Hash.Name = "Hash";
+            this.Hash.ReadOnly = true;
+            this.Hash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Hash.ToolTipText = "Хэш записи пользователя";
+            // 
+            // SecondaryHash
+            // 
+            this.SecondaryHash.HeaderText = "Вторичный хэш";
+            this.SecondaryHash.MaxInputLength = 12;
+            this.SecondaryHash.Name = "SecondaryHash";
+            this.SecondaryHash.ReadOnly = true;
+            this.SecondaryHash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Username
+            // 
+            this.Username.HeaderText = "Имя";
+            this.Username.MaxInputLength = 12;
+            this.Username.Name = "Username";
+            this.Username.ReadOnly = true;
+            this.Username.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Username.ToolTipText = "Имя пользователя";
+            this.Username.Width = 200;
+            // 
+            // Password
+            // 
+            this.Password.HeaderText = "Пароль";
+            this.Password.MaxInputLength = 12;
+            this.Password.Name = "Password";
+            this.Password.ReadOnly = true;
+            this.Password.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Password.ToolTipText = "Пароль пользователя";
+            this.Password.Width = 200;
             // 
             // groupBox1
             // 
@@ -448,43 +485,6 @@
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Hash
-            // 
-            this.Hash.HeaderText = "Первичный хэш";
-            this.Hash.MaxInputLength = 12;
-            this.Hash.Name = "Hash";
-            this.Hash.ReadOnly = true;
-            this.Hash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Hash.ToolTipText = "Хэш записи пользователя";
-            // 
-            // SecondaryHash
-            // 
-            this.SecondaryHash.HeaderText = "Вторичный хэш";
-            this.SecondaryHash.MaxInputLength = 12;
-            this.SecondaryHash.Name = "SecondaryHash";
-            this.SecondaryHash.ReadOnly = true;
-            this.SecondaryHash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Username
-            // 
-            this.Username.HeaderText = "Имя";
-            this.Username.MaxInputLength = 12;
-            this.Username.Name = "Username";
-            this.Username.ReadOnly = true;
-            this.Username.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Username.ToolTipText = "Имя пользователя";
-            this.Username.Width = 200;
-            // 
-            // Password
-            // 
-            this.Password.HeaderText = "Пароль";
-            this.Password.MaxInputLength = 12;
-            this.Password.Name = "Password";
-            this.Password.ReadOnly = true;
-            this.Password.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Password.ToolTipText = "Пароль пользователя";
-            this.Password.Width = 200;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -497,6 +497,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.dataGridViewsBox.ResumeLayout(false);

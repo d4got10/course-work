@@ -250,5 +250,13 @@ namespace Сoursework_Server
             player.Clan = target;
             //Message others
         }
+
+        public void SaveData(string folderPath)
+        {
+            var usersSaver = new DataSaver<CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>>();
+            usersSaver.Save(_users, folderPath, "Users.txt");
+            var clansSaver = new DataSaver<CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>>();
+            clansSaver.Save(_clans, folderPath, "Clans.txt");
+        }
     }
 }
