@@ -62,6 +62,7 @@ namespace Coursework_ServerInterface
             ServerIsRunning = false;
 
             Server = new Server();
+            Server.GameLogic.LoadData(Application.StartupPath + AppConstants.DataFolderPath);
             UpdateMainGridView();
             UpdateUsersGridView();
 
@@ -558,7 +559,7 @@ namespace Coursework_ServerInterface
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Server.GameLogic.SaveData(Application.StartupPath + "\\Data");
+            Server.GameLogic.SaveData(Application.StartupPath + AppConstants.DataFolderPath);
         }
     }
 }

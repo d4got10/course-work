@@ -24,9 +24,9 @@ namespace CourseWork_Server.DataStructures
         } 
     }
 
-    public class DataLoader<T> where T : ILoadable
+    public class DataLoader
     {
-        public bool Load(T target, string path, string fileName)
+        public string Load(string path, string fileName)
         {
             try
             {
@@ -35,15 +35,14 @@ namespace CourseWork_Server.DataStructures
                     using (var reader = new StreamReader(file))
                     {
                         var data = reader.ReadToEnd();
-                        target.SetData(data);
-                        return true;
+                        return data;
                     }
                 }
             }
             catch(Exception ex)
             {
                 Console.WriteLine("Файл для загрузки не существует. " + path);
-                return false;
+                return "";
             }
         }
     }

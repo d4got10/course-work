@@ -29,16 +29,17 @@ namespace Сoursework_Server
             Initialize();
             Configurate();
             GameLogic = new GameLogic(this);
-            Populate();
+            //Populate();
         }
 
         private void Populate()
         {
             GameLogic.CreateUser("123", "d4got10");
+
+            GameLogic.CreateClan("FEDORI", "#ff00ff");
+
             GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("Fedor", "Fet"));
             GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("German", "qwerty"));
-
-            //GameLogic.CreateAndAddPlayer("German", "Pedorenko", "", 5, 3);
         }
 
         private void Initialize()

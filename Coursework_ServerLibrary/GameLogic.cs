@@ -59,9 +59,6 @@ namespace Сoursework_Server
 
             Grid = new GameGrid(AppConstants.GameGridSize);
             _clientsProvider = clientsProvider;
-
-            var clan = new Clan("FEDORI", "#ff00ff");
-            _clans.Add(clan.Name, clan);
         }
 
         public bool TryGetUserData(string name, string password, out UserData data)
@@ -254,11 +251,69 @@ namespace Сoursework_Server
         public void SaveData(string folderPath)
         {
             var usersSaver = new DataSaver<CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>>();
-            usersSaver.Save(_users, folderPath, "Users.txt");
+            usersSaver.Save(_users, folderPath, AppConstants.UsersListFileName);
+
             var clansSaver = new DataSaver<CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>>();
-            clansSaver.Save(_clans, folderPath, "Clans.txt");
+            clansSaver.Save(_clans, folderPath, AppConstants.ClansListFileName);
+
             var listSaver = new DataSaver<SaveLoadableList<Player>>();
-            listSaver.Save(_players, folderPath, "Players.txt");
+            listSaver.Save(_players, folderPath, AppConstants.PlayerListFileName);
+        }
+
+        public void LoadData(string folderPath)
+        {
+            var loader = new DataLoader();
+            var usersData = loader.Load(folderPath, AppConstants.UsersListFileName);
+            LoadUsers(usersData);
+            var clansData = loader.Load(folderPath, AppConstants.ClansListFileName);
+            LoadClans(clansData);
+            var playersData = loader.Load(folderPath, AppConstants.PlayerListFileName);
+            LoadPlayers(playersData);
+        }
+
+        private void LoadUsers(string data)
+        {
+            var rows = data.Split('\n');
+            for(int i = 0; i < rows.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(rows[i])) continue;
+                var splitted = rows[i].Split('|');
+                CreateUser(splitted[0], splitted[1]);
+            }
+        }
+
+        private void LoadClans(string data)
+        {
+            var rows = data.Split('\n');
+            for (int i = 0; i < rows.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(rows[i])) continue;
+                var splitted = rows[i].Split('|');
+                CreateClan(splitted[0], splitted[1]);
+            }
+        }
+
+        private void LoadPlayers(string data)
+        {
+            var rows = data.Split('\n');
+            for (int i = 0; i < rows.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(rows[i])) continue;
+
+                var splitted = rows[i].Split('|');
+
+                UsersFinder.TryFind(splitted[0], out var userData, out _, out _);
+
+                var position = new Vector2(splitted[2]);
+
+                ClansFinder.TryFind(splitted[3], out var clan, out _);
+                if (clan != null && clan.ColorCode != splitted[4]) clan = null;
+
+                int health = int.Parse(splitted[5]);
+                int actionPoints = int.Parse(splitted[6]);
+
+                CreateAndAddPlayer(userData, position, clan, health, actionPoints);
+            }
         }
     }
 }

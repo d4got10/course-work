@@ -167,7 +167,7 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 if(_data[i] != null && _data[i].Deleted == false)
                 {
-                    string row = $"{_data[i].Key}|{_data[i].Value.GetData()}\n";
+                    string row = $"{_data[i].Value.GetData()}\n";
                     data.Append(row);
                 }
             }

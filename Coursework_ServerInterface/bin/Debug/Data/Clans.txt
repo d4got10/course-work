@@ -1,1 +1,2 @@
-FEDORI|FEDORI|#ff00ff
+FEDORI|#ff00ff
+newclan|#ff0aaa

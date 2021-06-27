@@ -16,6 +16,14 @@ namespace Shared
             Y = y;
         }
 
+        public Vector2(string rawData)
+        {
+            var data = rawData.Trim(new char[] { '(', ')' });
+            var splitted = data.Split(';');
+            X = int.Parse(splitted[0]);
+            Y = int.Parse(splitted[1]);
+        }
+
         public int CompareTo(Vector2 other)
         {
             return 10000000 * Y + X;   
