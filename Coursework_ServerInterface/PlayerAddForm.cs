@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CourseWork_Server.DataStructures;
 using CourseWork_Server.DataStructures.Danil;
+using CourseWork_Server.DataStructures.Matvey;
 using Сoursework_Server;
 
 namespace Coursework_ServerInterface
@@ -16,10 +17,10 @@ namespace Coursework_ServerInterface
     public partial class PlayerAddForm : Form
     {
         private Action<string[]> _onAddAction;
-        private IHashTableFinder<string, UserData> _users;
+        private IHashTableDoubleFinder<string, UserData> _users;
         private IHashTableFinder<string, Clan> _clans;
 
-        public PlayerAddForm(IHashTableFinder<string, UserData> users, IHashTableFinder<string, Clan> clans, Action<string[]> onAddAction)
+        public PlayerAddForm(IHashTableDoubleFinder<string, UserData> users, IHashTableFinder<string, Clan> clans, Action<string[]> onAddAction)
         {
             InitializeComponent();
             _onAddAction = onAddAction;
@@ -29,7 +30,7 @@ namespace Coursework_ServerInterface
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (_users.TryFind(userNameTextBox.Text, out var data, out _))
+            if (_users.TryFind(userNameTextBox.Text, out var data, out _, out _))
             {
                 passwordTextBox.Text = data.Password;
             }

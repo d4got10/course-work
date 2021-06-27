@@ -29,17 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.usersGridView = new System.Windows.Forms.DataGridView();
-            this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rangeButton = new System.Windows.Forms.Button();
+            this.searchButton = new System.Windows.Forms.Button();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.dataGridViewsBox = new System.Windows.Forms.GroupBox();
+            this.clansGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +52,7 @@
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.clansGridDataButton = new System.Windows.Forms.Button();
             this.mainGridDataButton = new System.Windows.Forms.Button();
             this.usersGridDataButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -59,21 +63,18 @@
             this.LogsLabel = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.clansGridDataButton = new System.Windows.Forms.Button();
-            this.clansGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.rangeButton = new System.Windows.Forms.Button();
+            this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SecondaryHash = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.dataGridViewsBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clansGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clansGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // usersGridView
@@ -86,16 +87,17 @@
             this.usersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.usersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Hash,
+            this.SecondaryHash,
             this.Username,
             this.Password});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.usersGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.usersGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.usersGridView.GridColor = System.Drawing.SystemColors.ButtonShadow;
             this.usersGridView.Location = new System.Drawing.Point(6, 19);
             this.usersGridView.Name = "usersGridView";
@@ -103,34 +105,6 @@
             this.usersGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.usersGridView.Size = new System.Drawing.Size(448, 391);
             this.usersGridView.TabIndex = 0;
-            // 
-            // Hash
-            // 
-            this.Hash.HeaderText = "Хэш";
-            this.Hash.MaxInputLength = 12;
-            this.Hash.Name = "Hash";
-            this.Hash.ReadOnly = true;
-            this.Hash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Hash.ToolTipText = "Хэш записи пользователя";
-            this.Hash.Width = 50;
-            // 
-            // Username
-            // 
-            this.Username.HeaderText = "Имя";
-            this.Username.MaxInputLength = 12;
-            this.Username.Name = "Username";
-            this.Username.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Username.ToolTipText = "Имя пользователя";
-            this.Username.Width = 200;
-            // 
-            // Password
-            // 
-            this.Password.HeaderText = "Пароль";
-            this.Password.MaxInputLength = 12;
-            this.Password.Name = "Password";
-            this.Password.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Password.ToolTipText = "Пароль пользователя";
-            this.Password.Width = 200;
             // 
             // groupBox1
             // 
@@ -143,6 +117,26 @@
             this.groupBox1.Size = new System.Drawing.Size(442, 52);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
+            // 
+            // rangeButton
+            // 
+            this.rangeButton.Location = new System.Drawing.Point(267, 10);
+            this.rangeButton.Name = "rangeButton";
+            this.rangeButton.Size = new System.Drawing.Size(81, 32);
+            this.rangeButton.TabIndex = 3;
+            this.rangeButton.Text = "Диапозон";
+            this.rangeButton.UseVisualStyleBackColor = true;
+            this.rangeButton.Click += new System.EventHandler(this.rangeButton_Click);
+            // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(180, 10);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(81, 32);
+            this.searchButton.TabIndex = 2;
+            this.searchButton.Text = "Поиск";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // RemoveButton
             // 
@@ -175,6 +169,68 @@
             this.dataGridViewsBox.TabIndex = 2;
             this.dataGridViewsBox.TabStop = false;
             // 
+            // clansGridView
+            // 
+            this.clansGridView.AllowUserToAddRows = false;
+            this.clansGridView.AllowUserToDeleteRows = false;
+            this.clansGridView.AllowUserToResizeColumns = false;
+            this.clansGridView.AllowUserToResizeRows = false;
+            this.clansGridView.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.clansGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.clansGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.clansGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            this.clansGridView.GridColor = System.Drawing.SystemColors.ButtonShadow;
+            this.clansGridView.Location = new System.Drawing.Point(6, 19);
+            this.clansGridView.MultiSelect = false;
+            this.clansGridView.Name = "clansGridView";
+            this.clansGridView.ReadOnly = true;
+            this.clansGridView.RowHeadersVisible = false;
+            this.clansGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.clansGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.clansGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.clansGridView.Size = new System.Drawing.Size(448, 391);
+            this.clansGridView.TabIndex = 2;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Хэш";
+            this.dataGridViewTextBoxColumn1.MaxInputLength = 12;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.ToolTipText = "Хэш записи пользователя";
+            this.dataGridViewTextBoxColumn1.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Название";
+            this.dataGridViewTextBoxColumn8.MaxInputLength = 12;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn8.ToolTipText = "Название клана";
+            this.dataGridViewTextBoxColumn8.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "Цвет";
+            this.dataGridViewTextBoxColumn9.MaxInputLength = 12;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn9.ToolTipText = "Код цвета";
+            this.dataGridViewTextBoxColumn9.Width = 200;
+            // 
             // mainGridView
             // 
             this.mainGridView.AllowUserToAddRows = false;
@@ -191,14 +247,14 @@
             this.ColorCode,
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewTextBoxColumn7});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mainGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mainGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.mainGridView.GridColor = System.Drawing.SystemColors.ButtonShadow;
             this.mainGridView.Location = new System.Drawing.Point(6, 19);
             this.mainGridView.MultiSelect = false;
@@ -276,6 +332,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(700, 41);
             this.panel1.TabIndex = 3;
+            // 
+            // clansGridDataButton
+            // 
+            this.clansGridDataButton.Location = new System.Drawing.Point(216, 3);
+            this.clansGridDataButton.Name = "clansGridDataButton";
+            this.clansGridDataButton.Size = new System.Drawing.Size(96, 35);
+            this.clansGridDataButton.TabIndex = 2;
+            this.clansGridDataButton.Text = "Кланы";
+            this.clansGridDataButton.UseVisualStyleBackColor = true;
+            this.clansGridDataButton.Click += new System.EventHandler(this.clansGridDataButton_Click);
             // 
             // mainGridDataButton
             // 
@@ -382,96 +448,42 @@
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // clansGridDataButton
+            // Hash
             // 
-            this.clansGridDataButton.Location = new System.Drawing.Point(216, 3);
-            this.clansGridDataButton.Name = "clansGridDataButton";
-            this.clansGridDataButton.Size = new System.Drawing.Size(96, 35);
-            this.clansGridDataButton.TabIndex = 2;
-            this.clansGridDataButton.Text = "Кланы";
-            this.clansGridDataButton.UseVisualStyleBackColor = true;
-            this.clansGridDataButton.Click += new System.EventHandler(this.clansGridDataButton_Click);
+            this.Hash.HeaderText = "Первичный хэш";
+            this.Hash.MaxInputLength = 12;
+            this.Hash.Name = "Hash";
+            this.Hash.ReadOnly = true;
+            this.Hash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Hash.ToolTipText = "Хэш записи пользователя";
             // 
-            // clansGridView
+            // SecondaryHash
             // 
-            this.clansGridView.AllowUserToAddRows = false;
-            this.clansGridView.AllowUserToDeleteRows = false;
-            this.clansGridView.AllowUserToResizeColumns = false;
-            this.clansGridView.AllowUserToResizeRows = false;
-            this.clansGridView.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
-            this.clansGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.clansGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn8,
-            this.dataGridViewTextBoxColumn9});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.clansGridView.DefaultCellStyle = dataGridViewCellStyle6;
-            this.clansGridView.GridColor = System.Drawing.SystemColors.ButtonShadow;
-            this.clansGridView.Location = new System.Drawing.Point(6, 19);
-            this.clansGridView.MultiSelect = false;
-            this.clansGridView.Name = "clansGridView";
-            this.clansGridView.ReadOnly = true;
-            this.clansGridView.RowHeadersVisible = false;
-            this.clansGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.clansGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.clansGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.clansGridView.Size = new System.Drawing.Size(448, 391);
-            this.clansGridView.TabIndex = 2;
+            this.SecondaryHash.HeaderText = "Вторичный хэш";
+            this.SecondaryHash.MaxInputLength = 12;
+            this.SecondaryHash.Name = "SecondaryHash";
+            this.SecondaryHash.ReadOnly = true;
+            this.SecondaryHash.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // dataGridViewTextBoxColumn1
+            // Username
             // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Хэш";
-            this.dataGridViewTextBoxColumn1.MaxInputLength = 12;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.ToolTipText = "Хэш записи пользователя";
-            this.dataGridViewTextBoxColumn1.Width = 50;
+            this.Username.HeaderText = "Имя";
+            this.Username.MaxInputLength = 12;
+            this.Username.Name = "Username";
+            this.Username.ReadOnly = true;
+            this.Username.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Username.ToolTipText = "Имя пользователя";
+            this.Username.Width = 200;
             // 
-            // dataGridViewTextBoxColumn8
+            // Password
             // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "Название";
-            this.dataGridViewTextBoxColumn8.MaxInputLength = 12;
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            this.dataGridViewTextBoxColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn8.ToolTipText = "Название клана";
-            this.dataGridViewTextBoxColumn8.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.HeaderText = "Цвет";
-            this.dataGridViewTextBoxColumn9.MaxInputLength = 12;
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            this.dataGridViewTextBoxColumn9.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn9.ToolTipText = "Код цвета";
-            this.dataGridViewTextBoxColumn9.Width = 200;
-            // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(180, 10);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(81, 32);
-            this.searchButton.TabIndex = 2;
-            this.searchButton.Text = "Поиск";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
-            // rangeButton
-            // 
-            this.rangeButton.Location = new System.Drawing.Point(267, 10);
-            this.rangeButton.Name = "rangeButton";
-            this.rangeButton.Size = new System.Drawing.Size(81, 32);
-            this.rangeButton.TabIndex = 3;
-            this.rangeButton.Text = "Диапозон";
-            this.rangeButton.UseVisualStyleBackColor = true;
+            this.Password.HeaderText = "Пароль";
+            this.Password.MaxInputLength = 12;
+            this.Password.Name = "Password";
+            this.Password.ReadOnly = true;
+            this.Password.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Password.ToolTipText = "Пароль пользователя";
+            this.Password.Width = 200;
             // 
             // Form1
             // 
@@ -482,18 +494,18 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridViewsBox);
             this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.dataGridViewsBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.clansGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainGridView)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.clansGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -516,9 +528,6 @@
         private System.Windows.Forms.Label LogsLabel;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.DataGridView mainGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Hash;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Username;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Password;
         private System.Windows.Forms.Button mainGridDataButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -534,6 +543,10 @@
         private System.Windows.Forms.Button clansGridDataButton;
         private System.Windows.Forms.Button rangeButton;
         private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Hash;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SecondaryHash;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Username;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Password;
     }
 }
 

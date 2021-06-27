@@ -29,19 +29,19 @@ namespace Сoursework_Server
         public System.Collections.Generic.IReadOnlyList<Player> Players => _players;
         public CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>.ValueWithHash[] UsersValues => _users.Values;
         public CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>.ValueWithHash[] ClansValues => _clans.Values;
-        public IHashTableFinder<string, UserData> UsersFinder => _users;
+        public IHashTableDoubleFinder<string, UserData> UsersFinder => _users;
         public IHashTableFinder<string, Clan> ClansFinder => _clans;
         public ITreeFinder<string, Player> PlayersByName => _playersByName;
         public ITreeFinder<string, Player> PlayersByClan => _playersByClan;
-        public ITreeFinder<int, Player> PlayersByHealth => _playersByHealth;
-        public ITreeFinder<int, Player> PlayersByActionPoints => _playersByActionPoints;
+        public ITreeRangeFinder<int, Player> PlayersByHealth => _playersByHealth;
+        public ITreeRangeFinder<int, Player> PlayersByActionPoints => _playersByActionPoints;
 
 
         private System.Collections.Generic.List<Player> _players;
         private CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan> _clans;
         private CourseWork_Server.DataStructures.Danil.HashTable<string, UserData> _users;
         private RedBlackTree<string, Player> _playersByName;
-        private RedBlackTree<string, Player> _playersByClan; //TODO: Поменять на дерево Матвея
+        private AVLTree<string, Player> _playersByClan; //TODO: Поменять на дерево Матвея
         private RedBlackTree<int, Player> _playersByHealth;
         private RedBlackTree<int, Player> _playersByActionPoints;
         private IClientsProvider _clientsProvider;
@@ -52,10 +52,10 @@ namespace Сoursework_Server
             _players = new System.Collections.Generic.List<Player>();
             _users = new CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>(CourseWork_Server.DataStructures.Danil.StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
             _clans = new CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan>(Coursework_Server.DataStructures.Matvey.StringHashTableExtras.HashFunction, AppConstants.MaxPlayers);
-            _playersByName = new RedBlackTree<string, Player>();
-            _playersByClan = new RedBlackTree<string, Player>();
-            _playersByHealth = new RedBlackTree<int, Player>();
-            _playersByActionPoints = new RedBlackTree<int, Player>();
+            _playersByName = new RedBlackTree<string, Player>("Дерево поиска по имени");
+            _playersByClan = new AVLTree<string, Player>("Дерево поиска по клану");
+            _playersByHealth = new RedBlackTree<int, Player>("Дерево поиска по здоровью");
+            _playersByActionPoints = new RedBlackTree<int, Player>("Дерево поиска по очкам действий");
 
             Grid = new GameGrid(AppConstants.GameGridSize);
             _clientsProvider = clientsProvider;
@@ -66,7 +66,7 @@ namespace Сoursework_Server
 
         public bool TryGetUserData(string name, string password, out UserData data)
         {
-            if(_users.TryFind(name, out data, out var hash))
+            if(_users.TryFind(name, out data, out _, out _))
             {
                 if(password == data.Password)
                 {
@@ -96,7 +96,7 @@ namespace Сoursework_Server
 
         public UserData CreateUser(string name, string password)
         {
-            if (_users.TryFind(name, out _, out _))
+            if (_users.TryFind(name, out _, out _, out _))
                 throw new Exception("Пользователь с таким именем уже существует.");
 
             var userData = new UserData(name, password);

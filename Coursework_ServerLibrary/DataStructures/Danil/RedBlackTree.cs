@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CourseWork_Server.DataStructures.Danil
 {
 
-    public class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>
+    public class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>, ITreeRangeFinder<TKey, TValue>
         where TKey : IComparable<TKey> 
         where TValue : IEquatable<TValue>
     {
@@ -13,6 +13,7 @@ namespace CourseWork_Server.DataStructures.Danil
         private Node<TKey, TValue> _nil;
 
         private int _comparisons = 0;
+        private string _name;
         #endregion
 
         #region Constructor
@@ -20,40 +21,160 @@ namespace CourseWork_Server.DataStructures.Danil
         //Формальные параметры: пусто
         //Входные данные: пусто
         //Выходные данные: объект класса RedBlackTree
-        public RedBlackTree()
+        public RedBlackTree(string name)
         {
             _nil = new Node<TKey, TValue>();
             _root = _nil;
+            _name = name;
         }
         #endregion
 
         #region Public Functions
         public IEnumerable<TValue> GetValuesRange(TKey min, TKey max)
         {
-            //если min > max кидаем ошибку
-            if (min.CompareTo(max) > 0) throw new ArgumentOutOfRangeException();
-            //если min или max == null кидаем ошибку
-            if (min == null || max == null) throw new ArgumentNullException();
+            ////если min > max кидаем ошибку
+            //if (min.CompareTo(max) > 0) throw new ArgumentOutOfRangeException();
+            ////если min или max == null кидаем ошибку
+            //if (min == null || max == null) throw new ArgumentNullException();
+
+            //var values = new List<TValue>();
+            //var node = _root;
+
+            ////ищем элемент из диапозона
+            //while(node != _nil && (node.Key.CompareTo(min) < 0 || node.Key.CompareTo(max) > 0))
+            //{
+            //    if (node.Key.CompareTo(min) < 0)
+            //        node = node.RightChild;
+            //    else
+            //        node = node.LeftChild;
+            //}
+
+            ////собираем все значения из него
+            //if(node != _nil && node.Key.CompareTo(min) >= 0 && node.Key.CompareTo(max) <= 0)
+            //{
+            //    GetValuesRangeInternal(node, min, max, values);
+            //}
+            ////возвращаем значения из диапозона
+            //return values;
 
             var values = new List<TValue>();
-            var node = _root;
 
-            //ищем элемент из диапозона
-            while(node != _nil && (node.Key.CompareTo(min) < 0 || node.Key.CompareTo(max) > 0))
+            var minNode = _root;
+            var maxNode = _root;
+            while (minNode != _nil || maxNode != _nil)
             {
-                if (node.Key.CompareTo(min) < 0)
-                    node = node.RightChild;
+                if (minNode == maxNode)
+                {
+                    bool added = false;
+                    bool goneLeft = false;
+                    if (min.CompareTo(minNode.Key) < 0)
+                    {
+                        minNode = minNode.LeftChild;
+                        goneLeft = true;
+                    }
+                    else if (min.CompareTo(minNode.Key) > 0)
+                    {
+                        minNode = minNode.RightChild;
+                    }
+                    else
+                    {
+                        foreach(var value in minNode.Values)
+                            values.Add(value);
+                        minNode = _nil;
+                        added = true;
+                    }
+
+                    if(max.CompareTo(maxNode.Key) < 0)
+                    {
+                        maxNode = maxNode.LeftChild;
+                    }
+                    else if(max.CompareTo(maxNode.Key) > 0)
+                    {
+                        if (goneLeft)
+                        {
+                            foreach (var value in maxNode.Values)
+                                values.Add(value);
+                        }
+                        maxNode = maxNode.RightChild;
+                    }
+                    else
+                    {
+                        if (added == false)
+                        {
+                            foreach (var value in maxNode.Values)
+                                values.Add(value);
+                        }
+                        maxNode = _nil;
+                        added = true;
+                    }
+
+                    if(minNode == maxNode)
+                    {
+                        if(added)
+                            minNode = maxNode = _nil;
+                    }
+                }
                 else
-                    node = node.LeftChild;
+                {
+                    if (minNode != null)
+                    {
+                        if(min.CompareTo(minNode.Key) < 0)
+                        {
+                            foreach (var value in minNode.Values)
+                                values.Add(value);
+                            GetValuesFromTree(minNode.RightChild, ref values);
+                            minNode = minNode.LeftChild;
+                        }
+                        else if (min.CompareTo(minNode.Key) > 0)
+                        {
+                            minNode = minNode.RightChild;
+                        }
+                        else
+                        {
+                            foreach (var value in minNode.Values)
+                                values.Add(value);
+                            GetValuesFromTree(minNode.RightChild, ref values);
+                            minNode = _nil;
+                        }
+                    }
+
+                    if (maxNode != _nil)
+                    {
+                        if (max.CompareTo(maxNode.Key) < 0)
+                        {
+                            maxNode = maxNode.LeftChild;
+                        }
+                        else if (max.CompareTo(maxNode.Key) > 0)
+                        {
+                            foreach (var value in maxNode.Values)
+                                values.Add(value);
+                            GetValuesFromTree(maxNode.LeftChild, ref values);
+                            maxNode = maxNode.RightChild;
+                        }
+                        else
+                        {
+                            foreach (var value in maxNode.Values)
+                                values.Add(value);
+                            GetValuesFromTree(maxNode.LeftChild, ref values);
+                            maxNode = _nil;
+                        }
+                    }
+                }
             }
 
-            //собираем все значения из него
-            if(node != _nil && node.Key.CompareTo(min) >= 0 && node.Key.CompareTo(max) <= 0)
-            {
-                GetValuesRangeInternal(node, min, max, values);
-            }
-            //возвращаем значения из диапозона
             return values;
+        }
+
+        private void GetValuesFromTree(Node<TKey, TValue> root, ref List<TValue> values)
+        {
+            if (root == _nil) return;
+
+            GetValuesFromTree(root.LeftChild, ref values);
+            foreach(var value in root.Values)
+            {
+                values.Add(value);
+            }
+            GetValuesFromTree(root.RightChild, ref values);
         }
 
         //Метод поиска по значению
@@ -508,11 +629,11 @@ namespace CourseWork_Server.DataStructures.Danil
                 else
                 {
                     _comparisons += 2;
-                    Console.WriteLine($"ДАННЫЕ: поиск потребовал {_comparisons} сравнений");
+                    Console.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
                     return node;
                 }
             }
-            Console.WriteLine($"ДАННЫЕ: поиск потребовал {_comparisons} сравнений");
+            Console.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
             return null;
         }
 

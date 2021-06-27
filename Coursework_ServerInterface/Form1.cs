@@ -106,10 +106,11 @@ namespace Coursework_ServerInterface
             var values = Server.GameLogic.UsersValues;
             for (int i = 0; i < values.Length; i++)
             {
-                string[] row = new string[3];
-                row[0] = values[i].Hash.ToString();
-                row[1] = values[i].Value.Login;
-                row[2] = values[i].Value.Password;
+                string[] row = new string[4];
+                row[0] = values[i].FirstHash.ToString();
+                row[1] = values[i].SecondHash.ToString();
+                row[2] = values[i].Value.Login;
+                row[3] = values[i].Value.Password;
                 usersGridView.Rows.Add(row);
             }
         }
@@ -157,6 +158,10 @@ namespace Coursework_ServerInterface
                     var username = values[0];
                     var password = values[1];
 
+                    if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                        throw new Exception("Имя пользователя или пароль не могут быть пустыми.");
+
+
                     var player = Server.GameLogic.CreateUser(username, password);
                 }
                 else
@@ -166,7 +171,7 @@ namespace Coursework_ServerInterface
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Некорректные входные данные.");
+                MessageBox.Show("Некорректные входные данные. " + ex.Message);
             }
         }
 
@@ -179,7 +184,27 @@ namespace Coursework_ServerInterface
                     var clanName = values[0];
                     var colorCode = values[1];
 
-                    var clan = Server.GameLogic.CreateClan(clanName, colorCode);
+                    if (string.IsNullOrWhiteSpace(clanName))
+                        throw new Exception("Название клана не может быть пустым.");
+
+                    if (colorCode.Length == 7)
+                    {
+                        if(colorCode[0] == '#')
+                        {
+                            bool ok = true;
+                            for(int i = 1; i < 7; i++)
+                            {
+                                ok &= (colorCode[i] >= '0' && colorCode[i] <= '9') || (colorCode[i] >= 'a' && colorCode[i] <= 'f');
+                            }
+                            if (ok)
+                            {
+                                var clan = Server.GameLogic.CreateClan(clanName, colorCode);
+                                return;
+                            }
+                        }
+                    }
+
+                    throw new Exception("Введён неверный код цвета.");
                 }
                 else
                 {
@@ -188,7 +213,7 @@ namespace Coursework_ServerInterface
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Некорректные входные данные.");
+                MessageBox.Show("Некорректные входные данные. " + ex.Message);
             }
         }
 
@@ -208,7 +233,6 @@ namespace Coursework_ServerInterface
                         var actionPoints = int.Parse(values[5]);
                         var health = int.Parse(values[6]);
 
-                        //TODO: find clan and add to user
                         var clanName = values[2];
                         var clanColorCode = values[3];
                         Clan clan;
@@ -256,7 +280,7 @@ namespace Coursework_ServerInterface
                     {
                         string username = (string)usersGridView.SelectedRows[0].Cells[1].Value;
                         string password = (string)usersGridView.SelectedRows[0].Cells[2].Value;
-                        if (Server.GameLogic.UsersFinder.TryFind(username, out var user, out _))
+                        if (Server.GameLogic.UsersFinder.TryFind(username, out var user, out _, out _))
                         {
                             Server.GameLogic.RemoveUser(user);
                         }
@@ -282,21 +306,105 @@ namespace Coursework_ServerInterface
             switch (_currentGridView)
             {
                 case GridViews.Main:
-                    form = new PlayerFindForm(OnPlayerFind);
+                    form = new SearchTypeForm(OnSearchTypeChosen);//
                     break;
                 case GridViews.Users:
+                    form = new SearchTypeForm(OnSearchTypeChosen);
                     break;
                 case GridViews.Clans:
+                    form = new SearchTypeForm(OnSearchTypeChosen);
                     break;
             }
             form?.Show();
         }
 
-        private void OnPlayerFind(string[] values)
+        private void OnSearchTypeChosen(SearchTypes searchType)
+        {
+            Form form = null;
+            switch (searchType)
+            {
+                case SearchTypes.User:
+                    form = new PlayerFindForm(OnPlayerByUserRequest);
+                    break;
+                case SearchTypes.Clan:
+                    form = new ClanSearchForm(OnPlayerByClanFindRequest);
+                    break;
+                case SearchTypes.Health:
+                    form = new RangeValuesInputForm(SearchHealthRange, 0, 10);
+                    break;
+                case SearchTypes.ActionPoints:
+                    form = new RangeValuesInputForm(SearchActionPointsRange, 0, 100);
+                    break;
+            }
+            form.Show();
+        }
+
+        private void SearchHealthRange(int min, int max)
+        {
+            try
+            {
+                var players = Server.GameLogic.PlayersByHealth.GetValuesRange(min, max);
+                if (players != null && players.Any())
+                {
+                    DisplayPlayers(players);
+                }
+                else
+                {
+                    MessageBox.Show("Пользователей с такими данными не найдено.");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Ошибка входных данных.");
+            }
+        }
+
+        private void SearchActionPointsRange(int min, int max)
+        {
+            try
+            {
+                var players = Server.GameLogic.PlayersByActionPoints.GetValuesRange(min, max);
+                if (players != null && players.Any())
+                {
+                    DisplayPlayers(players);
+                }
+                else
+                {
+                    MessageBox.Show("Пользователей с такими данными не найдено.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка входных данных.");
+            }
+        }
+
+        private void OnPlayerByUserRequest(string[] values)
         {
             var username = values[0];
             var password = values[1];
-            if(Server.GameLogic.PlayersByName.TryFind(username, out var players))
+
+            switch (_currentGridView) {
+                case GridViews.Main:
+                    if (Server.GameLogic.PlayersByName.TryFind(username, out var players))
+                        DisplayPlayers(players);
+                    else
+                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                    break;
+                case GridViews.Users:
+                    if (Server.GameLogic.UsersFinder.TryFind(username, out var value, out var firstHash, out var secondHash))
+                        DisplayUser(firstHash, secondHash, value);
+                    else
+                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                    break;
+            }
+        }
+
+
+        private void OnPlayerByClanFindRequest(string[] values)
+        {
+            var clanName = values[0];
+            if(Server.GameLogic.PlayersByClan.TryFind(clanName, out var players))
             {
                 DisplayPlayers(players);
             }
@@ -304,6 +412,24 @@ namespace Coursework_ServerInterface
             {
                 MessageBox.Show("Пользователей с такими данными не найдено.");
             }
+        }
+
+        private void rangeButton_Click(object sender, EventArgs e)
+        {
+            Form form = new RangeSearchTypeForm(OnSearchTypeChosen);
+            form?.Show();
+        }
+
+        private void DisplayUser(int firstHash, int secondHash, UserData user)
+        {
+            SetCurrentGridView(GridViews.Users);
+            usersGridView.Rows.Clear();
+            var row = new string[4];
+            row[0] = firstHash.ToString();
+            row[1] = secondHash.ToString();
+            row[2] = user.Login;
+            row[3] = user.Password;
+            usersGridView.Rows.Add(row);
         }
 
         private void DisplayPlayers(IEnumerable<Player> players)

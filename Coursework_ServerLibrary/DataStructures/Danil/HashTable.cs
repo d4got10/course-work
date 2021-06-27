@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-    public class HashTable<TKey, TValue> : IHashTableFinder<TKey, TValue> 
+    public class HashTable<TKey, TValue> : IHashTableDoubleFinder<TKey, TValue> 
                                             where TKey : IEquatable<TKey>
     {
         private class Node<UKey, UValue> where UKey : TKey where UValue : TValue
@@ -34,7 +34,8 @@ namespace CourseWork_Server.DataStructures.Danil
 
         public struct ValueWithHash
         {
-            public int Hash;
+            public int FirstHash;
+            public int SecondHash;
             public TValue Value;
         }
 
@@ -48,7 +49,8 @@ namespace CourseWork_Server.DataStructures.Danil
                 {
                     if(_data[i] != null && _data[i].Value != null && _data[i].Deleted == false)
                     {
-                        values[j].Hash = i;
+                        values[j].FirstHash = Function(_data[i].Key, 0, _data.Length);
+                        values[j].SecondHash = i;
                         values[j].Value = _data[i].Value;
                         j++;
                     }
@@ -95,19 +97,21 @@ namespace CourseWork_Server.DataStructures.Danil
             return false;
         }
 
-        public bool TryFind(TKey key, out TValue value, out int hash)
+        public bool TryFind(TKey key, out TValue value, out int firstHash, out int secondHash)
         {
-            hash = -1;
+            firstHash = -1;
+            secondHash = -1;
             value = default;
             for (int i = 0; i < _data.Length; i++)
             {
                 int index = Function(key, i, _data.Length);
+                if (i == 0) firstHash = index;
 
                 if (_data[index] != null)
                 {
                     if (_data[index].Deleted == false && _data[index].Key.Equals(key))
                     {
-                        hash = index;
+                        secondHash = index;
                         value = _data[index].Value;
                         return true;
                     }

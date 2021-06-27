@@ -46,3 +46,7 @@ D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterf
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.PlayerFindForm.resources
 C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.ClanAddForm.resources
 C:\Users\glazy\OneDrive\Рабочий стол\course-work\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.PlayerFindForm.resources
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.SearchTypeForm.resources
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.ClanSearchForm.resources
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.RangeSearchTypeForm.resources
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.RangeValuesInputForm.resources
