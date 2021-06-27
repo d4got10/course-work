@@ -50,3 +50,4 @@ D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterf
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.ClanSearchForm.resources
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.RangeSearchTypeForm.resources
 D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.RangeValuesInputForm.resources
+D:\repos\Coursework\Coursework_ServerInterface\obj\Debug\Coursework_ServerInterface.DebugForm.resources

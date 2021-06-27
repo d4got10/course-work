@@ -40,6 +40,7 @@ namespace Coursework_ServerInterface
 
         private GridViews _currentGridView;
         private bool _gridDataNeedsToUpdate;
+        private DebugForm _debugForm;
 
         public Form1()
         {
@@ -560,6 +561,16 @@ namespace Coursework_ServerInterface
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Server.GameLogic.SaveData(Application.StartupPath + AppConstants.DataFolderPath);
+        }
+
+        private void debugButton_Click(object sender, EventArgs e)
+        {
+            if (_debugForm == null || _debugForm.IsDisposed)
+                _debugForm = new DebugForm(Server.GameLogic.NameTreeDebug,
+                                            Server.GameLogic.ClanTreeDebug,
+                                            Server.GameLogic.HealthTreeDebug,
+                                            Server.GameLogic.ActionPointsTreeDebug);
+            _debugForm.Show();
         }
     }
 }

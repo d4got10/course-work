@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Coursework_ServerLibrary;
+using System;
 using System.Collections.Generic;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
 
-    public class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>, ITreeRangeFinder<TKey, TValue>
+    public class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>, ITreeRangeFinder<TKey, TValue>, IDisplayable
         where TKey : IComparable<TKey> 
         where TValue : IEquatable<TValue>
     {
@@ -200,6 +201,7 @@ namespace CourseWork_Server.DataStructures.Danil
         //Выходные данные: пусто
         public void Remove(TKey key, TValue value)
         {
+            _comparisons = 0;
             var node = Find(key);
             node.Values.Remove(value);
             if (node.Values.IsEmpty())
@@ -221,7 +223,7 @@ namespace CourseWork_Server.DataStructures.Danil
         public void DisplayStraight()
         {
             DisplayTreeStraight(_root);
-            Console.WriteLine();
+            Debug.WriteLine();
         }
 
         //Метод вывода дерева на экран
@@ -231,7 +233,7 @@ namespace CourseWork_Server.DataStructures.Danil
         public void Display()
         {
             DisplayTree(_root, 0);
-            Console.WriteLine();
+            Debug.WriteLine();
         }
 
         //Метод вывода дерева на экран
@@ -241,7 +243,7 @@ namespace CourseWork_Server.DataStructures.Danil
         public void DisplayReverse()
         {
             DisplayTreeReverse(_root);
-            Console.WriteLine();
+            Debug.WriteLine();
         }
 
         //Метод вывода дерева на экран
@@ -251,7 +253,7 @@ namespace CourseWork_Server.DataStructures.Danil
         public void DisplaySimmetrical()
         {
             DisplayTreeSimmetrical(_root);
-            Console.WriteLine();
+            Debug.WriteLine();
         }
 
         //Метод добавления значения
@@ -629,11 +631,11 @@ namespace CourseWork_Server.DataStructures.Danil
                 else
                 {
                     _comparisons += 2;
-                    Console.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
+                    Debug.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
                     return node;
                 }
             }
-            Console.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
+            Debug.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
             return null;
         }
 
@@ -649,8 +651,8 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 DisplayTree(root.RightChild, tabs+1);
             }
-            for (int i = 0; i < tabs; i++) Console.Write("\t");
-            Console.WriteLine($"{root.Key}_{(root.IsBlack ? "B" : "R")} ");
+            for (int i = 0; i < tabs; i++) Debug.Write("\t");
+            Debug.WriteLine($"{root.Key}_{(root.IsBlack ? "B" : "R")} ");
             if (root.LeftChild != _nil)
             {
                 DisplayTree(root.LeftChild, tabs+1);
@@ -673,7 +675,7 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 DisplayTreeReverse(root.RightChild);
             }
-            Console.Write($"{root.Key} ");
+            Debug.Write($"{root.Key} ");
         }
 
         //Метод симметричного вывода поддерева
@@ -688,7 +690,7 @@ namespace CourseWork_Server.DataStructures.Danil
             {
                 DisplayTreeSimmetrical(root.LeftChild);
             }
-            Console.Write($"{root.Key} ");
+            Debug.Write($"{root.Key} ");
             if (root.RightChild != _nil)
             {
                 DisplayTreeSimmetrical(root.RightChild);
@@ -703,7 +705,7 @@ namespace CourseWork_Server.DataStructures.Danil
         {
             if (root == _nil) return;
 
-            Console.Write($"{root.Key}_{(root.IsBlack ? "B" : "R")} ");
+            Debug.Write($"{root.Key}_{(root.IsBlack ? "B" : "R")} ");
             if (root.LeftChild != _nil)
             {
                 DisplayTreeStraight(root.LeftChild);

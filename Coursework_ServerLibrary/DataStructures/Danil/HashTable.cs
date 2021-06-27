@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Coursework_ServerLibrary;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-    public class HashTable<TKey, TValue> : IHashTableDoubleFinder<TKey, TValue>, ISaveable
+    public class HashTable<TKey, TValue> : IHashTableDoubleFinder<TKey, TValue>, ISaveable, IDisplayable
                                             where TKey : IEquatable<TKey>
                                             where TValue : ISaveable
     {
@@ -176,18 +177,18 @@ namespace CourseWork_Server.DataStructures.Danil
 
         public void Display()
         {
-            Console.WriteLine($"Hashtable [Size:{_data.Length}] [Load:{_currentLoad}/{_data.Length}]:");
+            Debug.WriteLine($"Hashtable [Size:{_data.Length}] [Load:{_currentLoad}/{_data.Length}]:");
             for(int i = 0; i < _data.Length; i++)
             {
                 if(_data[i] != null)
                 {
                     if (_data[i].Deleted == false)
                     {
-                        Console.WriteLine($"Hash code [{i}]: {{Key:{_data[i].Key}; Value:{_data[i].Value}}}");
+                        Debug.WriteLine($"Hash code [{i}]: {{Key:{_data[i].Key}; Value:{_data[i].Value}}}");
                     }
                     else
                     {
-                        Console.WriteLine($"Hash code [{i}]: DELETED");
+                        Debug.WriteLine($"Hash code [{i}]: DELETED");
                     }
                 }
             }

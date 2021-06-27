@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Coursework_ServerLibrary;
+using System;
 using System.Collections.Generic;
 
 
 namespace CourseWork_Server.DataStructures.Matvey
 {
-    public partial class AVLTree<TKey, TValue> : ITreeFinder<TKey, TValue>
+    public partial class AVLTree<TKey, TValue> 
         where TKey : IComparable
         where TValue : IEquatable<TValue>
     {
@@ -27,7 +28,8 @@ namespace CourseWork_Server.DataStructures.Matvey
         }
     }
 
-    public partial class AVLTree<TKey, TValue> where TKey : IComparable
+    public partial class AVLTree<TKey, TValue> : ITreeFinder<TKey, TValue>, IDisplayable
+                                    where TKey : IComparable
                                     where TValue : IEquatable<TValue>
     {
         private Node _head;
@@ -54,7 +56,7 @@ namespace CourseWork_Server.DataStructures.Matvey
             }
             else
             {
-                if (key.CompareTo(parent.Left.Key) < 0)
+                if (key.CompareTo(parent.Key) < 0)
                     parent.Left = new Node(key, value);
                 else
                     parent.Right = new Node(key, value);
@@ -116,6 +118,13 @@ namespace CourseWork_Server.DataStructures.Matvey
                 }
             }
         }
+
+        public void Display()
+        {
+            int tabs = 0;
+            DisplayTree(_head, tabs);
+        }
+
         private bool Find(TKey key, out Node found, out Node parent)
         {
             parent = _head;
@@ -151,11 +160,11 @@ namespace CourseWork_Server.DataStructures.Matvey
                 return 0;
         }
 
-
         private int BFactor (Node elem)
         {
             return HeightElem(elem.Right) - HeightElem(elem.Left);
         }
+
         private void FixedHeight(Node elem)
         {
             int left_h = HeightElem(elem.Left);
@@ -165,6 +174,7 @@ namespace CourseWork_Server.DataStructures.Matvey
             else
                 elem.Height = right_h + 1;
         }
+
         private Node RotateRight(Node elem)
         {
             Node p_elem = elem.Left;
@@ -174,6 +184,7 @@ namespace CourseWork_Server.DataStructures.Matvey
             FixedHeight(p_elem);
             return p_elem;
         }
+
         private Node RotateLeft(Node elem)
         {
             Node p_elem = elem.Right;
@@ -183,6 +194,7 @@ namespace CourseWork_Server.DataStructures.Matvey
             FixedHeight(p_elem);
             return p_elem;
         }
+
         private Node Balance(Node elem)
         {
             FixedHeight(elem);
@@ -200,6 +212,7 @@ namespace CourseWork_Server.DataStructures.Matvey
             }
             return elem;
         }
+
         private Node FindMax(Node elem)
         {
             if (elem.Right != null)
@@ -207,12 +220,23 @@ namespace CourseWork_Server.DataStructures.Matvey
             else
                 return elem;
         }
+
         private Node RemoveMax(Node elem)
         {
             if (elem.Right == null)
                 return elem.Left;
             elem.Right = RemoveMax(elem.Right);
             return Balance(elem);
+        }
+
+        private void DisplayTree(Node root, int tabs)
+        {
+            if (root == null) return;
+
+            DisplayTree(root.Right, tabs + 1);
+            for (int i = 0; i < tabs; i++) Debug.Write("\t");
+            Debug.WriteLine($"{root.Key}");
+            DisplayTree(root.Left, tabs + 1);
         }
     }
 }

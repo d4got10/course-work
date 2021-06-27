@@ -36,16 +36,19 @@ namespace Сoursework_Server
         public ITreeRangeFinder<int, Player> PlayersByHealth => _playersByHealth;
         public ITreeRangeFinder<int, Player> PlayersByActionPoints => _playersByActionPoints;
 
+        public IDisplayable NameTreeDebug => _playersByName;
+        public IDisplayable ClanTreeDebug => _playersByClan;
+        public IDisplayable HealthTreeDebug => _playersByHealth;
+        public IDisplayable ActionPointsTreeDebug => _playersByActionPoints;
 
         private SaveLoadableList<Player> _players;
         private CourseWork_Server.DataStructures.Matvey.HashTable<string, Clan> _clans;
         private CourseWork_Server.DataStructures.Danil.HashTable<string, UserData> _users;
         private RedBlackTree<string, Player> _playersByName;
-        private AVLTree<string, Player> _playersByClan; //TODO: Поменять на дерево Матвея
+        private AVLTree<string, Player> _playersByClan;
         private RedBlackTree<int, Player> _playersByHealth;
         private RedBlackTree<int, Player> _playersByActionPoints;
         private IClientsProvider _clientsProvider;
-
 
         public GameLogic(IClientsProvider clientsProvider)
         {

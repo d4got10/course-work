@@ -67,6 +67,7 @@
             this.LogsLabel = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.debugButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.dataGridViewsBox.SuspendLayout();
@@ -485,11 +486,22 @@
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // debugButton
+            // 
+            this.debugButton.Location = new System.Drawing.Point(603, 491);
+            this.debugButton.Name = "debugButton";
+            this.debugButton.Size = new System.Drawing.Size(94, 32);
+            this.debugButton.TabIndex = 5;
+            this.debugButton.Text = "Отладка";
+            this.debugButton.UseVisualStyleBackColor = true;
+            this.debugButton.Click += new System.EventHandler(this.debugButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1106, 545);
+            this.Controls.Add(this.debugButton);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridViewsBox);
@@ -548,6 +560,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SecondaryHash;
         private System.Windows.Forms.DataGridViewTextBoxColumn Username;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private System.Windows.Forms.Button debugButton;
     }
 }
 
