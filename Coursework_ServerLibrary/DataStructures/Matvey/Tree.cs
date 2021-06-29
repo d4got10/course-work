@@ -43,26 +43,20 @@ namespace CourseWork_Server.DataStructures.Matvey
 
         public void Add(TKey key, TValue value)
         {
-            if (_head == null)
-            {
-                _head = new Node(key, value);
-                return;
-            }
+            _head = Insert(_head, key, value);
+        }
 
-            Node current = null, parent = null;
-            if(Find(key, out current, out parent))
-            {
-                current.Values.Add(value);
-            }
+        private Node Insert(Node root, TKey key, TValue value)
+        {
+            if (root == null) return new Node(key, value);
+
+            if (key.CompareTo(root.Key) < 0)
+                root.Left = Insert(root.Left, key, value);
+            else if (key.CompareTo(root.Key) > 0)
+                root.Right = Insert(root.Right, key, value);
             else
-            {
-                if (key.CompareTo(parent.Key) < 0)
-                    parent.Left = new Node(key, value);
-                else
-                    parent.Right = new Node(key, value);
-            }
-
-            _head = Balance(_head);
+                root.Values.Add(value);
+            return Balance(root);
         }
 
         public bool TryFind(TKey key, out IEnumerable<TValue> values)
@@ -80,43 +74,32 @@ namespace CourseWork_Server.DataStructures.Matvey
 
         public void Remove(TKey key, TValue value)
         {
-            if (_head == null) return;
+            _head = Remove(_head, key, value);
+        }
 
-            if(Find(key, out var current, out var parent))
+        private Node Remove(Node root, TKey key, TValue value)
+        {
+            if (root == null) return null;
+            if (key.CompareTo(root.Key) < 0)
+                root.Left = Remove(root.Left, key, value);
+            else if (key.CompareTo(root.Key) > 0)
+                root.Right = Remove(root.Right, key, value);
+            else
             {
-                current.Values.Remove(value);
-                if(current.Values.Count == 0)
+                root.Values.Remove(value);
+                if(root.Values.Count == 0)
                 {
-                    if (parent == current)
-                    {
-                        _head = _head.Left;
-                    }
-                    else
-                    {
-                        var right = current.Right;
-                        var left = current.Left;
-                        current.Left = null;
-                        current.Right = null;
-                        if (right == null)
-                        {
-                            if (parent.Left == current)
-                                parent.Left = left;
-                            else
-                                parent.Right = left;
-                            return;
-                        }
-
-                        var max = FindMax(left);
-                        max.Left = RemoveMax(left);
-                        max.Right = right;
-                        if (parent.Left == current)
-                            parent.Left = max;
-                        else
-                            parent.Right = max;
-                        Balance(parent);
-                    }
+                    Node right = root.Right;
+                    Node left = root.Left;
+                    if (left == null) return right;
+                    Node max = FindMax(left);
+                    max.Left = RemoveMax(left);
+                    max.Right = right;
+                    return Balance(max);
                 }
             }
+
+            return Balance(root);
         }
 
         public void Display()

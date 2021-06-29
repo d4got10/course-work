@@ -47,6 +47,7 @@
             this.debugTextBox.Multiline = true;
             this.debugTextBox.Name = "debugTextBox";
             this.debugTextBox.ReadOnly = true;
+            this.debugTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.debugTextBox.Size = new System.Drawing.Size(478, 426);
             this.debugTextBox.TabIndex = 0;
             // 
