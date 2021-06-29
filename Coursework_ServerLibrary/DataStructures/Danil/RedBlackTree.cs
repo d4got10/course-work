@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-
     public class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>, ITreeRangeFinder<TKey, TValue>, IDisplayable
         where TKey : IComparable<TKey> 
         where TValue : IEquatable<TValue>

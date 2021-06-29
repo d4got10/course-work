@@ -282,6 +282,8 @@ namespace Сoursework_Server
             for(int i = 0; i < rows.Length; i++)
             {
                 if (string.IsNullOrWhiteSpace(rows[i])) continue;
+                rows[i] = rows[i].Trim('\r');
+                rows[i] = rows[i].Trim('\n');
                 var splitted = rows[i].Split('|');
                 CreateUser(splitted[0], splitted[1]);
             }
@@ -293,6 +295,8 @@ namespace Сoursework_Server
             for (int i = 0; i < rows.Length; i++)
             {
                 if (string.IsNullOrWhiteSpace(rows[i])) continue;
+                rows[i] = rows[i].Trim('\r');
+                rows[i] = rows[i].Trim('\n');
                 var splitted = rows[i].Split('|');
                 CreateClan(splitted[0], splitted[1]);
             }
@@ -305,6 +309,8 @@ namespace Сoursework_Server
             {
                 if (string.IsNullOrWhiteSpace(rows[i])) continue;
 
+                rows[i] = rows[i].Trim('\r');
+                rows[i] = rows[i].Trim('\n');
                 var splitted = rows[i].Split('|');
 
                 UsersFinder.TryFind(splitted[0], out var userData, out _, out _);
