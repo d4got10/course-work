@@ -68,6 +68,7 @@
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.Size = new System.Drawing.Size(145, 26);
             this.passwordTextBox.TabIndex = 2;
+            this.passwordTextBox.Visible = false;
             // 
             // nameTextBox
             // 
@@ -102,6 +103,7 @@
             this.label3.Size = new System.Drawing.Size(67, 20);
             this.label3.TabIndex = 3;
             this.label3.Text = "Пароль";
+            this.label3.Visible = false;
             // 
             // label2
             // 

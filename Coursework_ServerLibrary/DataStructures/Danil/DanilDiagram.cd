@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CourseWork_Server.DataStructures.Danil.HashTable&lt;TKey, TValue&gt;">
+    <Position X="8.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAFAAAAEABBAAABUIAAAEAAAAAAAAgAAECADQ=</HashCode>
+      <FileName>DataStructures\Danil\HashTable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CourseWork_Server.DataStructures.Danil.List&lt;T&gt;">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <NestedTypes>
+      <Class Name="CourseWork_Server.DataStructures.Danil.List&lt;T&gt;.Node&lt;U&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Danil\List.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAJAAAAAAAAQABAECAAABAAAAAAAAAAEAAAAAABCAAA=</HashCode>
+      <FileName>DataStructures\Danil\List.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CourseWork_Server.DataStructures.Danil.RedBlackTree&lt;TKey, TValue&gt;">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <NestedTypes>
+      <Class Name="CourseWork_Server.DataStructures.Danil.RedBlackTree&lt;TKey, TValue&gt;.Node&lt;UKey, UValue&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Danil\RedBlackTree.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EAIAIAAAAEkQQAAAAggABQMACQEoABAEQAEgQABCIII=</HashCode>
+      <FileName>DataStructures\Danil\RedBlackTree.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="List" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CourseWork_Server.DataStructures.Danil.StringHashTableExtras">
+    <Position X="1.75" Y="5.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAgAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\Danil\StringHashTableExtras.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork_Server.DataStructures.SaveLoadableList&lt;T&gt;">
+    <Position X="10.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAABAACAAAAAQAAAAAABAEAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\SaveLoadableList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="CourseWork_Server.DataStructures.Danil.IHashTableDoubleFinder&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>DataStructures\Danil\IHashTableFinder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CourseWork_Server.DataStructures.Matvey.IHashTableFinder&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="1.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>DataStructures\Danil\IHashTableFinder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CourseWork_Server.DataStructures.ITreeFinder&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>DataStructures\Danil\ITreeFinder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CourseWork_Server.DataStructures.ITreeRangeFinder&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="1.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\Danil\ITreeFinder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CourseWork_Server.DataStructures.IDisplayable" Collapsed="true">
+    <Position X="1.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\IDisplayable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

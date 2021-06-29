@@ -10,10 +10,14 @@ namespace CourseWork_Server.DataStructures.Danil
         where TValue : IEquatable<TValue>
     {
         #region Private Variables
+        //Корень дерева
         private Node<TKey, TValue> _root;
+        //Нулевой указатель
         private Node<TKey, TValue> _nil;
 
+        //Количество сравнений
         private int _comparisons = 0;
+        //Имя дерева, использующееся для отладки
         private string _name;
         #endregion
 
@@ -31,33 +35,9 @@ namespace CourseWork_Server.DataStructures.Danil
         #endregion
 
         #region Public Functions
+        //TODO
         public IEnumerable<TValue> GetValuesRange(TKey min, TKey max)
         {
-            ////если min > max кидаем ошибку
-            //if (min.CompareTo(max) > 0) throw new ArgumentOutOfRangeException();
-            ////если min или max == null кидаем ошибку
-            //if (min == null || max == null) throw new ArgumentNullException();
-
-            //var values = new List<TValue>();
-            //var node = _root;
-
-            ////ищем элемент из диапозона
-            //while(node != _nil && (node.Key.CompareTo(min) < 0 || node.Key.CompareTo(max) > 0))
-            //{
-            //    if (node.Key.CompareTo(min) < 0)
-            //        node = node.RightChild;
-            //    else
-            //        node = node.LeftChild;
-            //}
-
-            ////собираем все значения из него
-            //if(node != _nil && node.Key.CompareTo(min) >= 0 && node.Key.CompareTo(max) <= 0)
-            //{
-            //    GetValuesRangeInternal(node, min, max, values);
-            //}
-            ////возвращаем значения из диапозона
-            //return values;
-
             var values = new List<TValue>();
 
             var minNode = _root;
@@ -166,6 +146,7 @@ namespace CourseWork_Server.DataStructures.Danil
             return values;
         }
 
+        //TODO
         private void GetValuesFromTree(Node<TKey, TValue> root, ref List<TValue> values)
         {
             if (root == _nil) return;
@@ -835,7 +816,16 @@ namespace CourseWork_Server.DataStructures.Danil
                 Parent = null;
             }
 
+            //Метод добавления значения в список узла
+            //Формальные параметры: UValue
+            //Входные данные: объект класса Node, значение для добавления
+            //Выходные данные: пусто
             public void Add(UValue value) => Values.Add(value);
+
+            //Метод удаления значения из списка узла
+            //Формальные параметры: UValue
+            //Входные данные: объект класса Node, значение для удаления
+            //Выходные данные: пусто
             public void Remove(UValue value) => Values.Remove(value);
         }
 

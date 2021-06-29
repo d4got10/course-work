@@ -18,4 +18,12 @@
 80|#ff0aaa
 90|#ff0aaa
 FEDORI|#ff00ff
-newclan|#ff0aaa
+BoxVord|#baf000
+ALBINOS|#abcbff
+Pirate|#00ff00
+Midas|#f0f0f0
+roBob|#123f60
+Killers|#aabbaa
+Color|#fab0fa
+VordBox|#000fab
+Bobor|#afbc20

@@ -4,9 +4,10 @@ namespace CourseWork_Server.DataStructures.Danil
 {
     public static class StringHashTableExtras
     {
-        public static int HashFunction(string key, int j, int size)
+        public static int HashFunction(string key, int i, int size)
         {
-            return ((Hash1(key, size) + (367 * j * j + 823 * j + 1861) * Hash2(key, size)) % size + size) % size;
+            return (Hash1(key, size) + i * Hash2(key, size)) % size;
+            //return ((Hash1(key, size) + (367 * j * j + 823 * j + 1861) * Hash2(key, size)) % size + size) % size;
         }
 
         public static int Hash1(string key, int size)
@@ -17,7 +18,7 @@ namespace CourseWork_Server.DataStructures.Danil
             value *= value;
             int count = Extras.GetDigitCount(value);
             int sizeCount = Extras.GetDigitCount(size);
-            for (int i = 0; i < (count - size) / 2; i++)
+            for (int i = 0; i < (count - sizeCount) / 2; i++)
             {
                 value /= 10;
             }
@@ -32,7 +33,7 @@ namespace CourseWork_Server.DataStructures.Danil
             int value = 0;
             for (int i = 0; i < key.Length; i++)
                 value += key[i];
-            return value % size;
+            return 1 + value % size;
         }
     }
 }

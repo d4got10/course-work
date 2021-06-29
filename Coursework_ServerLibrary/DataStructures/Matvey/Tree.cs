@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace CourseWork_Server.DataStructures.Matvey
 {
-    public partial class AVLTree<TKey, TValue> 
-        where TKey : IComparable
-        where TValue : IEquatable<TValue>
+    public class AVLTree<TKey, TValue> : ITreeFinder<TKey, TValue>, IDisplayable
+                                    where TKey : IComparable
+                                    where TValue : IEquatable<TValue>
     {
         private class Node
         {
@@ -26,12 +26,7 @@ namespace CourseWork_Server.DataStructures.Matvey
                 Height = 1;
             }
         }
-    }
 
-    public partial class AVLTree<TKey, TValue> : ITreeFinder<TKey, TValue>, IDisplayable
-                                    where TKey : IComparable
-                                    where TValue : IEquatable<TValue>
-    {
         private Node _head;
         private string _name;
         private int _comparisons = 0;

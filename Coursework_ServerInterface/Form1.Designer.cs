@@ -162,7 +162,7 @@
             this.rangeButton.Name = "rangeButton";
             this.rangeButton.Size = new System.Drawing.Size(81, 32);
             this.rangeButton.TabIndex = 3;
-            this.rangeButton.Text = "Диапозон";
+            this.rangeButton.Text = "Диапазон";
             this.rangeButton.UseVisualStyleBackColor = true;
             this.rangeButton.Click += new System.EventHandler(this.rangeButton_Click);
             // 

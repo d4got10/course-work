@@ -226,7 +226,13 @@ namespace Coursework_ServerInterface
                 if (values.Length == 7)
                 {
                     var username = values[0];
+                    
                     var password = values[1];
+                    if(password == "ошибка")
+                    {
+                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                        return;
+                    }
 
                     if (Server.GameLogic.TryGetUserData(username, password, out var data))
                     {
@@ -237,9 +243,14 @@ namespace Coursework_ServerInterface
 
                         var clanName = values[2];
                         var clanColorCode = values[3];
+                        if(clanColorCode == "ошибка")
+                        {
+                            MessageBox.Show("Кланов с такими данными не найдено.");
+                            return;
+                        }
                         Clan clan;
-
                         Server.GameLogic.ClansFinder.TryFind(clanName, out clan, out _);
+                        
 
                         var player = Server.GameLogic.CreateAndAddPlayer(data, position, clan, actionPoints, health);
                     }
@@ -255,7 +266,7 @@ namespace Coursework_ServerInterface
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Некорректные входные данные." + ex.Message);
+                MessageBox.Show("Некорректные входные данные. " + ex.Message);
             }
         }
 
@@ -304,17 +315,17 @@ namespace Coursework_ServerInterface
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            Form form = null;
+            Form form = null; 
             switch (_currentGridView)
             {
                 case GridViews.Main:
-                    form = new SearchTypeForm(OnSearchTypeChosen);//
+                    form = new SearchTypeForm(OnSearchTypeChosen);
                     break;
                 case GridViews.Users:
-                    form = new SearchTypeForm(OnSearchTypeChosen);
+                    form = new PlayerFindForm(OnPlayerByUserRequest);
                     break;
                 case GridViews.Clans:
-                    form = new SearchTypeForm(OnSearchTypeChosen);
+                    form = new ClanSearchForm(OnPlayerByClanFindRequest);
                     break;
             }
             form?.Show();
@@ -357,7 +368,7 @@ namespace Coursework_ServerInterface
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Ошибка входных данных.");
+                MessageBox.Show("Ошибка входных данных для диапазона. " + ex.Message);
             }
         }
 
@@ -377,7 +388,7 @@ namespace Coursework_ServerInterface
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка входных данных.");
+                MessageBox.Show("Ошибка входных данных для диапазона. " + ex.Message);
             }
         }
 
