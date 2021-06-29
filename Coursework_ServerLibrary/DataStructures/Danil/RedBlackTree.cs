@@ -4,7 +4,131 @@ using System.Collections.Generic;
 
 namespace CourseWork_Server.DataStructures.Danil
 {
-    public class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>, ITreeRangeFinder<TKey, TValue>, IDisplayable
+
+    public partial class RedBlackTree<TKey, TValue> where TKey : IComparable<TKey>
+                                                    where TValue : IEquatable<TValue>
+    {
+        #region Internal Node Class
+        private class Node<UKey, UValue> : IDisposable where UValue : IEquatable<UValue>
+        {
+            public readonly UKey Key;
+            public List<UValue> Values;
+
+            public Node<UKey, UValue> LeftChild;
+            public Node<UKey, UValue> RightChild;
+            public Node<UKey, UValue> Parent;
+
+            public bool IsBlack;
+
+            public Node<UKey, UValue> Sibling
+            {
+                get
+                {
+                    if (Parent.LeftChild == this)
+                        return Parent.RightChild;
+                    else
+                        return Parent.LeftChild;
+                }
+            }
+
+            public Node<UKey, UValue> Uncle
+            {
+                get
+                {
+                    if (GrandParent.LeftChild == Parent)
+                        return GrandParent.RightChild;
+                    else
+                        return GrandParent.LeftChild;
+                }
+            }
+
+            public Node<UKey, UValue> GrandParent
+            {
+                get
+                {
+                    return Parent.Parent;
+                }
+            }
+
+            //Конструктор объекта класса Node
+            //Формальные параметры: пусто
+            //Входные данные: пусто
+            //Выходные данные: объект класса Node
+            public Node()
+            {
+                Values = new List<UValue>();
+                LeftChild = this;
+                RightChild = this;
+                Parent = this;
+                IsBlack = true;
+            }
+
+            //Конструктор объекта класса Node
+            //Формальные параметры: объект класса U, объект класса Node<U>
+            //Входные данные: значение узла, nil-узел
+            //Выходные данные: объект класса Node
+            public Node(UKey key, UValue value, Node<UKey, UValue> nil)
+            {
+                Key = key;
+                Values = new List<UValue>();
+                Values.Add(value);
+                LeftChild = nil;
+                RightChild = nil;
+                Parent = nil;
+                IsBlack = false;
+            }
+
+            //Конструктор объекта класса Node
+            //Формальные параметры: объект класса U, объект класса Node<U>, логическая переменная, объект класса Node<U>
+            //Входные данные: значение узла, nil-узел
+            //Выходные данные: объект класса Node
+            public Node(UKey key, UValue value, Node<UKey, UValue> parent, bool isLeftChild, Node<UKey, UValue> nil)
+            {
+                Key = key;
+                Values = new List<UValue>();
+                Values.Add(value);
+                LeftChild = nil;
+                RightChild = nil;
+                Parent = parent;
+
+                if (parent != null)
+                    if (isLeftChild)
+                        parent.LeftChild = this;
+                    else
+                        parent.RightChild = this;
+
+                IsBlack = false;
+            }
+
+            //Метод очистки полей узла
+            //Формальные параметры: пусто
+            //Входные данные: объект класса Node
+            //Выходные данные: пусто
+            public void Dispose()
+            {
+                Values = null;
+                LeftChild = null;
+                RightChild = null;
+                Parent = null;
+            }
+
+            //Метод добавления значения в список узла
+            //Формальные параметры: UValue
+            //Входные данные: объект класса Node, значение для добавления
+            //Выходные данные: пусто
+            public void Add(UValue value) => Values.Add(value);
+
+            //Метод удаления значения из списка узла
+            //Формальные параметры: UValue
+            //Входные данные: объект класса Node, значение для удаления
+            //Выходные данные: пусто
+            public void Remove(UValue value) => Values.Remove(value);
+        }
+
+        #endregion
+    }
+
+    public partial class RedBlackTree<TKey, TValue> : ITreeFinder<TKey, TValue>, ITreeRangeFinder<TKey, TValue>, IDisplayable
         where TKey : IComparable<TKey> 
         where TValue : IEquatable<TValue>
     {
@@ -709,125 +833,6 @@ namespace CourseWork_Server.DataStructures.Danil
                 root.Dispose();
             }
         }
-        #endregion
-
-        #region Internal Node Class
-        private class Node<UKey, UValue> : IDisposable where UValue : IEquatable<UValue>
-        {
-            public readonly UKey Key;
-            public List<UValue> Values;
-
-            public Node<UKey, UValue> LeftChild;
-            public Node<UKey, UValue> RightChild;
-            public Node<UKey, UValue> Parent;
-
-            public bool IsBlack;
-
-            public Node<UKey, UValue> Sibling
-            {
-                get
-                {
-                    if (Parent.LeftChild == this)
-                        return Parent.RightChild;
-                    else
-                        return Parent.LeftChild;
-                }
-            }
-
-            public Node<UKey, UValue> Uncle
-            {
-                get
-                {
-                    if (GrandParent.LeftChild == Parent)
-                        return GrandParent.RightChild;
-                    else 
-                        return GrandParent.LeftChild;
-                }
-            }
-
-            public Node<UKey, UValue> GrandParent
-            {
-                get
-                {
-                    return Parent.Parent;
-                }
-            }
-
-            //Конструктор объекта класса Node
-            //Формальные параметры: пусто
-            //Входные данные: пусто
-            //Выходные данные: объект класса Node
-            public Node()
-            {
-                Values = new List<UValue>();
-                LeftChild = this;
-                RightChild = this;
-                Parent = this;
-                IsBlack = true;
-            }
-
-            //Конструктор объекта класса Node
-            //Формальные параметры: объект класса U, объект класса Node<U>
-            //Входные данные: значение узла, nil-узел
-            //Выходные данные: объект класса Node
-            public Node(UKey key, UValue value, Node<UKey, UValue> nil)
-            {
-                Key = key;
-                Values = new List<UValue>();
-                Values.Add(value);
-                LeftChild = nil;
-                RightChild = nil;
-                Parent = nil;
-                IsBlack = false;
-            }
-
-            //Конструктор объекта класса Node
-            //Формальные параметры: объект класса U, объект класса Node<U>, логическая переменная, объект класса Node<U>
-            //Входные данные: значение узла, nil-узел
-            //Выходные данные: объект класса Node
-            public Node(UKey key, UValue value, Node<UKey, UValue> parent, bool isLeftChild, Node<UKey, UValue> nil)
-            {
-                Key = key;
-                Values = new List<UValue>();
-                Values.Add(value);
-                LeftChild = nil;
-                RightChild = nil;
-                Parent = parent;
-
-                if (parent != null)
-                    if (isLeftChild)
-                        parent.LeftChild = this;
-                    else
-                        parent.RightChild = this;
-
-                IsBlack = false;
-            }
-
-            //Метод очистки полей узла
-            //Формальные параметры: пусто
-            //Входные данные: объект класса Node
-            //Выходные данные: пусто
-            public void Dispose()
-            {
-                Values = null;
-                LeftChild = null;
-                RightChild = null;
-                Parent = null;
-            }
-
-            //Метод добавления значения в список узла
-            //Формальные параметры: UValue
-            //Входные данные: объект класса Node, значение для добавления
-            //Выходные данные: пусто
-            public void Add(UValue value) => Values.Add(value);
-
-            //Метод удаления значения из списка узла
-            //Формальные параметры: UValue
-            //Входные данные: объект класса Node, значение для удаления
-            //Выходные данные: пусто
-            public void Remove(UValue value) => Values.Remove(value);
-        }
-
         #endregion
     }
 }

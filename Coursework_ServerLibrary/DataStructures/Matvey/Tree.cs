@@ -59,7 +59,7 @@ namespace CourseWork_Server.DataStructures.Matvey
             _comparisons = 0;
             if(Find(key, out var found, out var parent))
             {
-                Console.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
+                Debug.WriteLine($"ДАННЫЕ [{_name}]: поиск потребовал {_comparisons} сравнений");
                 values = found.Values;
                 return true;
             }

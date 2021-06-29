@@ -1,7 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CourseWork_Server.DataStructures.Danil.HashTable&lt;TKey, TValue&gt;">
-    <Position X="8.75" Y="2" Width="1.5" />
+    <Position X="10.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="CourseWork_Server.DataStructures.Danil.HashTable&lt;TKey, TValue&gt;.Node&lt;UKey, UValue&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Danil\HashTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="CourseWork_Server.DataStructures.Danil.HashTable&lt;TKey, TValue&gt;.HashFunction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Danil\HashTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Struct Name="CourseWork_Server.DataStructures.Danil.HashTable&lt;TKey, TValue&gt;.ValueWithHash" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Danil\HashTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAIAAAAAFAAAAEABBAAABUIAAAEAAAAAAAAgAAECADQ=</HashCode>
       <FileName>DataStructures\Danil\HashTable.cs</FileName>
@@ -9,7 +29,10 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CourseWork_Server.DataStructures.Danil.List&lt;T&gt;">
-    <Position X="6.75" Y="2" Width="1.5" />
+    <Position X="8.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
       <Class Name="CourseWork_Server.DataStructures.Danil.List&lt;T&gt;.Node&lt;U&gt;" Collapsed="true">
         <TypeIdentifier>
@@ -24,9 +47,12 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CourseWork_Server.DataStructures.Danil.RedBlackTree&lt;TKey, TValue&gt;">
-    <Position X="4.25" Y="2" Width="1.5" />
+    <Position X="4.5" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
-      <Class Name="CourseWork_Server.DataStructures.Danil.RedBlackTree&lt;TKey, TValue&gt;.Node&lt;UKey, UValue&gt;" Collapsed="true">
+      <Class Name="CourseWork_Server.DataStructures.Danil.RedBlackTree&lt;TKey, TValue&gt;.Node&lt;UKey, UValue&gt;">
         <TypeIdentifier>
           <NewMemberFileName>DataStructures\Danil\RedBlackTree.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -34,12 +60,9 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>EAIAIAAAAEkQQAAAAggABQMACQEoABAEQAEgQABCIII=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataStructures\Danil\RedBlackTree.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="List" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CourseWork_Server.DataStructures.Danil.StringHashTableExtras">
@@ -53,10 +76,18 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CourseWork_Server.DataStructures.SaveLoadableList&lt;T&gt;">
-    <Position X="10.5" Y="2" Width="1.5" />
+    <Position X="12.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAAAABAACAAAAAQAAAAAABAEAAAAAAAAAAA=</HashCode>
       <FileName>DataStructures\SaveLoadableList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CourseWork_Server.DataStructures.Danil.RedBlackTree&lt;TKey, TValue&gt;">
+    <Position X="6.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIAIAAAAEkQQAAAAggABQMACQEoABAEQAEgQABCIII=</HashCode>
+      <FileName>DataStructures\Danil\RedBlackTree.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
