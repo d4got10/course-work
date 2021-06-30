@@ -402,7 +402,7 @@ namespace Coursework_ServerInterface
                     if (Server.GameLogic.PlayersByName.TryFind(username, out var players))
                         DisplayPlayers(players);
                     else
-                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                        MessageBox.Show("Игроков с такими данными не найдено.");
                     break;
                 case GridViews.Users:
                     if (Server.GameLogic.UsersFinder.TryFind(username, out var value, out var firstHash, out var secondHash))
@@ -423,13 +423,13 @@ namespace Coursework_ServerInterface
                     if (Server.GameLogic.PlayersByClan.TryFind(clanName, out var players))
                         DisplayPlayers(players);
                     else
-                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                        MessageBox.Show("Игроков с такими данными не найдено.");
                     break;
                 case GridViews.Clans:
                     if (Server.GameLogic.ClansFinder.TryFind(clanName, out var clan, out var hash))
                         DisplayClan(hash, clan);
                     else
-                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                        MessageBox.Show("Кланов с такими данными не найдено.");
                     break;
             }
         }
