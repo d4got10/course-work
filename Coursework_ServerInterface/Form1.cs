@@ -417,13 +417,20 @@ namespace Coursework_ServerInterface
         private void OnPlayerByClanFindRequest(string[] values)
         {
             var clanName = values[0];
-            if(Server.GameLogic.PlayersByClan.TryFind(clanName, out var players))
+            switch (_currentGridView)
             {
-                DisplayPlayers(players);
-            }
-            else
-            {
-                MessageBox.Show("Пользователей с такими данными не найдено.");
+                case GridViews.Main:
+                    if (Server.GameLogic.PlayersByClan.TryFind(clanName, out var players))
+                        DisplayPlayers(players);
+                    else
+                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                    break;
+                case GridViews.Clans:
+                    if (Server.GameLogic.ClansFinder.TryFind(clanName, out var clan, out var hash))
+                        DisplayClan(hash, clan);
+                    else
+                        MessageBox.Show("Пользователей с такими данными не найдено.");
+                    break;
             }
         }
 
@@ -443,6 +450,17 @@ namespace Coursework_ServerInterface
             row[2] = user.Login;
             row[3] = user.Password;
             usersGridView.Rows.Add(row);
+        }
+
+        private void DisplayClan(int hashValue, Clan clan)
+        {
+            SetCurrentGridView(GridViews.Clans);
+            clansGridView.Rows.Clear();
+            var row = new string[3];
+            row[0] = hashValue.ToString();
+            row[1] = clan.Name;
+            row[2] = clan.ColorCode;
+            clansGridView.Rows.Add(row);
         }
 
         private void DisplayPlayers(IEnumerable<Player> players)
