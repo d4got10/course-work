@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CourseWork_Server.DataStructures.Matvey.HashTable&lt;TKey, TValue&gt;">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="CourseWork_Server.DataStructures.Matvey.HashTable&lt;TKey, TValue&gt;.HashFunction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Matvey\HashTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Struct Name="CourseWork_Server.DataStructures.Matvey.HashTable&lt;TKey, TValue&gt;.KeyValuePair" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Matvey\HashTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Struct>
+      <Struct Name="CourseWork_Server.DataStructures.Matvey.HashTable&lt;TKey, TValue&gt;.ValueWithHash" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Matvey\HashTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAEAAAggAAAAAABAIAAAAAAAAAAAAgAAACAAA=</HashCode>
+      <FileName>DataStructures\Matvey\HashTable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CourseWork_Server.DataStructures.Matvey.List&lt;T&gt;">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="CourseWork_Server.DataStructures.Matvey.List&lt;T&gt;.Node" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Matvey\List.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAgAAAABAAAAAABAQAAAAAAAAEAAAAAABCAAA=</HashCode>
+      <FileName>DataStructures\Matvey\List.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CourseWork_Server.DataStructures.Matvey.AVLTree&lt;TKey, TValue&gt;">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="CourseWork_Server.DataStructures.Matvey.AVLTree&lt;TKey, TValue&gt;.Node" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataStructures\Matvey\Tree.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIAIEAQAEgAAAAAAAgABQAEAAAIAAAAAAAAABADoIE=</HashCode>
+      <FileName>DataStructures\Matvey\Tree.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Coursework_Server.DataStructures.Matvey.StringHashTableExtras">
+    <Position X="3.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\Matvey\StringHashTableExtras.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

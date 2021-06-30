@@ -275,7 +275,7 @@ namespace Coursework_ServerInterface
             switch (_currentGridView)
             {
                 case GridViews.Main:
-                    if (usersGridView.SelectedRows.Count > 0)
+                    if (mainGridView.SelectedRows.Count > 0)
                     {
                         string username = (string)mainGridView.SelectedRows[0].Cells[0].Value;
                         string password = (string)mainGridView.SelectedRows[0].Cells[1].Value;
@@ -291,8 +291,8 @@ namespace Coursework_ServerInterface
                 case GridViews.Users:
                     if (usersGridView.SelectedRows.Count > 0)
                     {
-                        string username = (string)usersGridView.SelectedRows[0].Cells[1].Value;
-                        string password = (string)usersGridView.SelectedRows[0].Cells[2].Value;
+                        string username = (string)usersGridView.SelectedRows[0].Cells[2].Value;
+                        string password = (string)usersGridView.SelectedRows[0].Cells[3].Value;
                         if (Server.GameLogic.UsersFinder.TryFind(username, out var user, out _, out _))
                         {
                             Server.GameLogic.RemoveUser(user);
@@ -300,7 +300,7 @@ namespace Coursework_ServerInterface
                     }
                     break;
                 case GridViews.Clans:
-                    if (usersGridView.SelectedRows.Count > 0)
+                    if (clansGridView.SelectedRows.Count > 0)
                     {
                         string clanName = (string)clansGridView.SelectedRows[0].Cells[1].Value;
                         string colorCode = (string)clansGridView.SelectedRows[0].Cells[2].Value;

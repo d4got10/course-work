@@ -163,6 +163,9 @@ namespace CourseWork_Server.DataStructures.Danil
         {
             var values = new List<TValue>();
 
+            if (min.CompareTo(max) > 0) throw new Exception("Минимальное значение больше максимального");
+
+            _comparisons = 0;
             var minNode = _root;
             var maxNode = _root;
             while (minNode != _nil || maxNode != _nil)
@@ -175,13 +178,16 @@ namespace CourseWork_Server.DataStructures.Danil
                     {
                         minNode = minNode.LeftChild;
                         goneLeft = true;
+                        _comparisons++;
                     }
                     else if (min.CompareTo(minNode.Key) > 0)
                     {
                         minNode = minNode.RightChild;
+                        _comparisons += 2;
                     }
                     else
                     {
+                        _comparisons += 2;
                         foreach(var value in minNode.Values)
                             values.Add(value);
                         minNode = _nil;
@@ -190,10 +196,12 @@ namespace CourseWork_Server.DataStructures.Danil
 
                     if(max.CompareTo(maxNode.Key) < 0)
                     {
+                        _comparisons++;
                         maxNode = maxNode.LeftChild;
                     }
                     else if(max.CompareTo(maxNode.Key) > 0)
                     {
+                        _comparisons += 2;
                         if (goneLeft)
                         {
                             foreach (var value in maxNode.Values)
@@ -203,6 +211,7 @@ namespace CourseWork_Server.DataStructures.Danil
                     }
                     else
                     {
+                        _comparisons += 2;
                         if (added == false)
                         {
                             foreach (var value in maxNode.Values)
@@ -224,6 +233,7 @@ namespace CourseWork_Server.DataStructures.Danil
                     {
                         if(min.CompareTo(minNode.Key) < 0)
                         {
+                            _comparisons++;
                             foreach (var value in minNode.Values)
                                 values.Add(value);
                             GetValuesFromTree(minNode.RightChild, ref values);
@@ -231,10 +241,12 @@ namespace CourseWork_Server.DataStructures.Danil
                         }
                         else if (min.CompareTo(minNode.Key) > 0)
                         {
+                            _comparisons += 2;
                             minNode = minNode.RightChild;
                         }
                         else
                         {
+                            _comparisons += 2;
                             foreach (var value in minNode.Values)
                                 values.Add(value);
                             GetValuesFromTree(minNode.RightChild, ref values);
@@ -246,10 +258,12 @@ namespace CourseWork_Server.DataStructures.Danil
                     {
                         if (max.CompareTo(maxNode.Key) < 0)
                         {
+                            _comparisons++;
                             maxNode = maxNode.LeftChild;
                         }
                         else if (max.CompareTo(maxNode.Key) > 0)
                         {
+                            _comparisons += 2;
                             foreach (var value in maxNode.Values)
                                 values.Add(value);
                             GetValuesFromTree(maxNode.LeftChild, ref values);
@@ -257,6 +271,7 @@ namespace CourseWork_Server.DataStructures.Danil
                         }
                         else
                         {
+                            _comparisons += 2;
                             foreach (var value in maxNode.Values)
                                 values.Add(value);
                             GetValuesFromTree(maxNode.LeftChild, ref values);
@@ -266,6 +281,7 @@ namespace CourseWork_Server.DataStructures.Danil
                 }
             }
 
+            Debug.WriteLine($"[ДАННЫЕ] {_name} произвело {_comparisons} сравнений");
             return values;
         }
 
