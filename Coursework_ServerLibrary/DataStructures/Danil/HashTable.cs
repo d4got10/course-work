@@ -115,14 +115,17 @@ namespace CourseWork_Server.DataStructures.Danil
                     {
                         secondHash = index;
                         value = _data[index].Value;
+                        Debug.WriteLine($"[ДАННЫЕ] Поиск по хеш-таблице потребовал {i + 1} сравнений");
                         return true;
                     }
                 }
                 else
                 {
+                    Debug.WriteLine($"[ДАННЫЕ] Поиск по хеш-таблице потребовал {i + 1} сравнений");
                     return false;
                 }
             }
+            Debug.WriteLine($"[ДАННЫЕ] Поиск по хеш-таблице потребовал {_data.Length} сравнений");
             return false;
         }
 

@@ -74,5 +74,10 @@ namespace Сoursework_Server
                     $"|{Health}" +
                     $"|{ActionPointsCount}";
         }
+
+        public override string ToString()
+        {
+            return UserData.Login;
+        }
     }
 }

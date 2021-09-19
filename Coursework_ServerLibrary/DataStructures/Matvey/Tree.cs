@@ -214,6 +214,11 @@ namespace CourseWork_Server.DataStructures.Matvey
             DisplayTree(root.Right, tabs + 1);
             for (int i = 0; i < tabs; i++) Debug.Write("\t");
             Debug.WriteLine($"{root.Key}");
+            //foreach(var value in root.Values)
+            //{
+            //    Debug.Write($"{value.ToString()} ");
+            //}
+            //Debug.WriteLine("]");
             DisplayTree(root.Left, tabs + 1);
         }
     }

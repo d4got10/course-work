@@ -94,15 +94,32 @@ namespace Сoursework_Server
             return false;
         }
 
+        private bool CheckValid(string name)
+        {
+            bool ok = true;
+            for (int i = 0; i < name.Length; i++)
+                ok &= ((name[i] >= 'A' && name[i] <= 'Z') || (name[i] >= 'a' && name[i] <= 'z') || (name[i] >= '0' && name[i] <= '9'));
+            return ok;
+        }
+
         public UserData CreateUser(string name, string password)
         {
+            if ((CheckValid(name) && CheckValid(password)) == false)
+                throw new Exception("");
+
             if (_users.TryFind(name, out _, out _, out _))
                 throw new Exception("Пользователь с таким именем уже существует.");
 
             var userData = new UserData(name, password);
 
-            if (_users.Add(name, userData) == false)
-                throw new Exception("Пользователь не был добавлен в хэш-таблицу.");
+            try
+            {
+                if (_users.Add(name, userData) == false)
+                    throw new Exception("Пользователь не был добавлен в хэш-таблицу.");
+            }
+            catch(Exception ex)
+            {
+            }
 
             return userData;
         }
@@ -253,8 +270,6 @@ namespace Сoursework_Server
 
         public void SaveData(string folderPath)
         {
-            return;
-
             var usersSaver = new DataSaver<CourseWork_Server.DataStructures.Danil.HashTable<string, UserData>>();
             usersSaver.Save(_users, folderPath, AppConstants.UsersListFileName);
 
@@ -323,7 +338,7 @@ namespace Сoursework_Server
                 int health = int.Parse(splitted[5]);
                 int actionPoints = int.Parse(splitted[6]);
 
-                CreateAndAddPlayer(userData, position, clan, health, actionPoints);
+                CreateAndAddPlayer(userData, position, clan, actionPoints, health);
             }
         }
     }

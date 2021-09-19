@@ -229,7 +229,7 @@ namespace CourseWork_Server.DataStructures.Danil
                 }
                 else
                 {
-                    if (minNode != null)
+                    if (minNode != _nil)
                     {
                         if(min.CompareTo(minNode.Key) < 0)
                         {
@@ -772,7 +772,10 @@ namespace CourseWork_Server.DataStructures.Danil
                 DisplayTree(root.RightChild, tabs+1);
             }
             for (int i = 0; i < tabs; i++) Debug.Write("\t");
-            Debug.WriteLine($"{root.Key}_{(root.IsBlack ? "B" : "R")} ");
+            Debug.WriteLine($"{root.Key}_{(root.IsBlack ? "B" : "R")}");
+            //foreach(var value in root.Values)
+            //    Debug.Write($" {value} ");
+            //Debug.WriteLine("]\n");
             if (root.LeftChild != _nil)
             {
                 DisplayTree(root.LeftChild, tabs+1);

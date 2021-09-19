@@ -34,12 +34,26 @@ namespace Сoursework_Server
 
         private void Populate()
         {
-            GameLogic.CreateUser("123", "d4got10");
-
-            GameLogic.CreateClan("FEDORI", "#ff00ff");
-
-            GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("Fedor", "Fet"));
-            GameLogic.CreateAndAddPlayer(GameLogic.CreateUser("German", "qwerty"));
+            var rand = new Random();
+            int added = 0;
+            for(int i = 0; i < 1000; i++)
+            {
+                string str = "";
+                int len = rand.Next() % 12 + 1;
+                for (int j = 0; j < len; j++)
+                {
+                    char t = (char)(rand.Next() % ('z' - 'a') + 'a');
+                    str += t.ToString();
+                }
+                try
+                {
+                    GameLogic.CreateUser(str, "test");
+                    added++;
+                }
+                catch(Exception ex)
+                {
+                }
+            }
         }
 
         private void Initialize()

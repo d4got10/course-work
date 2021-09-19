@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Coursework_ServerLibrary">
+      <HintPath>Coursework_ServerLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Coursework_SharedLibrary">
+      <HintPath>Coursework_SharedLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
