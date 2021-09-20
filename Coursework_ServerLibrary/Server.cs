@@ -164,7 +164,7 @@ namespace Сoursework_Server
             _clients.Remove(client);
             Console.WriteLine($"Client [{client.Name}] disconnected!");
             if (ex != null)
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message} {ex.StackTrace}");
         }
         #endregion
     }

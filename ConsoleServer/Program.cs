@@ -46,6 +46,9 @@ namespace ConsoleServer
                             Console.WriteLine("Ошибка: " + ex.Message);
                         }
                         break;
+                    default:
+                        Console.WriteLine("Неизвестная команда.");
+                        break;
                 }
             }
             server.Stop();

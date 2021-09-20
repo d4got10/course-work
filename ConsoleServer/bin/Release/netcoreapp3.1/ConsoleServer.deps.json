@@ -8,27 +8,23 @@
     ".NETCoreApp,Version=v3.1": {
       "ConsoleServer/1.0.0": {
         "dependencies": {
-          "Coursework_ServerLibrary": "1.0.0.0",
-          "Coursework_SharedLibrary": "1.0.0.0"
+          "Coursework_ServerLibrary": "1.0.0"
         },
         "runtime": {
           "ConsoleServer.dll": {}
         }
       },
-      "Coursework_ServerLibrary/1.0.0.0": {
+      "Coursework_ServerLibrary/1.0.0": {
+        "dependencies": {
+          "Coursework_SharedLibrary": "1.0.0"
+        },
         "runtime": {
-          "Coursework_ServerLibrary.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Coursework_ServerLibrary.dll": {}
         }
       },
-      "Coursework_SharedLibrary/1.0.0.0": {
+      "Coursework_SharedLibrary/1.0.0": {
         "runtime": {
-          "Coursework_SharedLibrary.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Coursework_SharedLibrary.dll": {}
         }
       }
     }
@@ -39,13 +35,13 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Coursework_ServerLibrary/1.0.0.0": {
-      "type": "reference",
+    "Coursework_ServerLibrary/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Coursework_SharedLibrary/1.0.0.0": {
-      "type": "reference",
+    "Coursework_SharedLibrary/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

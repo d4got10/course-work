@@ -6,12 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Coursework_ServerLibrary">
-      <HintPath>Coursework_ServerLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Coursework_SharedLibrary">
-      <HintPath>Coursework_SharedLibrary.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Coursework_ServerLibrary\Coursework_ServerLibrary.csproj" />
   </ItemGroup>
 
 </Project>
