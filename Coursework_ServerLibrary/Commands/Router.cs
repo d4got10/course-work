@@ -39,7 +39,7 @@ namespace Сoursework_Server.Commands
                 case (byte)Packet.PACKET_IDS.MOVE:
                     return GetMoveCommand(client, packet);
                 default:
-                    return null;
+                    throw new Exception($"Unknown packet ID. Value [{commandID}]");
             }
         }
 
