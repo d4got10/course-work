@@ -46,6 +46,9 @@ namespace ConsoleServer
                             Console.WriteLine("Ошибка: " + ex.Message);
                         }
                         break;
+                    case "/q":
+                        Console.WriteLine("Выход.");
+                        break;
                     default:
                         Console.WriteLine("Неизвестная команда.");
                         break;

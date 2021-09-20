@@ -62,6 +62,8 @@ namespace Сoursework_Server
             catch(ArgumentException ex)
             {
                 Console.WriteLine("Argument exception: " + ex.Message + "." + ex.StackTrace);
+                Socket.BeginReceive(Buffer, 0, BUFFER_SIZE, 0,
+                        new AsyncCallback(ReadCallback), null);
             }
             catch(Exception ex)
             {
