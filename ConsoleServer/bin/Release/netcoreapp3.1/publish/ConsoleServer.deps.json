@@ -10,6 +10,7 @@
       "ConsoleServer/1.0.0": {
         "dependencies": {
           "Coursework_ServerLibrary": "1.0.0",
+          "Coursework_SharedLibrary": "1.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.linux-x64": "3.1.7"
         },
         "runtime": {

@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v3.1": {
       "ConsoleServer/1.0.0": {
         "dependencies": {
-          "Coursework_ServerLibrary": "1.0.0"
+          "Coursework_ServerLibrary": "1.0.0",
+          "Coursework_SharedLibrary": "1.0.0"
         },
         "runtime": {
           "ConsoleServer.dll": {}

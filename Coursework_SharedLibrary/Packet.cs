@@ -122,8 +122,15 @@ namespace Shared
             return _data;
         }
 
-        static void Main()
+        public override string ToString()
         {
+            var str = new StringBuilder();
+            for (int i = 0; i < _data.Length; i++) 
+            {
+                str.Append(_data[i]);
+                str.Append(" ");
+            }
+            return str.ToString();
         }
     }
 }

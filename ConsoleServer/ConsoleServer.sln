@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleServer", "ConsoleSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coursework_ServerLibrary", "..\Coursework_ServerLibrary\Coursework_ServerLibrary.csproj", "{DB1F3BC2-48B8-41B2-B58A-A5099C36F159}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coursework_SharedLibrary", "..\Coursework_SharedLibrary\Coursework_SharedLibrary.csproj", "{59EF06FB-D501-4748-B815-A4F64D368E42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DB1F3BC2-48B8-41B2-B58A-A5099C36F159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB1F3BC2-48B8-41B2-B58A-A5099C36F159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB1F3BC2-48B8-41B2-B58A-A5099C36F159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59EF06FB-D501-4748-B815-A4F64D368E42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59EF06FB-D501-4748-B815-A4F64D368E42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59EF06FB-D501-4748-B815-A4F64D368E42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59EF06FB-D501-4748-B815-A4F64D368E42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
