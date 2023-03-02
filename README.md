@@ -30,4 +30,4 @@
 3) Перейти по относительному пути "Coursework\Build_Safe\"
 4) Запустить "Coursework.exe"
 
-![Интерфейс сервера](server_interface_example.png)
+![Интерфейс сервера](https://github.com/d4got10/course-work/blob/master/server_interfacte_example.png)
