@@ -30,4 +30,4 @@
 3) Перейти по относительному пути "Coursework\Build_Safe\"
 4) Запустить "Coursework.exe"
 
-![Интерфейс сервера](https://prnt.sc/9g4c7M8zlkfb)
+![Интерфейс сервера](server_interface_example.png)
